@@ -1,11 +1,11 @@
-package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
+package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.PaymentStatus;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.ViolationType;
 
 import java.time.LocalDate;
 
-public class TrafficFine {
+public class TrafficFineDTO {
     private Long id;
     private LocalDate issueDate;
     private LocalDate paymentDueDate;
@@ -17,10 +17,10 @@ public class TrafficFine {
     private Long vehicleId;
     private Long driverId;
 
-    public TrafficFine() {
+    public TrafficFineDTO() {
     }
 
-    public TrafficFine(Long id, LocalDate issueDate, LocalDate paymentDueDate, String violationDescription, ViolationType violationType, String location, PaymentStatus paymentStatus, Double amount, Long vehicleId, Long driverId) {
+    public TrafficFineDTO(Long id, LocalDate issueDate, LocalDate paymentDueDate, String violationDescription, ViolationType violationType, String location, PaymentStatus paymentStatus, Double amount, Long vehicleId, Long driverId) {
         this.id = id;
         this.issueDate = issueDate;
         this.paymentDueDate = paymentDueDate;
