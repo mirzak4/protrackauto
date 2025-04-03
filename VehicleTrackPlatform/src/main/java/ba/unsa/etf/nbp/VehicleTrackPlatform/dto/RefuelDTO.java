@@ -1,8 +1,8 @@
-package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
+package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
 import java.time.LocalDate;
 
-public class Refuel {
+public class RefuelDTO {
     private Long id;
     private String fiscalReceiptNumber;
     private LocalDate refuelDate;
@@ -13,10 +13,10 @@ public class Refuel {
     private Long stationId;
     private Long vehicleId;
 
-    public Refuel() {
+    public RefuelDTO() {
     }
 
-    public Refuel(Long id, String fiscalReceiptNumber, LocalDate refuelDate, Double quantity, Double pricePerLiter, Double mileage, Long fuelTypeId, Long stationId, Long vehicleId) {
+    public RefuelDTO(Long id, String fiscalReceiptNumber, LocalDate refuelDate, Double quantity, Double pricePerLiter, Double mileage, Long fuelTypeId, Long stationId, Long vehicleId) {
         this.id = id;
         this.fiscalReceiptNumber = fiscalReceiptNumber;
         this.refuelDate = refuelDate;
