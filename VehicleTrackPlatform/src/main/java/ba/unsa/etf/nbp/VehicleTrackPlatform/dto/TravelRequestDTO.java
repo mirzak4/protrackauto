@@ -1,10 +1,10 @@
-package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
+package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.RequestStatus;
 
 import java.time.LocalDate;
 
-public class TravelRequest {
+public class TravelRequestDTO {
     private Long id;
     private String approvedBy;
     private LocalDate approvalDate;
@@ -16,10 +16,10 @@ public class TravelRequest {
     private Long vehicleId;
     private Long driverId;
 
-    public TravelRequest() {
+    public TravelRequestDTO() {
     }
 
-    public TravelRequest(Long id, String approvedBy, LocalDate approvalDate, String departureLocation, String destination, LocalDate startDate, LocalDate endDate, RequestStatus requestStatus, Long vehicleId, Long driverId) {
+    public TravelRequestDTO(Long id, String approvedBy, LocalDate approvalDate, String departureLocation, String destination, LocalDate startDate, LocalDate endDate, RequestStatus requestStatus, Long vehicleId, Long driverId) {
         this.id = id;
         this.approvedBy = approvedBy;
         this.approvalDate = approvalDate;
