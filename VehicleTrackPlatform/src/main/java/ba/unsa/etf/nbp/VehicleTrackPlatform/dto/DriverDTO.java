@@ -1,10 +1,10 @@
-package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
+package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.DriverStatus;
 
 import java.time.LocalDate;
 
-public class Driver {
+public class DriverDTO {
     private Long id;
     private String firstName;
     private String lastName;
@@ -17,10 +17,10 @@ public class Driver {
     private LocalDate employmentDate;
     private DriverStatus driverStatus;
 
-    public Driver() {
+    public DriverDTO() {
     }
 
-    public Driver(Long id, String firstName, String lastName, LocalDate birthDate, String licenseNumber, LocalDate licenseExpiry, String address, String phoneNumber, String email, LocalDate employmentDate, DriverStatus driverStatus) {
+    public DriverDTO(Long id, String firstName, String lastName, LocalDate birthDate, String licenseNumber, LocalDate licenseExpiry, String address, String phoneNumber, String email, LocalDate employmentDate, DriverStatus driverStatus) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
