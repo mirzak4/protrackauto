@@ -2,7 +2,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.CompanyType;
 
-public class Company {
+public class Company extends AuditableEntity {
     private Long id;
     private CompanyType companyType;
     private String name;
