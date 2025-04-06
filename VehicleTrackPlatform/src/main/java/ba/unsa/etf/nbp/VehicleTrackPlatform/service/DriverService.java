@@ -3,6 +3,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.service;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.DriverDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Driver;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.DriverRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 public class DriverService {
     private final DriverRepository driverRepository;
 
+    @Autowired
     public DriverService(DriverRepository driverRepository) {
         this.driverRepository = driverRepository;
     }

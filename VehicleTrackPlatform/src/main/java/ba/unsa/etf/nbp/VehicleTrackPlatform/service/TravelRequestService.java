@@ -3,6 +3,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.service;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.TravelRequestDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.TravelRequest;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.TravelRequestRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class TravelRequestService {
 
     private final TravelRequestRepository travelRequestRepository;
 
+    @Autowired
     public TravelRequestService(TravelRequestRepository travelRequestRepository) {
         this.travelRequestRepository = travelRequestRepository;
     }

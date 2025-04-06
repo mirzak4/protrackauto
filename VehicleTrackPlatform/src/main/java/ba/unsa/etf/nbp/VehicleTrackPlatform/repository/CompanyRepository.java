@@ -1,6 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.repository;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Company;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.NonNull;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class CompanyRepository {
     private final JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public CompanyRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -45,7 +47,7 @@ public class CompanyRepository {
         if (company.getId() == null) {
             Long id = jdbcTemplate.queryForObject(
                     "INSERT INTO COMPANY (NAME, ADDRESS, CITY, POSTAL_CODE, PHONE_NUMBER, EMAIL) " +
-                            "VALUES (?, ?, ?, ?, ?, ?) RETURNING ID",
+                            "VALUES (?, ?, ?, ?, ?, ?)",
                     Long.class,
                     company.getName(),
                     company.getAddress(),

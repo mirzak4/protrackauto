@@ -2,6 +2,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.controller;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.RefuelDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.service.RefuelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class RefuelController {
     private final RefuelService refuelService;
 
+    @Autowired
     public RefuelController(RefuelService refuelService) {
         this.refuelService = refuelService;
     }

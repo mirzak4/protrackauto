@@ -2,6 +2,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.controller;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.TrafficFineDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.service.TrafficFineService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class TrafficFineController {
     private final TrafficFineService trafficFineService;
 
+    @Autowired
     public TrafficFineController(TrafficFineService trafficFineService) {
         this.trafficFineService = trafficFineService;
     }

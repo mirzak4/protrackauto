@@ -3,6 +3,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.service;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.CompanyDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Company;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.CompanyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 public class CompanyService {
     private final CompanyRepository companyRepository;
 
+    @Autowired
     public CompanyService(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
     }
@@ -36,7 +38,9 @@ public class CompanyService {
     }
 
     public List<CompanyDTO> getAllCompanies() {
-        return companyRepository.findAll().stream()
+        var companies = companyRepository.findAll();
+
+        return companies.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }

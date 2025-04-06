@@ -2,6 +2,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.repository;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.TravelRequest;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.TravelRequestStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,7 @@ import java.util.Optional;
 public class TravelRequestRepository {
     private final JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public TravelRequestRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

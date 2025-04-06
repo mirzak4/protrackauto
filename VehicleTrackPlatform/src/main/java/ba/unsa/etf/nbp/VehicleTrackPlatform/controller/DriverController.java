@@ -2,6 +2,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.controller;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.DriverDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.service.DriverService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class DriverController {
     private final DriverService driverService;
 
+    @Autowired
     public DriverController(DriverService driverService) {
         this.driverService = driverService;
     }

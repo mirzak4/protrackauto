@@ -3,6 +3,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.service;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.RefuelDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Refuel;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.RefuelRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 public class RefuelService {
     private final RefuelRepository refuelRepository;
 
+    @Autowired
     public RefuelService(RefuelRepository refuelRepository) {
         this.refuelRepository = refuelRepository;
     }

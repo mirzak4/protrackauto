@@ -3,6 +3,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.service;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.TrafficFineDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.TrafficFine;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.TrafficFineRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 public class TrafficFineService {
     private final TrafficFineRepository trafficFineRepository;
 
+    @Autowired
     public TrafficFineService(TrafficFineRepository trafficFineRepository) {
         this.trafficFineRepository = trafficFineRepository;
     }

@@ -1,6 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.repository;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Refuel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -14,6 +15,7 @@ import java.util.Optional;
 public class RefuelRepository {
     private final JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public RefuelRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
