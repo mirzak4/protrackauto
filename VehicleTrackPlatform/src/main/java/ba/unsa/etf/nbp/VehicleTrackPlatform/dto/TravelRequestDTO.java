@@ -1,6 +1,6 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
-import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.RequestStatus;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.TravelRequestStatus;
 
 import java.time.LocalDate;
 
@@ -12,14 +12,14 @@ public class TravelRequestDTO {
     private String destination;
     private LocalDate startDate;
     private LocalDate endDate;
-    private RequestStatus requestStatus;
+    private TravelRequestStatus travelRequestStatus;
     private Long vehicleId;
     private Long driverId;
 
     public TravelRequestDTO() {
     }
 
-    public TravelRequestDTO(Long id, String approvedBy, LocalDate approvalDate, String departureLocation, String destination, LocalDate startDate, LocalDate endDate, RequestStatus requestStatus, Long vehicleId, Long driverId) {
+    public TravelRequestDTO(Long id, String approvedBy, LocalDate approvalDate, String departureLocation, String destination, LocalDate startDate, LocalDate endDate, TravelRequestStatus travelRequestStatus, Long vehicleId, Long driverId) {
         this.id = id;
         this.approvedBy = approvedBy;
         this.approvalDate = approvalDate;
@@ -27,7 +27,7 @@ public class TravelRequestDTO {
         this.destination = destination;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.requestStatus = requestStatus;
+        this.travelRequestStatus = travelRequestStatus;
         this.vehicleId = vehicleId;
         this.driverId = driverId;
     }
@@ -88,12 +88,12 @@ public class TravelRequestDTO {
         this.endDate = endDate;
     }
 
-    public RequestStatus getRequestStatus() {
-        return requestStatus;
+    public TravelRequestStatus getRequestStatus() {
+        return travelRequestStatus;
     }
 
-    public void setRequestStatus(RequestStatus requestStatus) {
-        this.requestStatus = requestStatus;
+    public void setRequestStatus(TravelRequestStatus travelRequestStatus) {
+        this.travelRequestStatus = travelRequestStatus;
     }
 
     public Long getVehicleId() {

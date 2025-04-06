@@ -9,7 +9,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/traffic-fines")
+@RequestMapping("/api/traffic-fine")
 public class TrafficFineController {
     private final TrafficFineService trafficFineService;
 

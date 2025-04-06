@@ -1,6 +1,6 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
-public class StationDTO {
+public class CompanyDTO {
     private Long id;
     private String name;
     private String address;
@@ -9,10 +9,10 @@ public class StationDTO {
     private String phoneNumber;
     private String email;
 
-    public StationDTO() {
+    public CompanyDTO() {
     }
 
-    public StationDTO(Long id, String name, String address, String city, String postalCode, String phoneNumber, String email) {
+    public CompanyDTO(Long id, String name, String address, String city, String postalCode, String phoneNumber, String email) {
         this.id = id;
         this.name = name;
         this.address = address;

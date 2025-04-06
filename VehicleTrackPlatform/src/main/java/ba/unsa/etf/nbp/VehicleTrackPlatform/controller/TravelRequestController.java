@@ -10,7 +10,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/travel-requests")
+@RequestMapping("/api/travel-request")
 public class TravelRequestController {
     private final TravelRequestService travelRequestService;
 

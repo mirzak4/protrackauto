@@ -9,7 +9,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/refuels")
+@RequestMapping("/api/refuel")
 public class RefuelController {
     private final RefuelService refuelService;
 

@@ -1,18 +1,22 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
-public class InsuranceCompany {
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.CompanyType;
+
+public class Company {
     private Long id;
-    private String companyName;
+    private CompanyType companyType;
+    private String name;
     private String address;
     private String email;
     private String contactPerson;
 
-    public InsuranceCompany() {
+    public Company() {
     }
 
-    public InsuranceCompany(Long id, String companyName, String address, String email, String contactPerson) {
+    public Company(Long id, CompanyType companyType, String name, String address, String email, String contactPerson) {
         this.id = id;
-        this.companyName = companyName;
+        this.companyType = companyType;
+        this.name = name;
         this.address = address;
         this.email = email;
         this.contactPerson = contactPerson;
@@ -26,12 +30,20 @@ public class InsuranceCompany {
         this.id = id;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public CompanyType getCompanyType() {
+        return companyType;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setCompanyType(CompanyType companyType) {
+        this.companyType = companyType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {

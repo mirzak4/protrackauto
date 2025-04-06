@@ -1,7 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.repository;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.TravelRequest;
-import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.RequestStatus;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.TravelRequestStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -31,7 +31,7 @@ public class TravelRequestRepository {
             request.setDestination(rs.getString("DESTINATION"));
             request.setStartDate(rs.getDate("START_DATE").toLocalDate());
             request.setEndDate(rs.getDate("END_DATE").toLocalDate());
-            request.setRequestStatus(RequestStatus.valueOf(rs.getString("REQUEST_STATUS")));
+            request.setRequestStatus(TravelRequestStatus.valueOf(rs.getString("REQUEST_STATUS")));
             request.setVehicleId(rs.getLong("VEHICLE_ID"));
             request.setDriverId(rs.getLong("DRIVER_ID"));
             return request;

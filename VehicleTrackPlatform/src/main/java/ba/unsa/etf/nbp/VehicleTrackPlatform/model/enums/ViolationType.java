@@ -2,20 +2,35 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums;
 
 public enum ViolationType {
 
-    SPEEDING("Speeding"),
-    RED_LIGHT("Running red light"),
-    PARKING("Illegal parking"),
-    SEATBELT("No seatbelt"),
-    DOCUMENTS("Invalid documents"),
-    OTHER("Other");
+    SPEEDING(1, "Speeding"),
+    RED_LIGHT(2, "Running red light"),
+    PARKING(3, "Illegal parking"),
+    SEATBELT(4, "No seatbelt"),
+    DOCUMENTS(5, "Invalid documents"),
+    OTHER(6, "Other");
 
-    private final String description;
+    private final int code;
+    private final String displayName;
 
-    ViolationType(String description) {
-        this.description = description;
+    ViolationType(int code, String displayName) {
+        this.code = code;
+        this.displayName = displayName;
     }
 
-    public String getDescription() {
-        return description;
+    public int getCode() {
+        return code;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public static ViolationType fromCode(int code) {
+        for (ViolationType type : values()) {
+            if (type.code == code) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("Invalid ViolationType code: " + code);
     }
 }
