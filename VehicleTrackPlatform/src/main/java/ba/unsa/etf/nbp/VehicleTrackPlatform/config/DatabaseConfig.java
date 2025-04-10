@@ -10,16 +10,6 @@ import javax.sql.DataSource;
 @Configuration
 public class DatabaseConfig {
     @Bean
-    public DataSource dataSource() {
-        return DataSourceBuilder.create()
-                .driverClassName("")
-                .url("")
-                .username("username")
-                .password("password")
-                .build();
-    }
-
-    @Bean
     public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }

@@ -2,6 +2,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.service;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.CompanyDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Company;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.CompanyType;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,8 +38,8 @@ public class CompanyService {
         return company;
     }
 
-    public List<CompanyDTO> getAllCompanies() {
-        var companies = companyRepository.findAll();
+    public List<CompanyDTO> getAllCompanies(CompanyType companyType) {
+        var companies = companyRepository.findAll(companyType);
 
         return companies.stream()
                 .map(this::convertToDTO)

@@ -5,7 +5,6 @@ public enum CompanyType {
     INSURANCE_COMPANY(1, "Insurance Company"),
     SERVICE_PROVIDER(2, "Service Provider"),
     GAS_STATION(3, "Gas Station");
-
     private final int code;
     private final String displayName;
 

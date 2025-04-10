@@ -1,6 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.controller;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.CompanyDTO;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.CompanyType;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,8 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<CompanyDTO> getAllCompanies() {
-        return companyService.getAllCompanies();
+    public List<CompanyDTO> getAllCompanies(@RequestParam CompanyType companyType) {
+        return companyService.getAllCompanies(companyType);
     }
 
     @GetMapping("/{id}")

@@ -1,6 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.repository;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Company;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.CompanyType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -34,8 +35,8 @@ public class CompanyRepository {
         }
     }
 
-    public List<Company> findAll() {
-        return jdbcTemplate.query("SELECT * FROM COMPANY", new CompanyRowMapper());
+    public List<Company> findAll(CompanyType companyType) {
+        return jdbcTemplate.query("SELECT * FROM COMPANY WHERE COMPANY_TYPE=?", new CompanyRowMapper(), companyType.getCode());
     }
 
     public Optional<Company> findById(Long id) {
