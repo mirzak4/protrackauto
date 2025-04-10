@@ -1,8 +1,8 @@
-package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
+package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
 import java.time.LocalDate;
 
-public class Vehicle {
+public class VehicleDTO {
     private Long id;
     private String licensePlate;
     private LocalDate firstRegistrationDate;
@@ -30,10 +30,10 @@ public class Vehicle {
     private String catalyst;
     private String engineNumber;
 
-    public Vehicle() {
+    public VehicleDTO() {
     }
 
-    public Vehicle(Long id, String licensePlate, LocalDate firstRegistrationDate, String firstRegistrationPlace, String firstLicensePlate, LocalDate registrationIssueDate, String registrationIssuePlace, Long fuelId, Integer vehicleCategory, Integer vehicleBodyType, String color, String vehicleBrandType, String registrationNumber, String commercialDescription, String chassisNumber, Integer productionYear, Double maxWeight, Double payload, Double vehicleWeight, String powerWeightRatio, Integer seatCount, Double engineDisplacement, Double maxPower, String ecoCharacteristics, String catalyst, String engineNumber) {
+    public VehicleDTO(Long id, String licensePlate, LocalDate firstRegistrationDate, String firstRegistrationPlace, String firstLicensePlate, LocalDate registrationIssueDate, String registrationIssuePlace, Long fuelId, Integer vehicleCategory, Integer vehicleBodyType, String color, String vehicleBrandType, String registrationNumber, String commercialDescription, String chassisNumber, Integer productionYear, Double maxWeight, Double payload, Double vehicleWeight, String powerWeightRatio, Integer seatCount, Double engineDisplacement, Double maxPower, String ecoCharacteristics, String catalyst, String engineNumber) {
         this.id = id;
         this.licensePlate = licensePlate;
         this.firstRegistrationDate = firstRegistrationDate;
