@@ -1,25 +1,25 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
-public class CompanyDTO {
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.AuditableEntity;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.CompanyType;
+
+public class CompanyDTO extends AuditableEntity {
     private Long id;
+    private CompanyType companyType;
     private String name;
     private String address;
-    private String city;
-    private String postalCode;
     private String phoneNumber;
     private String email;
+    private String contactPerson;
 
-    public CompanyDTO() {
-    }
-
-    public CompanyDTO(Long id, String name, String address, String city, String postalCode, String phoneNumber, String email) {
+    public CompanyDTO(Long id, CompanyType companyType, String name, String address, String phoneNumber, String email, String contactPerson) {
         this.id = id;
+        this.companyType = companyType;
         this.name = name;
         this.address = address;
-        this.city = city;
-        this.postalCode = postalCode;
         this.phoneNumber = phoneNumber;
         this.email = email;
+        this.contactPerson = contactPerson;
     }
 
     public Long getId() {
@@ -46,20 +46,28 @@ public class CompanyDTO {
         this.address = address;
     }
 
-    public String getCity() {
-        return city;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPostalCode() {
-        return postalCode;
+    public String getContactPerson() {
+        return contactPerson;
     }
 
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
+    public void setContactPerson(String contactPerson) {
+        this.contactPerson = contactPerson;
+    }
+
+    public CompanyType getCompanyType() {
+        return companyType;
+    }
+
+    public void setCompanyType(CompanyType companyType) {
+        this.companyType = companyType;
     }
 
     public String getPhoneNumber() {
@@ -68,13 +76,5 @@ public class CompanyDTO {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

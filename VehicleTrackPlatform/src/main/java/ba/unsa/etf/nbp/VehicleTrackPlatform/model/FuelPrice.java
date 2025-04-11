@@ -2,7 +2,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
 import java.time.LocalDate;
 
-public class FuelPrice {
+public class FuelPrice extends AuditableEntity {
     private Long id;
     private LocalDate issueDate;
     private Long fuelId;

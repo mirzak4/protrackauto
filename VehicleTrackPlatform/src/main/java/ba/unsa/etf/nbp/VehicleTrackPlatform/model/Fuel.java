@@ -1,6 +1,6 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
-public class Fuel {
+public class Fuel extends AuditableEntity {
     private Long id;
     private String name;
 

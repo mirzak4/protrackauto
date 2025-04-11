@@ -1,5 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum CompanyType {
 
     INSURANCE_COMPANY(1, "Insurance Company"),
@@ -13,6 +15,7 @@ public enum CompanyType {
         this.displayName = displayName;
     }
 
+    @JsonValue
     public int getCode() {
         return code;
     }

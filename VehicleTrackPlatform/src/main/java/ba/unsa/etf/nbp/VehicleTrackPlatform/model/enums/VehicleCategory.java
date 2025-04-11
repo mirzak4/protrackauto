@@ -1,5 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.Arrays;
 
 public enum VehicleCategory {
@@ -22,6 +24,7 @@ public enum VehicleCategory {
         this.displayName = displayName;
     }
 
+    @JsonValue
     public int getCode() {
         return code;
     }

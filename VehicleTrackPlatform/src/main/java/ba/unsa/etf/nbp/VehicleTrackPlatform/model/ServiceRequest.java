@@ -2,7 +2,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
 import java.time.LocalDate;
 
-public class ServiceRequest {
+public class ServiceRequest extends AuditableEntity {
     private Long id;
     private String orderNumber;
     private String requestedService;

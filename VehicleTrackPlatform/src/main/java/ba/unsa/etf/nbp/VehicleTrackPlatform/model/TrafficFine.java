@@ -5,7 +5,7 @@ import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.ViolationType;
 
 import java.time.LocalDate;
 
-public class TrafficFine {
+public class TrafficFine extends AuditableEntity {
     private Long id;
     private LocalDate issueDate;
     private LocalDate paymentDueDate;

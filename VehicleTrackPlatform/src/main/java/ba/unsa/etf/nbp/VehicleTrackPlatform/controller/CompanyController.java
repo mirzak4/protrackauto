@@ -34,16 +34,16 @@ public class CompanyController {
     }
 
     @PostMapping
-    public ResponseEntity<CompanyDTO> createCompany(@RequestBody CompanyDTO companyDTO) {
-        CompanyDTO savedCompany = companyService.saveCompany(companyDTO);
-        return ResponseEntity.created(URI.create("/api/company/" + savedCompany.getId()))
-                .body(savedCompany);
+    public ResponseEntity<Long> createCompany(@RequestBody CompanyDTO companyDTO) {
+        Long companyId = companyService.createCompany(companyDTO);
+        return ResponseEntity.created(URI.create("/api/company/" + companyId))
+                .body(companyId);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CompanyDTO> updateCompany(@PathVariable Long id, @RequestBody CompanyDTO companyDTO) {
         companyDTO.setId(id);
-        return ResponseEntity.ok(companyService.saveCompany(companyDTO));
+        return ResponseEntity.ok(companyService.updateCompany(companyDTO));
     }
 
     @DeleteMapping("/{id}")

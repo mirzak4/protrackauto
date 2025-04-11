@@ -1,5 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 // To be deleted possibly
 public enum DriverStatus {
     ACTIVE(1, "Active"),
@@ -22,6 +24,7 @@ public enum DriverStatus {
         this.displayName = displayName;
     }
 
+    @JsonValue
     public int getCode() {
         return code;
     }

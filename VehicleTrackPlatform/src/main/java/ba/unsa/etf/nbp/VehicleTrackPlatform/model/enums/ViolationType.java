@@ -1,5 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum ViolationType {
 
     SPEEDING(1, "Speeding"),
@@ -17,6 +19,7 @@ public enum ViolationType {
         this.displayName = displayName;
     }
 
+    @JsonValue
     public int getCode() {
         return code;
     }

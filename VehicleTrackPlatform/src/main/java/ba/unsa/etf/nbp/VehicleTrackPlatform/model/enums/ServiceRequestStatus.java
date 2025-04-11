@@ -1,5 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum ServiceRequestStatus {
     REQUESTED(1, "Requested"),
     SCHEDULED(2, "Scheduled"),
@@ -16,6 +18,7 @@ public enum ServiceRequestStatus {
         this.displayName = displayName;
     }
 
+    @JsonValue
     public int getCode() {
         return code;
     }

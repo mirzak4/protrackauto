@@ -2,7 +2,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
 import java.time.LocalDate;
 
-public class Vehicle {
+public class Vehicle extends AuditableEntity {
     private Long id;
     private String licensePlate;
     private LocalDate firstRegistrationDate;

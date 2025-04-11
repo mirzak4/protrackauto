@@ -1,5 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum TravelRequestStatus {
     PENDING(1, "Pending"),
     APPROVED(2, "Approved"),
@@ -16,6 +18,7 @@ public enum TravelRequestStatus {
         this.displayName = displayName;
     }
 
+    @JsonValue
     public int getCode() {
         return code;
     }

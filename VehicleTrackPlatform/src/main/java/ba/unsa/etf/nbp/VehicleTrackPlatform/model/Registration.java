@@ -2,7 +2,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
 import java.time.LocalDate;
 
-public class Registration {
+public class Registration extends AuditableEntity {
     private Long id;
     private String policyNumber;
     private String insuranceType;

@@ -2,22 +2,34 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.CompanyType;
 
+import java.time.Instant;
+
 public class Company extends AuditableEntity {
     private Long id;
     private CompanyType companyType;
     private String name;
     private String address;
+    private String phoneNumber;
     private String email;
     private String contactPerson;
 
     public Company() {
     }
 
-    public Company(Long id, CompanyType companyType, String name, String address, String email, String contactPerson) {
+    public Company(
+            Long id,
+            CompanyType companyType,
+            String name,
+            String address,
+            String phoneNumber,
+            String email,
+            String contactPerson
+            ) {
         this.id = id;
         this.companyType = companyType;
         this.name = name;
         this.address = address;
+        this.phoneNumber = phoneNumber;
         this.email = email;
         this.contactPerson = contactPerson;
     }
@@ -68,5 +80,13 @@ public class Company extends AuditableEntity {
 
     public void setContactPerson(String contactPerson) {
         this.contactPerson = contactPerson;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

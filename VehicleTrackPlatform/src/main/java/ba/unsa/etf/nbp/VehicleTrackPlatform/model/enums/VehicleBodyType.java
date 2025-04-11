@@ -1,5 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum VehicleBodyType {
     SEDAN(1, "Sedan"),
     HATCHBACK(2, "Hatchback"),
@@ -25,6 +27,7 @@ public enum VehicleBodyType {
         this.displayName = displayName;
     }
 
+    @JsonValue
     public int getCode() {
         return code;
     }

@@ -4,7 +4,7 @@ import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.TravelRequestStatus;
 
 import java.time.LocalDate;
 
-public class TravelRequest {
+public class TravelRequest extends AuditableEntity {
     private Long id;
     private String approvedBy;
     private LocalDate approvalDate;

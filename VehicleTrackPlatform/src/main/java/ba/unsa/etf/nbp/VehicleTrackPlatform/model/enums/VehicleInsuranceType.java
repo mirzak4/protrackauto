@@ -1,5 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum VehicleInsuranceType {
 
     LIABILITY(1, "Liability Insurance"),
@@ -23,6 +25,7 @@ public enum VehicleInsuranceType {
         this.displayName = displayName;
     }
 
+    @JsonValue
     public int getCode() {
         return code;
     }

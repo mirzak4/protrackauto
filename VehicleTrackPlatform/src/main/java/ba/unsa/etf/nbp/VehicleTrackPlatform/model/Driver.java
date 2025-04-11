@@ -4,7 +4,7 @@ import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.DriverStatus;
 
 import java.time.LocalDate;
 
-public class Driver {
+public class Driver extends AuditableEntity {
     private Long id;
     private String firstName;
     private String lastName;

@@ -1,5 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum ServiceType {
 
     REGULAR_SERVICE(1, "Regular Service Check"),
@@ -13,6 +15,7 @@ public enum ServiceType {
         this.displayName = displayName;
     }
 
+    @JsonValue
     public int getCode() {
         return code;
     }
