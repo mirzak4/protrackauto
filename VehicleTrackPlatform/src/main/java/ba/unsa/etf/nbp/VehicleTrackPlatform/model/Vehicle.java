@@ -1,5 +1,8 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.VehicleBodyType;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.VehicleCategory;
+
 import java.time.LocalDate;
 
 public class Vehicle extends AuditableEntity {
@@ -11,8 +14,8 @@ public class Vehicle extends AuditableEntity {
     private LocalDate registrationIssueDate;
     private String registrationIssuePlace;
     private Long fuelId;
-    private Integer vehicleCategory;
-    private Integer vehicleBodyType;
+    private VehicleCategory vehicleCategory;
+    private VehicleBodyType vehicleBodyType;
     private String color;
     private String vehicleBrandType;
     private String registrationNumber;
@@ -22,7 +25,7 @@ public class Vehicle extends AuditableEntity {
     private Double maxWeight;
     private Double payload;
     private Double vehicleWeight;
-    private String powerWeightRatio;
+    private Double powerWeightRatio;
     private Integer seatCount;
     private Double engineDisplacement;
     private Double maxPower;
@@ -33,7 +36,33 @@ public class Vehicle extends AuditableEntity {
     public Vehicle() {
     }
 
-    public Vehicle(Long id, String licensePlate, LocalDate firstRegistrationDate, String firstRegistrationPlace, String firstLicensePlate, LocalDate registrationIssueDate, String registrationIssuePlace, Long fuelId, Integer vehicleCategory, Integer vehicleBodyType, String color, String vehicleBrandType, String registrationNumber, String commercialDescription, String chassisNumber, Integer productionYear, Double maxWeight, Double payload, Double vehicleWeight, String powerWeightRatio, Integer seatCount, Double engineDisplacement, Double maxPower, String ecoCharacteristics, String catalyst, String engineNumber) {
+    public Vehicle(
+            Long id,
+            String licensePlate,
+            LocalDate firstRegistrationDate,
+            String firstRegistrationPlace,
+            String firstLicensePlate,
+            LocalDate registrationIssueDate,
+            String registrationIssuePlace,
+            Long fuelId,
+            VehicleCategory vehicleCategory,
+            VehicleBodyType vehicleBodyType,
+            String color,
+            String vehicleBrandType,
+            String registrationNumber,
+            String commercialDescription,
+            String chassisNumber,
+            Integer productionYear,
+            Double maxWeight,
+            Double payload,
+            Double vehicleWeight,
+            Double powerWeightRatio,
+            Integer seatCount,
+            Double engineDisplacement,
+            Double maxPower,
+            String ecoCharacteristics,
+            String catalyst,
+            String engineNumber) {
         this.id = id;
         this.licensePlate = licensePlate;
         this.firstRegistrationDate = firstRegistrationDate;
@@ -126,19 +155,19 @@ public class Vehicle extends AuditableEntity {
         this.fuelId = fuelId;
     }
 
-    public Integer getVehicleCategory() {
+    public VehicleCategory getVehicleCategory() {
         return vehicleCategory;
     }
 
-    public void setVehicleCategory(Integer vehicleCategory) {
+    public void setVehicleCategory(VehicleCategory vehicleCategory) {
         this.vehicleCategory = vehicleCategory;
     }
 
-    public Integer getVehicleBodyType() {
+    public VehicleBodyType getVehicleBodyType() {
         return vehicleBodyType;
     }
 
-    public void setVehicleBodyType(Integer vehicleBodyType) {
+    public void setVehicleBodyType(VehicleBodyType vehicleBodyType) {
         this.vehicleBodyType = vehicleBodyType;
     }
 
@@ -214,11 +243,11 @@ public class Vehicle extends AuditableEntity {
         this.vehicleWeight = vehicleWeight;
     }
 
-    public String getPowerWeightRatio() {
+    public Double getPowerWeightRatio() {
         return powerWeightRatio;
     }
 
-    public void setPowerWeightRatio(String powerWeightRatio) {
+    public void setPowerWeightRatio(Double powerWeightRatio) {
         this.powerWeightRatio = powerWeightRatio;
     }
 

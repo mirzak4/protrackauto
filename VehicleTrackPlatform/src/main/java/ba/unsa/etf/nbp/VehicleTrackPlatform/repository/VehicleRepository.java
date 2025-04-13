@@ -1,10 +1,17 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.repository;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Vehicle;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.VehicleBodyType;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.VehicleCategory;
+import org.jspecify.annotations.NonNull;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -20,36 +27,42 @@ public class VehicleRepository {
 
     private static final class VehicleRowMapper implements RowMapper<Vehicle> {
         @Override
+        @NonNull
         public Vehicle mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Vehicle vehicle = new Vehicle();
-            vehicle.setId(rs.getLong("ID"));
-            vehicle.setLicensePlate(rs.getString("LICENSE_PLATE"));
-            vehicle.setFirstRegistrationDate(rs.getDate("FIRST_REGISTRATION_DATE") != null ?
-                    rs.getDate("FIRST_REGISTRATION_DATE").toLocalDate() : null);
-            vehicle.setFirstRegistrationPlace(rs.getString("FIRST_REGISTRATION_PLACE"));
-            vehicle.setFirstLicensePlate(rs.getString("FIRST_LICENSE_PLATE"));
-            vehicle.setRegistrationIssueDate(rs.getDate("REGISTRATION_ISSUE_DATE") != null ?
-                    rs.getDate("REGISTRATION_ISSUE_DATE").toLocalDate() : null);
-            vehicle.setRegistrationIssuePlace(rs.getString("REGISTRATION_ISSUE_PLACE"));
-            vehicle.setFuelId(rs.getLong("FUEL_ID"));
-            vehicle.setVehicleCategory(rs.getInt("VEHICLE_CATEGORY"));
-            vehicle.setVehicleBodyType(rs.getInt("VEHICLE_BODY_TYPE"));
-            vehicle.setColor(rs.getString("COLOR"));
-            vehicle.setVehicleBrandType(rs.getString("VEHICLE_BRAND_TYPE"));
-            vehicle.setRegistrationNumber(rs.getString("REGISTRATION_NUMBER"));
-            vehicle.setCommercialDescription(rs.getString("COMMERCIAL_DESCRIPTION"));
-            vehicle.setChassisNumber(rs.getString("CHASSIS_NUMBER"));
-            vehicle.setProductionYear(rs.getInt("PRODUCTION_YEAR"));
-            vehicle.setMaxWeight(rs.getDouble("MAX_WEIGHT"));
-            vehicle.setPayload(rs.getDouble("PAYLOAD"));
-            vehicle.setVehicleWeight(rs.getDouble("VEHICLE_WEIGHT"));
-            vehicle.setPowerWeightRatio(rs.getString("POWER_WEIGHT_RATIO"));
-            vehicle.setSeatCount(rs.getInt("SEAT_COUNT"));
-            vehicle.setEngineDisplacement(rs.getDouble("ENGINE_DISPLACEMENT"));
-            vehicle.setMaxPower(rs.getDouble("MAX_POWER"));
-            vehicle.setEcoCharacteristics(rs.getString("ECO_CHARACTERISTICS"));
-            vehicle.setCatalyst(rs.getString("CATALYST"));
-            vehicle.setEngineNumber(rs.getString("ENGINE_NUMBER"));
+            var vehicle = new Vehicle(
+                    rs.getLong("ID"),
+                    rs.getString("LICENSE_PLATE"),
+                    rs.getDate("FIRST_REGISTRATION_DATE").toLocalDate(),
+                    rs.getString("FIRST_REGISTRATION_PLACE"),
+                    rs.getString("FIRST_LICENSE_PLATE"),
+                    rs.getDate("REGISTRATION_ISSUE_DATE").toLocalDate(),
+                    rs.getString("REGISTRATION_ISSUE_PLACE"),
+                    rs.getLong("FUEL_ID"),
+                    VehicleCategory.parse(rs.getInt("VEHICLE_CATEGORY")),
+                    VehicleBodyType.fromCode(rs.getInt("VEHICLE_BODY_TYPE")),
+                    rs.getString("COLOR"),
+                    rs.getString("VEHICLE_BRAND_TYPE"),
+                    rs.getString("REGISTRATION_NUMBER"),
+                    rs.getString("COMMERCIAL_DESCRIPTION"),
+                    rs.getString("CHASSIS_NUMBER"),
+                    rs.getInt("PRODUCTION_YEAR"),
+                    rs.getDouble("MAX_WEIGHT"),
+                    rs.getDouble("PAYLOAD"),
+                    rs.getDouble("VEHICLE_WEIGHT"),
+                    rs.getDouble("POWER_WEIGHT_RATIO"),
+                    rs.getInt("SEAT_COUNT"),
+                    rs.getDouble("ENGINE_DISPLACEMENT"),
+                    rs.getDouble("MAX_POWER"),
+                    rs.getString("ECO_CHARACTERISTICS"),
+                    rs.getString("CATALYST"),
+                    rs.getString("ENGINE_NUMBER")
+            );
+
+            vehicle.setCreatedAt(rs.getTimestamp("CREATED_AT").toInstant());
+            vehicle.setCreatedBy(rs.getString("CREATED_BY"));
+            vehicle.setModifiedAt(rs.getTimestamp("MODIFIED_AT").toInstant());
+            vehicle.setModifiedBy(rs.getString("MODIFIED_BY"));
+
             return vehicle;
         }
     }
@@ -63,84 +76,65 @@ public class VehicleRepository {
                 new VehicleRowMapper(), id).stream().findFirst();
     }
 
-    public Vehicle save(Vehicle vehicle) {
-        if (vehicle.getId() == null) {
-            Long id = jdbcTemplate.queryForObject(
-                    "INSERT INTO VEHICLE (" +
-                            "LICENSE_PLATE, FIRST_REGISTRATION_DATE, FIRST_REGISTRATION_PLACE, " +
-                            "FIRST_LICENSE_PLATE, REGISTRATION_ISSUE_DATE, REGISTRATION_ISSUE_PLACE, " +
-                            "FUEL_ID, VEHICLE_CATEGORY, VEHICLE_BODY_TYPE, COLOR, VEHICLE_BRAND_TYPE, " +
-                            "REGISTRATION_NUMBER, COMMERCIAL_DESCRIPTION, CHASSIS_NUMBER, PRODUCTION_YEAR, " +
-                            "MAX_WEIGHT, PAYLOAD, VEHICLE_WEIGHT, POWER_WEIGHT_RATIO, SEAT_COUNT, " +
-                            "ENGINE_DISPLACEMENT, MAX_POWER, ECO_CHARACTERISTICS, CATALYST, ENGINE_NUMBER" +
-                            ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING ID",
-                    Long.class,
-                    // All parameters in order
-                    vehicle.getLicensePlate(),
-                    vehicle.getFirstRegistrationDate(),
-                    vehicle.getFirstRegistrationPlace(),
-                    vehicle.getFirstLicensePlate(),
-                    vehicle.getRegistrationIssueDate(),
-                    vehicle.getRegistrationIssuePlace(),
-                    vehicle.getFuelId(),
-                    vehicle.getVehicleCategory(),
-                    vehicle.getVehicleBodyType(),
-                    vehicle.getColor(),
-                    vehicle.getVehicleBrandType(),
-                    vehicle.getRegistrationNumber(),
-                    vehicle.getCommercialDescription(),
-                    vehicle.getChassisNumber(),
-                    vehicle.getProductionYear(),
-                    vehicle.getMaxWeight(),
-                    vehicle.getPayload(),
-                    vehicle.getVehicleWeight(),
-                    vehicle.getPowerWeightRatio(),
-                    vehicle.getSeatCount(),
-                    vehicle.getEngineDisplacement(),
-                    vehicle.getMaxPower(),
-                    vehicle.getEcoCharacteristics(),
-                    vehicle.getCatalyst(),
-                    vehicle.getEngineNumber());
-            vehicle.setId(id);
-        } else {
-            jdbcTemplate.update(
-                    "UPDATE VEHICLE SET " +
-                            "LICENSE_PLATE = ?, FIRST_REGISTRATION_DATE = ?, FIRST_REGISTRATION_PLACE = ?, " +
-                            "FIRST_LICENSE_PLATE = ?, REGISTRATION_ISSUE_DATE = ?, REGISTRATION_ISSUE_PLACE = ?, " +
-                            "FUEL_ID = ?, VEHICLE_CATEGORY = ?, VEHICLE_BODY_TYPE = ?, COLOR = ?, VEHICLE_BRAND_TYPE = ?, " +
-                            "REGISTRATION_NUMBER = ?, COMMERCIAL_DESCRIPTION = ?, CHASSIS_NUMBER = ?, PRODUCTION_YEAR = ?, " +
-                            "MAX_WEIGHT = ?, PAYLOAD = ?, VEHICLE_WEIGHT = ?, POWER_WEIGHT_RATIO = ?, SEAT_COUNT = ?, " +
-                            "ENGINE_DISPLACEMENT = ?, MAX_POWER = ?, ECO_CHARACTERISTICS = ?, CATALYST = ?, ENGINE_NUMBER = ? " +
-                            "WHERE ID = ?",
-                    // All parameters in order
-                    vehicle.getLicensePlate(),
-                    vehicle.getFirstRegistrationDate(),
-                    vehicle.getFirstRegistrationPlace(),
-                    vehicle.getFirstLicensePlate(),
-                    vehicle.getRegistrationIssueDate(),
-                    vehicle.getRegistrationIssuePlace(),
-                    vehicle.getFuelId(),
-                    vehicle.getVehicleCategory(),
-                    vehicle.getVehicleBodyType(),
-                    vehicle.getColor(),
-                    vehicle.getVehicleBrandType(),
-                    vehicle.getRegistrationNumber(),
-                    vehicle.getCommercialDescription(),
-                    vehicle.getChassisNumber(),
-                    vehicle.getProductionYear(),
-                    vehicle.getMaxWeight(),
-                    vehicle.getPayload(),
-                    vehicle.getVehicleWeight(),
-                    vehicle.getPowerWeightRatio(),
-                    vehicle.getSeatCount(),
-                    vehicle.getEngineDisplacement(),
-                    vehicle.getMaxPower(),
-                    vehicle.getEcoCharacteristics(),
-                    vehicle.getCatalyst(),
-                    vehicle.getEngineNumber(),
-                    vehicle.getId());
-        }
-        return vehicle;
+    public Long create(Vehicle v) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            String sql = """
+            INSERT INTO VEHICLE (
+                LICENSE_PLATE, FIRST_REGISTRATION_DATE, FIRST_REGISTRATION_PLACE, FIRST_LICENSE_PLATE, 
+                REGISTRATION_ISSUE_DATE, REGISTRATION_ISSUE_PLACE, FUEL_ID, VEHICLE_CATEGORY, VEHICLE_BODY_TYPE, COLOR,
+                VEHICLE_BRAND_TYPE, REGISTRATION_NUMBER, COMMERCIAL_DESCRIPTION, CHASSIS_NUMBER, PRODUCTION_YEAR, 
+                MAX_WEIGHT, PAYLOAD, VEHICLE_WEIGHT, POWER_WEIGHT_RATIO, SEAT_COUNT, ENGINE_DISPLACEMENT, 
+                MAX_POWER, ECO_CHARACTERISTICS, CATALYST, ENGINE_NUMBER
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """;
+            PreparedStatement ps = connection.prepareStatement(sql, new String[]{"ID"});
+            ps.setString(1, v.getLicensePlate());
+            ps.setDate(2, Date.valueOf(v.getFirstRegistrationDate()));
+            ps.setString(3, v.getFirstRegistrationPlace());
+            ps.setString(4, v.getFirstLicensePlate());
+            ps.setDate(5, Date.valueOf(v.getRegistrationIssueDate()));
+            ps.setString(6, v.getRegistrationIssuePlace());
+            ps.setLong(7, v.getFuelId());
+            ps.setInt(8, v.getVehicleCategory().getCode());
+            ps.setInt(9, v.getVehicleBodyType().getCode());
+            ps.setString(10, v.getColor());
+            ps.setString(11, v.getVehicleBrandType());
+            ps.setString(12, v.getRegistrationNumber());
+            ps.setString(13, v.getCommercialDescription());
+            ps.setString(14, v.getChassisNumber());
+            ps.setInt(15, v.getProductionYear());
+            ps.setDouble(16, v.getMaxWeight());
+            ps.setDouble(17, v.getPayload());
+            ps.setDouble(18, v.getVehicleWeight());
+            ps.setDouble(19, v.getPowerWeightRatio());
+            ps.setInt(20, v.getSeatCount());
+            ps.setDouble(21, v.getEngineDisplacement());
+            ps.setDouble(22, v.getMaxPower());
+            ps.setString(23, v.getEcoCharacteristics());
+            ps.setString(24, v.getCatalyst());
+            ps.setString(25, v.getEngineNumber());
+            return ps;
+        }, keyHolder);
+
+        return keyHolder.getKey().longValue();
+    }
+
+
+    public Vehicle update(Vehicle v) {
+        jdbcTemplate.update("""
+            UPDATE VEHICLE SET LICENSE_PLATE=?, FIRST_REGISTRATION_DATE=?, FIRST_REGISTRATION_PLACE=?, FIRST_LICENSE_PLATE=?,
+            REGISTRATION_ISSUE_DATE=?, REGISTRATION_ISSUE_PLACE=?, FUEL_ID=?, VEHICLE_CATEGORY=?, VEHICLE_BODY_TYPE=?, COLOR=?,
+            VEHICLE_BRAND_TYPE=?, REGISTRATION_NUMBER=?, COMMERCIAL_DESCRIPTION=?, CHASSIS_NUMBER=?, PRODUCTION_YEAR=?, MAX_WEIGHT=?, PAYLOAD=?,
+            VEHICLE_WEIGHT=?, POWER_WEIGHT_RATIO=?, SEAT_COUNT=?, ENGINE_DISPLACEMENT=?, MAX_POWER=?, ECO_CHARACTERISTICS=?,
+            CATALYST=?, ENGINE_NUMBER=? WHERE ID=?""",
+                v.getLicensePlate(), Date.valueOf(v.getFirstRegistrationDate()), v.getFirstRegistrationPlace(), v.getFirstLicensePlate(),
+                Date.valueOf(v.getRegistrationIssueDate()), v.getRegistrationIssuePlace(), v.getFuelId(),
+                v.getVehicleCategory().getCode(), v.getVehicleBodyType().getCode(), v.getColor(),
+                v.getVehicleBrandType(), v.getRegistrationNumber(), v.getCommercialDescription(), v.getChassisNumber(), v.getProductionYear(),
+                v.getMaxWeight(), v.getPayload(), v.getVehicleWeight(), v.getPowerWeightRatio(), v.getSeatCount(),
+                v.getEngineDisplacement(), v.getMaxPower(), v.getEcoCharacteristics(), v.getCatalyst(), v.getEngineNumber(), v.getId());
+        return v;
     }
 
     public void deleteById(Long id) {

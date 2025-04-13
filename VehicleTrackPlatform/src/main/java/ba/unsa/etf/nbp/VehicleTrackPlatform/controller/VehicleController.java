@@ -9,7 +9,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/vehicles")
+@RequestMapping("/api/vehicle")
 public class VehicleController {
     private final VehicleService vehicleService;
 
@@ -30,16 +30,16 @@ public class VehicleController {
     }
 
     @PostMapping
-    public ResponseEntity<VehicleDTO> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
-        VehicleDTO savedVehicle = vehicleService.saveVehicle(vehicleDTO);
-        return ResponseEntity.created(URI.create("/api/vehicles/" + savedVehicle.getId()))
-                .body(savedVehicle);
+    public ResponseEntity<Long> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
+        Long vehicleId = vehicleService.createVehicle(vehicleDTO);
+        return ResponseEntity.created(URI.create("/api/vehicle/" + vehicleId))
+                .body(vehicleId);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<VehicleDTO> updateVehicle(@PathVariable Long id, @RequestBody VehicleDTO vehicleDTO) {
         vehicleDTO.setId(id);
-        return ResponseEntity.ok(vehicleService.saveVehicle(vehicleDTO));
+        return ResponseEntity.ok(vehicleService.updateVehicle(vehicleDTO));
     }
 
     @DeleteMapping("/{id}")

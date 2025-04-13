@@ -18,65 +18,72 @@ public class VehicleService {
     }
 
     private VehicleDTO convertToDTO(Vehicle vehicle) {
-        VehicleDTO dto = new VehicleDTO();
-        dto.setId(vehicle.getId());
-        dto.setLicensePlate(vehicle.getLicensePlate());
-        dto.setFirstRegistrationDate(vehicle.getFirstRegistrationDate());
-        dto.setFirstRegistrationPlace(vehicle.getFirstRegistrationPlace());
-        dto.setFirstLicensePlate(vehicle.getFirstLicensePlate());
-        dto.setRegistrationIssueDate(vehicle.getRegistrationIssueDate());
-        dto.setRegistrationIssuePlace(vehicle.getRegistrationIssuePlace());
-        dto.setFuelId(vehicle.getFuelId());
-        dto.setVehicleCategory(vehicle.getVehicleCategory());
-        dto.setVehicleBodyType(vehicle.getVehicleBodyType());
-        dto.setColor(vehicle.getColor());
-        dto.setVehicleBrandType(vehicle.getVehicleBrandType());
-        dto.setRegistrationNumber(vehicle.getRegistrationNumber());
-        dto.setCommercialDescription(vehicle.getCommercialDescription());
-        dto.setChassisNumber(vehicle.getChassisNumber());
-        dto.setProductionYear(vehicle.getProductionYear());
-        dto.setMaxWeight(vehicle.getMaxWeight());
-        dto.setPayload(vehicle.getPayload());
-        dto.setVehicleWeight(vehicle.getVehicleWeight());
-        dto.setPowerWeightRatio(vehicle.getPowerWeightRatio());
-        dto.setSeatCount(vehicle.getSeatCount());
-        dto.setEngineDisplacement(vehicle.getEngineDisplacement());
-        dto.setMaxPower(vehicle.getMaxPower());
-        dto.setEcoCharacteristics(vehicle.getEcoCharacteristics());
-        dto.setCatalyst(vehicle.getCatalyst());
-        dto.setEngineNumber(vehicle.getEngineNumber());
+        var dto = new VehicleDTO(
+                vehicle.getId(),
+                vehicle.getLicensePlate(),
+                vehicle.getFirstRegistrationDate(),
+                vehicle.getFirstRegistrationPlace(),
+                vehicle.getFirstLicensePlate(),
+                vehicle.getRegistrationIssueDate(),
+                vehicle.getRegistrationIssuePlace(),
+                vehicle.getFuelId(),
+                vehicle.getVehicleCategory(),
+                vehicle.getVehicleBodyType(),
+                vehicle.getColor(),
+                vehicle.getVehicleBrandType(),
+                vehicle.getRegistrationNumber(),
+                vehicle.getCommercialDescription(),
+                vehicle.getChassisNumber(),
+                vehicle.getProductionYear(),
+                vehicle.getMaxWeight(),
+                vehicle.getPayload(),
+                vehicle.getVehicleWeight(),
+                vehicle.getPowerWeightRatio(),
+                vehicle.getSeatCount(),
+                vehicle.getEngineDisplacement(),
+                vehicle.getMaxPower(),
+                vehicle.getEcoCharacteristics(),
+                vehicle.getCatalyst(),
+                vehicle.getEngineNumber()
+        );
+
+        dto.setCreatedAt(vehicle.getCreatedAt());
+        dto.setCreatedBy(vehicle.getCreatedBy());
+        dto.setModifiedAt(vehicle.getModifiedAt());
+        dto.setModifiedBy(vehicle.getModifiedBy());
+
         return dto;
     }
 
     private Vehicle convertToEntity(VehicleDTO dto) {
-        Vehicle vehicle = new Vehicle();
-        vehicle.setId(dto.getId());
-        vehicle.setLicensePlate(dto.getLicensePlate());
-        vehicle.setFirstRegistrationDate(dto.getFirstRegistrationDate());
-        vehicle.setFirstRegistrationPlace(dto.getFirstRegistrationPlace());
-        vehicle.setFirstLicensePlate(dto.getFirstLicensePlate());
-        vehicle.setRegistrationIssueDate(dto.getRegistrationIssueDate());
-        vehicle.setRegistrationIssuePlace(dto.getRegistrationIssuePlace());
-        vehicle.setFuelId(dto.getFuelId());
-        vehicle.setVehicleCategory(dto.getVehicleCategory());
-        vehicle.setVehicleBodyType(dto.getVehicleBodyType());
-        vehicle.setColor(dto.getColor());
-        vehicle.setVehicleBrandType(dto.getVehicleBrandType());
-        vehicle.setRegistrationNumber(dto.getRegistrationNumber());
-        vehicle.setCommercialDescription(dto.getCommercialDescription());
-        vehicle.setChassisNumber(dto.getChassisNumber());
-        vehicle.setProductionYear(dto.getProductionYear());
-        vehicle.setMaxWeight(dto.getMaxWeight());
-        vehicle.setPayload(dto.getPayload());
-        vehicle.setVehicleWeight(dto.getVehicleWeight());
-        vehicle.setPowerWeightRatio(dto.getPowerWeightRatio());
-        vehicle.setSeatCount(dto.getSeatCount());
-        vehicle.setEngineDisplacement(dto.getEngineDisplacement());
-        vehicle.setMaxPower(dto.getMaxPower());
-        vehicle.setEcoCharacteristics(dto.getEcoCharacteristics());
-        vehicle.setCatalyst(dto.getCatalyst());
-        vehicle.setEngineNumber(dto.getEngineNumber());
-        return vehicle;
+        return new Vehicle(
+                dto.getId(),
+                dto.getLicensePlate(),
+                dto.getFirstRegistrationDate(),
+                dto.getFirstRegistrationPlace(),
+                dto.getFirstLicensePlate(),
+                dto.getRegistrationIssueDate(),
+                dto.getRegistrationIssuePlace(),
+                dto.getFuelId(),
+                dto.getVehicleCategory(),
+                dto.getVehicleBodyType(),
+                dto.getColor(),
+                dto.getVehicleBrandType(),
+                dto.getRegistrationNumber(),
+                dto.getCommercialDescription(),
+                dto.getChassisNumber(),
+                dto.getProductionYear(),
+                dto.getMaxWeight(),
+                dto.getPayload(),
+                dto.getVehicleWeight(),
+                dto.getPowerWeightRatio(),
+                dto.getSeatCount(),
+                dto.getEngineDisplacement(),
+                dto.getMaxPower(),
+                dto.getEcoCharacteristics(),
+                dto.getCatalyst(),
+                dto.getEngineNumber()
+        );
     }
 
     public List<VehicleDTO> getAllVehicles() {
@@ -90,9 +97,14 @@ public class VehicleService {
                 .map(this::convertToDTO);
     }
 
-    public VehicleDTO saveVehicle(VehicleDTO vehicleDTO) {
+    public Long createVehicle(VehicleDTO vehicleDTO) {
         Vehicle vehicle = convertToEntity(vehicleDTO);
-        Vehicle savedVehicle = vehicleRepository.save(vehicle);
+        return vehicleRepository.create(vehicle);
+    }
+
+    public VehicleDTO updateVehicle(VehicleDTO vehicleDTO) {
+        Vehicle vehicle = convertToEntity(vehicleDTO);
+        Vehicle savedVehicle = vehicleRepository.update(vehicle);
         return convertToDTO(savedVehicle);
     }
 
