@@ -1,10 +1,11 @@
-package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
+package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.AuditableEntity;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.VehicleInsuranceType;
 
 import java.time.LocalDate;
 
-public class Registration extends AuditableEntity {
+public class RegistrationDTO extends AuditableEntity {
     private Long id;
     private String policyNumber;
     private VehicleInsuranceType insuranceType;
@@ -15,10 +16,10 @@ public class Registration extends AuditableEntity {
     private Long vehicleId;
     private Long insuranceCompanyId;
 
-    public Registration() {
+    public RegistrationDTO() {
     }
 
-    public Registration(
+    public RegistrationDTO(
             Long id,
             String policyNumber,
             VehicleInsuranceType insuranceType,

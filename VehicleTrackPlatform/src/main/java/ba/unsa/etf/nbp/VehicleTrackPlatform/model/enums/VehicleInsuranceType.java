@@ -33,4 +33,13 @@ public enum VehicleInsuranceType {
     public String getDisplayName() {
         return displayName;
     }
+
+    public static VehicleInsuranceType fromCode(int code) {
+        for (VehicleInsuranceType type : values()) {
+            if (type.code == code) {
+                return type;
+            }
+        }
+        throw new IllegalArgumentException("Unknown insurance type code: " + code);
+    }
 }
