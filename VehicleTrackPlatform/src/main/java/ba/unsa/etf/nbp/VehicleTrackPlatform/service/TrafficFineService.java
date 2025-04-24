@@ -19,38 +19,46 @@ public class TrafficFineService {
         this.trafficFineRepository = trafficFineRepository;
     }
 
-    private TrafficFineDTO convertToDTO(TrafficFine fine) {
-        TrafficFineDTO dto = new TrafficFineDTO();
-        dto.setId(fine.getId());
-        dto.setIssueDate(fine.getIssueDate());
-        dto.setPaymentDueDate(fine.getPaymentDueDate());
-        dto.setViolationDescription(fine.getViolationDescription());
-        dto.setViolationType(fine.getViolationType());
-        dto.setLocation(fine.getLocation());
-        dto.setPaymentStatus(fine.getPaymentStatus());
-        dto.setAmount(fine.getAmount());
-        dto.setVehicleId(fine.getVehicleId());
-        dto.setDriverId(fine.getDriverId());
+    private TrafficFineDTO convertToDTO(TrafficFine trafficFine) {
+        var dto = new TrafficFineDTO(
+                trafficFine.getId(),
+                trafficFine.getIssueDate(),
+                trafficFine.getPaymentDueDate(),
+                trafficFine.getViolationDescription(),
+                trafficFine.getViolationType(),
+                trafficFine.getLocation(),
+                trafficFine.getPaymentStatus(),
+                trafficFine.getAmount(),
+                trafficFine.getVehicleId(),
+                trafficFine.getDriverId()
+        );
+
+        dto.setCreatedAt(trafficFine.getCreatedAt());
+        dto.setCreatedBy(trafficFine.getCreatedBy());
+        dto.setModifiedAt(trafficFine.getModifiedAt());
+        dto.setModifiedBy(trafficFine.getModifiedBy());
+
         return dto;
     }
 
     private TrafficFine convertToEntity(TrafficFineDTO dto) {
-        TrafficFine fine = new TrafficFine();
-        fine.setId(dto.getId());
-        fine.setIssueDate(dto.getIssueDate());
-        fine.setPaymentDueDate(dto.getPaymentDueDate());
-        fine.setViolationDescription(dto.getViolationDescription());
-        fine.setViolationType(dto.getViolationType());
-        fine.setLocation(dto.getLocation());
-        fine.setPaymentStatus(dto.getPaymentStatus());
-        fine.setAmount(dto.getAmount());
-        fine.setVehicleId(dto.getVehicleId());
-        fine.setDriverId(dto.getDriverId());
-        return fine;
+        return new TrafficFine(
+                dto.getId(),
+                dto.getIssueDate(),
+                dto.getPaymentDueDate(),
+                dto.getViolationDescription(),
+                dto.getViolationType(),
+                dto.getLocation(),
+                dto.getPaymentStatus(),
+                dto.getAmount(),
+                dto.getVehicleId(),
+                dto.getDriverId()
+        );
     }
 
     public List<TrafficFineDTO> getAllTrafficFines() {
-        return trafficFineRepository.findAll().stream()
+        var fines = trafficFineRepository.findAll();
+        return fines.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -60,25 +68,18 @@ public class TrafficFineService {
                 .map(this::convertToDTO);
     }
 
-    public TrafficFineDTO saveTrafficFine(TrafficFineDTO trafficFineDTO) {
+    public Long createTrafficFine(TrafficFineDTO trafficFineDTO) {
         TrafficFine fine = convertToEntity(trafficFineDTO);
-        TrafficFine savedFine = trafficFineRepository.save(fine);
+        return trafficFineRepository.create(fine);
+    }
+
+    public TrafficFineDTO updateTrafficFine(TrafficFineDTO trafficFineDTO) {
+        TrafficFine fine = convertToEntity(trafficFineDTO);
+        TrafficFine savedFine = trafficFineRepository.update(fine);
         return convertToDTO(savedFine);
     }
 
     public void deleteTrafficFine(Long id) {
         trafficFineRepository.deleteById(id);
-    }
-
-    public List<TrafficFineDTO> getFinesByDriver(Long driverId) {
-        return trafficFineRepository.findByDriverId(driverId).stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-    }
-
-    public List<TrafficFineDTO> getFinesByVehicle(Long vehicleId) {
-        return trafficFineRepository.findByVehicleId(vehicleId).stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
     }
 }

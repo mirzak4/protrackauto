@@ -1,11 +1,12 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.AuditableEntity;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.PaymentStatus;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.ViolationType;
 
 import java.time.LocalDate;
 
-public class TrafficFineDTO {
+public class TrafficFineDTO extends AuditableEntity {
     private Long id;
     private LocalDate issueDate;
     private LocalDate paymentDueDate;
@@ -20,7 +21,17 @@ public class TrafficFineDTO {
     public TrafficFineDTO() {
     }
 
-    public TrafficFineDTO(Long id, LocalDate issueDate, LocalDate paymentDueDate, String violationDescription, ViolationType violationType, String location, PaymentStatus paymentStatus, Double amount, Long vehicleId, Long driverId) {
+    public TrafficFineDTO(
+            Long id,
+            LocalDate issueDate,
+            LocalDate paymentDueDate,
+            String violationDescription,
+            ViolationType violationType,
+            String location,
+            PaymentStatus paymentStatus,
+            Double amount,
+            Long vehicleId,
+            Long driverId) {
         this.id = id;
         this.issueDate = issueDate;
         this.paymentDueDate = paymentDueDate;

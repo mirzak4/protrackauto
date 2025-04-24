@@ -20,7 +20,17 @@ public class TrafficFine extends AuditableEntity {
     public TrafficFine() {
     }
 
-    public TrafficFine(Long id, LocalDate issueDate, LocalDate paymentDueDate, String violationDescription, ViolationType violationType, String location, PaymentStatus paymentStatus, Double amount, Long vehicleId, Long driverId) {
+    public TrafficFine(
+            Long id,
+            LocalDate issueDate,
+            LocalDate paymentDueDate,
+            String violationDescription,
+            ViolationType violationType,
+            String location,
+            PaymentStatus paymentStatus,
+            Double amount,
+            Long vehicleId,
+            Long driverId) {
         this.id = id;
         this.issueDate = issueDate;
         this.paymentDueDate = paymentDueDate;
