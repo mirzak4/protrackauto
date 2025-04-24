@@ -1,44 +1,43 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
-import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.DriverStatus;
-
+import java.time.Instant;
 import java.time.LocalDate;
 
-public class Driver extends AuditableEntity {
+public class Driver {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private LocalDate birthDate;
+    private Long userId;
     private String licenseNumber;
     private LocalDate licenseExpiry;
-    private String address;
-    private String phoneNumber;
-    private String email;
     private LocalDate employmentDate;
 
-    public Driver() {
+    private User user;
+
+    public Driver(
+            Long id,
+            User user,
+            String licenseNumber,
+            LocalDate licenseExpiry,
+            LocalDate employmentDate) {
+        this.id = id;
+
+        this.user = user;
+        this.userId = user.getId();
+
+        this.licenseNumber = licenseNumber;
+        this.licenseExpiry = licenseExpiry;
+        this.employmentDate = employmentDate;
     }
 
     public Driver(
             Long id,
-            String firstName,
-            String lastName,
-            LocalDate birthDate,
+            Long userId,
             String licenseNumber,
             LocalDate licenseExpiry,
-            String address,
-            String phoneNumber,
-            String email,
             LocalDate employmentDate) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
+        this.userId = userId;
         this.licenseNumber = licenseNumber;
         this.licenseExpiry = licenseExpiry;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
         this.employmentDate = employmentDate;
     }
 
@@ -48,30 +47,6 @@ public class Driver extends AuditableEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
     }
 
     public String getLicenseNumber() {
@@ -90,29 +65,6 @@ public class Driver extends AuditableEntity {
         this.licenseExpiry = licenseExpiry;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public LocalDate getEmploymentDate() {
         return employmentDate;
@@ -120,5 +72,21 @@ public class Driver extends AuditableEntity {
 
     public void setEmploymentDate(LocalDate employmentDate) {
         this.employmentDate = employmentDate;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

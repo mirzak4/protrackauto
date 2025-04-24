@@ -18,9 +18,13 @@ import java.util.Comparator;
 @Component
 public class SeedRunner implements ApplicationRunner {
 
-    @Value("${app.resources.seed.seed-dir}")
-    private String seedScriptsDir;
+    @Value("${app.resources.database}")
+    private String dbResourceUrl;
     private final DataSource dataSource;
+
+    private String getSeedScriptsUrl() {
+        return dbResourceUrl + "/scripts";
+    }
 
     public SeedRunner(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -29,12 +33,13 @@ public class SeedRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        String seedScriptsUrl = this.getSeedScriptsUrl();
 
         // Pattern to match all .sql files in the folder
-        Resource[] resources = resolver.getResources("classpath*:" + seedScriptsDir + "/*.sql");
+        Resource[] resources = resolver.getResources("classpath*:" + seedScriptsUrl + "/*.sql");
 
         if (resources.length == 0) {
-            throw new RuntimeException("No SQL files found in classpath:" + seedScriptsDir);
+            throw new RuntimeException("No SQL scripts found in classpath:" + seedScriptsUrl);
         }
 
         try (Connection conn = dataSource.getConnection()) {
