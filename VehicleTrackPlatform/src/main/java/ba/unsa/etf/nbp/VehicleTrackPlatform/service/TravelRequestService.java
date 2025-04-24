@@ -2,6 +2,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.service;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.TravelRequestDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.TravelRequest;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.TravelRequestStatus;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.TravelRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class TravelRequestService {
-
     private final TravelRequestRepository travelRequestRepository;
 
     @Autowired
@@ -20,38 +20,47 @@ public class TravelRequestService {
         this.travelRequestRepository = travelRequestRepository;
     }
 
-    private TravelRequestDTO convertToDTO(TravelRequest request) {
-        TravelRequestDTO dto = new TravelRequestDTO();
-        dto.setId(request.getId());
-        dto.setApprovedBy(request.getApprovedBy());
-        dto.setApprovalDate(request.getApprovalDate());
-        dto.setDepartureLocation(request.getDepartureLocation());
-        dto.setDestination(request.getDestination());
-        dto.setStartDate(request.getStartDate());
-        dto.setEndDate(request.getEndDate());
-        dto.setRequestStatus(request.getRequestStatus());
-        dto.setVehicleId(request.getVehicleId());
-        dto.setDriverId(request.getDriverId());
+    private TravelRequestDTO convertToDTO(TravelRequest travelRequest) {
+        var dto = new TravelRequestDTO(
+                travelRequest.getId(),
+                travelRequest.getApprovedBy(),
+                travelRequest.getApprovalDate(),
+                travelRequest.getDepartureLocation(),
+                travelRequest.getDestination(),
+                travelRequest.getStartDate(),
+                travelRequest.getEndDate(),
+                travelRequest.getRequestStatus(),
+                travelRequest.getVehicleId(),
+                travelRequest.getDriverId()
+        );
+
+        dto.setCreatedAt(travelRequest.getCreatedAt());
+        dto.setCreatedBy(travelRequest.getCreatedBy());
+        dto.setModifiedAt(travelRequest.getModifiedAt());
+        dto.setModifiedBy(travelRequest.getModifiedBy());
+
         return dto;
     }
 
     private TravelRequest convertToEntity(TravelRequestDTO dto) {
-        TravelRequest request = new TravelRequest();
-        request.setId(dto.getId());
-        request.setApprovedBy(dto.getApprovedBy());
-        request.setApprovalDate(dto.getApprovalDate());
-        request.setDepartureLocation(dto.getDepartureLocation());
-        request.setDestination(dto.getDestination());
-        request.setStartDate(dto.getStartDate());
-        request.setEndDate(dto.getEndDate());
-        request.setRequestStatus(dto.getRequestStatus());
-        request.setVehicleId(dto.getVehicleId());
-        request.setDriverId(dto.getDriverId());
-        return request;
+        return new TravelRequest(
+                dto.getId(),
+                dto.getApprovedBy(),
+                dto.getApprovalDate(),
+                dto.getDepartureLocation(),
+                dto.getDestination(),
+                dto.getStartDate(),
+                dto.getEndDate(),
+                dto.getRequestStatus(),
+                dto.getVehicleId(),
+                dto.getDriverId()
+        );
     }
 
     public List<TravelRequestDTO> getAllTravelRequests() {
-        return travelRequestRepository.findAll().stream()
+        var travelRequests = travelRequestRepository.findAll();
+
+        return travelRequests.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -61,10 +70,15 @@ public class TravelRequestService {
                 .map(this::convertToDTO);
     }
 
-    public TravelRequestDTO saveTravelRequest(TravelRequestDTO travelRequestDTO) {
-        TravelRequest request = convertToEntity(travelRequestDTO);
-        TravelRequest savedRequest = travelRequestRepository.save(request);
-        return convertToDTO(savedRequest);
+    public Long createTravelRequest(TravelRequestDTO travelRequestDTO) {
+        TravelRequest travelRequest = convertToEntity(travelRequestDTO);
+        return travelRequestRepository.create(travelRequest);
+    }
+
+    public TravelRequestDTO updateTravelRequest(TravelRequestDTO travelRequestDTO) {
+        TravelRequest travelRequest = convertToEntity(travelRequestDTO);
+        TravelRequest savedTravelRequest = travelRequestRepository.update(travelRequest);
+        return convertToDTO(savedTravelRequest);
     }
 
     public void deleteTravelRequest(Long id) {

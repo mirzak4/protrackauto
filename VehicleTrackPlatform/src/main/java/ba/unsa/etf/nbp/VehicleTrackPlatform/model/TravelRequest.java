@@ -12,14 +12,24 @@ public class TravelRequest extends AuditableEntity {
     private String destination;
     private LocalDate startDate;
     private LocalDate endDate;
-    private TravelRequestStatus travelRequestStatus;
+    private TravelRequestStatus requestStatus;
     private Long vehicleId;
     private Long driverId;
 
     public TravelRequest() {
     }
 
-    public TravelRequest(Long id, String approvedBy, LocalDate approvalDate, String departureLocation, String destination, LocalDate startDate, LocalDate endDate, TravelRequestStatus travelRequestStatus, Long vehicleId, Long driverId) {
+    public TravelRequest(
+            Long id,
+            String approvedBy,
+            LocalDate approvalDate,
+            String departureLocation,
+            String destination,
+            LocalDate startDate,
+            LocalDate endDate,
+            TravelRequestStatus requestStatus,
+            Long vehicleId,
+            Long driverId) {
         this.id = id;
         this.approvedBy = approvedBy;
         this.approvalDate = approvalDate;
@@ -27,7 +37,7 @@ public class TravelRequest extends AuditableEntity {
         this.destination = destination;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.travelRequestStatus = travelRequestStatus;
+        this.requestStatus = requestStatus;
         this.vehicleId = vehicleId;
         this.driverId = driverId;
     }
@@ -89,11 +99,11 @@ public class TravelRequest extends AuditableEntity {
     }
 
     public TravelRequestStatus getRequestStatus() {
-        return travelRequestStatus;
+        return requestStatus;
     }
 
-    public void setRequestStatus(TravelRequestStatus travelRequestStatus) {
-        this.travelRequestStatus = travelRequestStatus;
+    public void setRequestStatus(TravelRequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
     }
 
     public Long getVehicleId() {

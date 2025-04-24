@@ -1,10 +1,11 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.AuditableEntity;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.TravelRequestStatus;
 
 import java.time.LocalDate;
 
-public class TravelRequestDTO {
+public class TravelRequestDTO extends AuditableEntity {
     private Long id;
     private String approvedBy;
     private LocalDate approvalDate;
@@ -12,14 +13,24 @@ public class TravelRequestDTO {
     private String destination;
     private LocalDate startDate;
     private LocalDate endDate;
-    private TravelRequestStatus travelRequestStatus;
+    private TravelRequestStatus requestStatus;
     private Long vehicleId;
     private Long driverId;
 
     public TravelRequestDTO() {
     }
 
-    public TravelRequestDTO(Long id, String approvedBy, LocalDate approvalDate, String departureLocation, String destination, LocalDate startDate, LocalDate endDate, TravelRequestStatus travelRequestStatus, Long vehicleId, Long driverId) {
+    public TravelRequestDTO(
+            Long id,
+            String approvedBy,
+            LocalDate approvalDate,
+            String departureLocation,
+            String destination,
+            LocalDate startDate,
+            LocalDate endDate,
+            TravelRequestStatus requestStatus,
+            Long vehicleId,
+            Long driverId) {
         this.id = id;
         this.approvedBy = approvedBy;
         this.approvalDate = approvalDate;
@@ -27,7 +38,7 @@ public class TravelRequestDTO {
         this.destination = destination;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.travelRequestStatus = travelRequestStatus;
+        this.requestStatus = requestStatus;
         this.vehicleId = vehicleId;
         this.driverId = driverId;
     }
@@ -89,11 +100,11 @@ public class TravelRequestDTO {
     }
 
     public TravelRequestStatus getRequestStatus() {
-        return travelRequestStatus;
+        return requestStatus;
     }
 
-    public void setRequestStatus(TravelRequestStatus travelRequestStatus) {
-        this.travelRequestStatus = travelRequestStatus;
+    public void setRequestStatus(TravelRequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
     }
 
     public Long getVehicleId() {
