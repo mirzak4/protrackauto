@@ -31,7 +31,7 @@ public class RefuelRepository {
         public Refuel mapRow(ResultSet rs, int rowNum) throws SQLException {
             Refuel refuel = new Refuel(
                     rs.getLong("ID"),
-                    rs.getString("FISCAL_RECEIPT_NUMBER"),
+                    rs.getInt("FISCAL_RECEIPT_NUMBER"),
                     rs.getDate("REFUEL_DATE").toLocalDate(),
                     rs.getDouble("QUANTITY"),
                     rs.getDouble("TOTAL_CHARGE_AMOUNT"),
@@ -64,7 +64,7 @@ public class RefuelRepository {
             String sql = "INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID) " +
                     "VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"ID"});
-            ps.setString(1, refuel.getFiscalReceiptNumber());
+            ps.setInt(1, refuel.getFiscalReceiptNumber());
             ps.setDate(2, Date.valueOf(refuel.getRefuelDate()));
             ps.setDouble(3, refuel.getQuantity());
             ps.setDouble(4, refuel.getTotalChargeAmount());

@@ -6,7 +6,7 @@ import java.time.LocalDate;
 
 public class RefuelDTO extends AuditableEntity {
     private Long id;
-    private String fiscalReceiptNumber;
+    private Integer fiscalReceiptNumber;
     private LocalDate refuelDate;
     private Double quantity;
     private Double totalChargeAmount;
@@ -18,7 +18,7 @@ public class RefuelDTO extends AuditableEntity {
 
     public RefuelDTO(
             Long id,
-            String fiscalReceiptNumber,
+            Integer fiscalReceiptNumber,
             LocalDate refuelDate,
             Double quantity,
             Double totalChargeAmount,
@@ -41,11 +41,11 @@ public class RefuelDTO extends AuditableEntity {
         this.id = id;
     }
 
-    public String getFiscalReceiptNumber() {
+    public Integer getFiscalReceiptNumber() {
         return fiscalReceiptNumber;
     }
 
-    public void setFiscalReceiptNumber(String fiscalReceiptNumber) {
+    public void setFiscalReceiptNumber(Integer fiscalReceiptNumber) {
         this.fiscalReceiptNumber = fiscalReceiptNumber;
     }
 
