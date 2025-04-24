@@ -1,18 +1,20 @@
-package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
+package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
+
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.AuditableEntity;
 
 import java.time.LocalDate;
 
-public class FuelPrice extends AuditableEntity {
+public class FuelPriceDTO extends AuditableEntity {
     private Long id;
     private Double price;
     private LocalDate issueDate;
     private Long fuelId;
     private Long gasStationId;
 
-    public FuelPrice() {
+    public FuelPriceDTO() {
     }
 
-    public FuelPrice(Long id, Double price, LocalDate issueDate, Long fuelId, Long gasStationId) {
+    public FuelPriceDTO(Long id, Double price, LocalDate issueDate, Long fuelId, Long gasStationId) {
         this.id = id;
         this.price = price;
         this.issueDate = issueDate;
