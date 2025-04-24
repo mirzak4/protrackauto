@@ -1,11 +1,16 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.repository;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Refuel;
+import io.micrometer.common.lang.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -22,17 +27,23 @@ public class RefuelRepository {
 
     private static final class RefuelRowMapper implements RowMapper<Refuel> {
         @Override
+        @NonNull
         public Refuel mapRow(ResultSet rs, int rowNum) throws SQLException {
-            Refuel refuel = new Refuel();
-            refuel.setId(rs.getLong("ID"));
-            refuel.setFiscalReceiptNumber(rs.getString("FISCAL_RECEIPT_NUMBER"));
-            refuel.setRefuelDate(rs.getDate("REFUEL_DATE").toLocalDate());
-            refuel.setQuantity(rs.getDouble("QUANTITY"));
-            refuel.setPricePerLiter(rs.getDouble("PRICE_PER_LITER"));
-            refuel.setMileage(rs.getDouble("MILEAGE"));
-            refuel.setFuelTypeId(rs.getLong("FUEL_TYPE_ID"));
-            refuel.setStationId(rs.getLong("STATION_ID"));
-            refuel.setVehicleId(rs.getLong("VEHICLE_ID"));
+            Refuel refuel = new Refuel(
+                    rs.getLong("ID"),
+                    rs.getString("FISCAL_RECEIPT_NUMBER"),
+                    rs.getDate("REFUEL_DATE").toLocalDate(),
+                    rs.getDouble("QUANTITY"),
+                    rs.getDouble("TOTAL_CHARGE_AMOUNT"),
+                    rs.getLong("GAS_STATION_ID"),
+                    rs.getLong("VEHICLE_ID")
+            );
+
+            refuel.setCreatedAt(rs.getTimestamp("CREATED_AT").toInstant());
+            refuel.setCreatedBy(rs.getString("CREATED_BY"));
+            refuel.setModifiedAt(rs.getTimestamp("MODIFIED_AT").toInstant());
+            refuel.setModifiedBy(rs.getString("MODIFIED_BY"));
+
             return refuel;
         }
     }
@@ -42,57 +53,44 @@ public class RefuelRepository {
     }
 
     public Optional<Refuel> findById(Long id) {
-        return jdbcTemplate.query("SELECT * FROM REFUEL WHERE ID = ?",
-                new RefuelRowMapper(), id).stream().findFirst();
+        return jdbcTemplate.query("SELECT * FROM REFUEL WHERE ID = ?", new RefuelRowMapper(), id)
+                .stream().findFirst();
     }
 
-    public Refuel save(Refuel refuel) {
-        if (refuel.getId() == null) {
-            Long id = jdbcTemplate.queryForObject(
-                    "INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, " +
-                            "PRICE_PER_LITER, MILEAGE, FUEL_TYPE_ID, STATION_ID, VEHICLE_ID) " +
-                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING ID",
-                    Long.class,
-                    refuel.getFiscalReceiptNumber(),
-                    refuel.getRefuelDate(),
-                    refuel.getQuantity(),
-                    refuel.getPricePerLiter(),
-                    refuel.getMileage(),
-                    refuel.getFuelTypeId(),
-                    refuel.getStationId(),
-                    refuel.getVehicleId());
-            refuel.setId(id);
-        } else {
-            jdbcTemplate.update(
-                    "UPDATE REFUEL SET FISCAL_RECEIPT_NUMBER = ?, REFUEL_DATE = ?, " +
-                            "QUANTITY = ?, PRICE_PER_LITER = ?, MILEAGE = ?, FUEL_TYPE_ID = ?, " +
-                            "STATION_ID = ?, VEHICLE_ID = ? WHERE ID = ?",
-                    refuel.getFiscalReceiptNumber(),
-                    refuel.getRefuelDate(),
-                    refuel.getQuantity(),
-                    refuel.getPricePerLiter(),
-                    refuel.getMileage(),
-                    refuel.getFuelTypeId(),
-                    refuel.getStationId(),
-                    refuel.getVehicleId(),
-                    refuel.getId());
-        }
+    public Long create(Refuel refuel) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(connection -> {
+            String sql = "INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = connection.prepareStatement(sql, new String[]{"ID"});
+            ps.setString(1, refuel.getFiscalReceiptNumber());
+            ps.setDate(2, Date.valueOf(refuel.getRefuelDate()));
+            ps.setDouble(3, refuel.getQuantity());
+            ps.setDouble(4, refuel.getTotalChargeAmount());
+            ps.setLong(5, refuel.getGasStationId());
+            ps.setLong(6, refuel.getVehicleId());
+            return ps;
+        }, keyHolder);
+
+        return keyHolder.getKey().longValue();
+    }
+
+    public Refuel update(Refuel refuel) {
+        jdbcTemplate.update(
+                "UPDATE REFUEL SET FISCAL_RECEIPT_NUMBER = ?, REFUEL_DATE = ?, QUANTITY = ?, TOTAL_CHARGE_AMOUNT = ?, GAS_STATION_ID = ?, VEHICLE_ID = ? WHERE ID = ?",
+                refuel.getFiscalReceiptNumber(),
+                Date.valueOf(refuel.getRefuelDate()),
+                refuel.getQuantity(),
+                refuel.getTotalChargeAmount(),
+                refuel.getGasStationId(),
+                refuel.getVehicleId(),
+                refuel.getId()
+        );
         return refuel;
     }
 
     public void deleteById(Long id) {
         jdbcTemplate.update("DELETE FROM REFUEL WHERE ID = ?", id);
-    }
-
-    public List<Refuel> findByVehicleId(Long vehicleId) {
-        return jdbcTemplate.query(
-                "SELECT * FROM REFUEL WHERE VEHICLE_ID = ? ORDER BY REFUEL_DATE DESC",
-                new RefuelRowMapper(), vehicleId);
-    }
-
-    public List<Refuel> findByStationId(Long stationId) {
-        return jdbcTemplate.query(
-                "SELECT * FROM REFUEL WHERE STATION_ID = ? ORDER BY REFUEL_DATE DESC",
-                new RefuelRowMapper(), stationId);
     }
 }

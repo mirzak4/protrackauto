@@ -7,24 +7,27 @@ public class Refuel extends AuditableEntity {
     private String fiscalReceiptNumber;
     private LocalDate refuelDate;
     private Double quantity;
-    private Double pricePerLiter;
-    private Double mileage;
-    private Long fuelTypeId;
-    private Long stationId;
+    private Double totalChargeAmount;
+    private Long gasStationId;
     private Long vehicleId;
 
     public Refuel() {
     }
 
-    public Refuel(Long id, String fiscalReceiptNumber, LocalDate refuelDate, Double quantity, Double pricePerLiter, Double mileage, Long fuelTypeId, Long stationId, Long vehicleId) {
+    public Refuel(
+            Long id,
+            String fiscalReceiptNumber,
+            LocalDate refuelDate,
+            Double quantity,
+            Double totalChargeAmount,
+            Long gasStationId,
+            Long vehicleId) {
         this.id = id;
         this.fiscalReceiptNumber = fiscalReceiptNumber;
         this.refuelDate = refuelDate;
         this.quantity = quantity;
-        this.pricePerLiter = pricePerLiter;
-        this.mileage = mileage;
-        this.fuelTypeId = fuelTypeId;
-        this.stationId = stationId;
+        this.totalChargeAmount = totalChargeAmount;
+        this.gasStationId = gasStationId;
         this.vehicleId = vehicleId;
     }
 
@@ -60,36 +63,20 @@ public class Refuel extends AuditableEntity {
         this.quantity = quantity;
     }
 
-    public Double getPricePerLiter() {
-        return pricePerLiter;
+    public Double getTotalChargeAmount() {
+        return totalChargeAmount;
     }
 
-    public void setPricePerLiter(Double pricePerLiter) {
-        this.pricePerLiter = pricePerLiter;
+    public void setTotalChargeAmount(Double totalChargeAmount) {
+        this.totalChargeAmount = totalChargeAmount;
     }
 
-    public Double getMileage() {
-        return mileage;
+    public Long getGasStationId() {
+        return gasStationId;
     }
 
-    public void setMileage(Double mileage) {
-        this.mileage = mileage;
-    }
-
-    public Long getFuelTypeId() {
-        return fuelTypeId;
-    }
-
-    public void setFuelTypeId(Long fuelTypeId) {
-        this.fuelTypeId = fuelTypeId;
-    }
-
-    public Long getStationId() {
-        return stationId;
-    }
-
-    public void setStationId(Long stationId) {
-        this.stationId = stationId;
+    public void setGasStationId(Long gasStationId) {
+        this.gasStationId = gasStationId;
     }
 
     public Long getVehicleId() {
