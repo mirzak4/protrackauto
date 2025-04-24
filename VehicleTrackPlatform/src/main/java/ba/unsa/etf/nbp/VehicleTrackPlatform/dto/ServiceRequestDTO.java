@@ -1,11 +1,12 @@
-package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
+package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.AuditableEntity;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.ServiceRequestStatus;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.ServiceType;
 
 import java.time.LocalDate;
 
-public class ServiceRequest extends AuditableEntity {
+public class ServiceRequestDTO extends AuditableEntity {
     private Long id;
     private ServiceType serviceType;
     private Integer fiscalReceiptNumber;
@@ -16,10 +17,10 @@ public class ServiceRequest extends AuditableEntity {
     private Long vehicleId;
     private Long servicerId;
 
-    public ServiceRequest() {
+    public ServiceRequestDTO() {
     }
 
-    public ServiceRequest(
+    public ServiceRequestDTO(
             Long id,
             ServiceType serviceType,
             Integer fiscalReceiptNumber,
