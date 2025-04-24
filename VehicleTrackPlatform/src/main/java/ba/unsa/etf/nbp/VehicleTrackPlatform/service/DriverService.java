@@ -20,39 +20,46 @@ public class DriverService {
     }
 
     private DriverDTO convertToDTO(Driver driver) {
-        DriverDTO dto = new DriverDTO();
-        dto.setId(driver.getId());
-        dto.setFirstName(driver.getFirstName());
-        dto.setLastName(driver.getLastName());
-        dto.setBirthDate(driver.getBirthDate());
-        dto.setLicenseNumber(driver.getLicenseNumber());
-        dto.setLicenseExpiry(driver.getLicenseExpiry());
-        dto.setAddress(driver.getAddress());
-        dto.setPhoneNumber(driver.getPhoneNumber());
-        dto.setEmail(driver.getEmail());
-        dto.setEmploymentDate(driver.getEmploymentDate());
-        dto.setDriverStatus(driver.getDriverStatus());
+        var dto = new DriverDTO(
+                driver.getId(),
+                driver.getFirstName(),
+                driver.getLastName(),
+                driver.getBirthDate(),
+                driver.getLicenseNumber(),
+                driver.getLicenseExpiry(),
+                driver.getAddress(),
+                driver.getPhoneNumber(),
+                driver.getEmail(),
+                driver.getEmploymentDate()
+        );
+
+        dto.setCreatedAt(driver.getCreatedAt());
+        dto.setCreatedBy(driver.getCreatedBy());
+        dto.setModifiedAt(driver.getModifiedAt());
+        dto.setModifiedBy(driver.getModifiedBy());
+
         return dto;
     }
 
     private Driver convertToEntity(DriverDTO dto) {
-        Driver driver = new Driver();
-        driver.setId(dto.getId());
-        driver.setFirstName(dto.getFirstName());
-        driver.setLastName(dto.getLastName());
-        driver.setBirthDate(dto.getBirthDate());
-        driver.setLicenseNumber(dto.getLicenseNumber());
-        driver.setLicenseExpiry(dto.getLicenseExpiry());
-        driver.setAddress(dto.getAddress());
-        driver.setPhoneNumber(dto.getPhoneNumber());
-        driver.setEmail(dto.getEmail());
-        driver.setEmploymentDate(dto.getEmploymentDate());
-        driver.setDriverStatus(dto.getDriverStatus());
-        return driver;
+        return new Driver(
+                dto.getId(),
+                dto.getFirstName(),
+                dto.getLastName(),
+                dto.getBirthDate(),
+                dto.getLicenseNumber(),
+                dto.getLicenseExpiry(),
+                dto.getAddress(),
+                dto.getPhoneNumber(),
+                dto.getEmail(),
+                dto.getEmploymentDate()
+        );
     }
 
     public List<DriverDTO> getAllDrivers() {
-        return driverRepository.findAll().stream()
+        var drivers = driverRepository.findAll();
+
+        return drivers.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
@@ -62,9 +69,14 @@ public class DriverService {
                 .map(this::convertToDTO);
     }
 
-    public DriverDTO saveDriver(DriverDTO driverDTO) {
+    public Long createDriver(DriverDTO driverDTO) {
         Driver driver = convertToEntity(driverDTO);
-        Driver savedDriver = driverRepository.save(driver);
+        return driverRepository.create(driver);
+    }
+
+    public DriverDTO updateDriver(DriverDTO driverDTO) {
+        Driver driver = convertToEntity(driverDTO);
+        Driver savedDriver = driverRepository.update(driver);
         return convertToDTO(savedDriver);
     }
 

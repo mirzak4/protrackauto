@@ -1,10 +1,11 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.AuditableEntity;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.DriverStatus;
 
 import java.time.LocalDate;
 
-public class DriverDTO {
+public class DriverDTO extends AuditableEntity {
     private Long id;
     private String firstName;
     private String lastName;
@@ -15,12 +16,21 @@ public class DriverDTO {
     private String phoneNumber;
     private String email;
     private LocalDate employmentDate;
-    private DriverStatus driverStatus;
 
     public DriverDTO() {
     }
 
-    public DriverDTO(Long id, String firstName, String lastName, LocalDate birthDate, String licenseNumber, LocalDate licenseExpiry, String address, String phoneNumber, String email, LocalDate employmentDate, DriverStatus driverStatus) {
+    public DriverDTO(
+            Long id,
+            String firstName,
+            String lastName,
+            LocalDate birthDate,
+            String licenseNumber,
+            LocalDate licenseExpiry,
+            String address,
+            String phoneNumber,
+            String email,
+            LocalDate employmentDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,7 +41,6 @@ public class DriverDTO {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.employmentDate = employmentDate;
-        this.driverStatus = driverStatus;
     }
 
     public Long getId() {
@@ -114,11 +123,4 @@ public class DriverDTO {
         this.employmentDate = employmentDate;
     }
 
-    public DriverStatus getDriverStatus() {
-        return driverStatus;
-    }
-
-    public void setDriverStatus(DriverStatus driverStatus) {
-        this.driverStatus = driverStatus;
-    }
 }

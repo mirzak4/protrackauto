@@ -15,12 +15,21 @@ public class Driver extends AuditableEntity {
     private String phoneNumber;
     private String email;
     private LocalDate employmentDate;
-    private DriverStatus driverStatus;
 
     public Driver() {
     }
 
-    public Driver(Long id, String firstName, String lastName, LocalDate birthDate, String licenseNumber, LocalDate licenseExpiry, String address, String phoneNumber, String email, LocalDate employmentDate, DriverStatus driverStatus) {
+    public Driver(
+            Long id,
+            String firstName,
+            String lastName,
+            LocalDate birthDate,
+            String licenseNumber,
+            LocalDate licenseExpiry,
+            String address,
+            String phoneNumber,
+            String email,
+            LocalDate employmentDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -31,7 +40,6 @@ public class Driver extends AuditableEntity {
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.employmentDate = employmentDate;
-        this.driverStatus = driverStatus;
     }
 
     public Long getId() {
@@ -112,13 +120,5 @@ public class Driver extends AuditableEntity {
 
     public void setEmploymentDate(LocalDate employmentDate) {
         this.employmentDate = employmentDate;
-    }
-
-    public DriverStatus getDriverStatus() {
-        return driverStatus;
-    }
-
-    public void setDriverStatus(DriverStatus driverStatus) {
-        this.driverStatus = driverStatus;
     }
 }
