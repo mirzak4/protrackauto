@@ -1,0 +1,54 @@
+BEGIN
+    DECLARE SCRIPT_ID RAW(16) := '339AF90AD661F89BE063143410ACC0C4';
+    BEGIN
+        DECLARE NOW DATE;
+        BEGIN
+            DECLARE EXEC_COUNT INT := 0;
+            BEGIN
+                SELECT COUNT(1) INTO EXEC_COUNT FROM SCRIPT_EXECUTION_HISTORY WHERE ID = SCRIPT_ID;
+                IF EXEC_COUNT = 0 THEN
+
+                    DECLARE
+                        V1 NUMBER; V2 NUMBER; V3 NUMBER; V4 NUMBER; V5 NUMBER;
+                        V6 NUMBER; V7 NUMBER; V8 NUMBER; V9 NUMBER; V10 NUMBER;
+                        D1 NUMBER; D2 NUMBER; D3 NUMBER; D4 NUMBER; D5 NUMBER;
+                    BEGIN
+                        SELECT ID INTO V1 FROM VEHICLE WHERE LICENSE_PLATE = 'BG222VV';
+                        SELECT ID INTO V2 FROM VEHICLE WHERE LICENSE_PLATE = 'BG333SS';
+                        SELECT ID INTO V3 FROM VEHICLE WHERE LICENSE_PLATE = 'BG444PP';
+                        SELECT ID INTO V4 FROM VEHICLE WHERE LICENSE_PLATE = 'BG555TT';
+                        SELECT ID INTO V5 FROM VEHICLE WHERE LICENSE_PLATE = 'BG666SS';
+
+                        SELECT D.ID INTO D1 FROM DRIVER D JOIN nbp.nbp_user U ON D.USER_ID = U.ID WHERE U.USERNAME = 'anezovic';
+                        SELECT D.ID INTO D2 FROM DRIVER D JOIN nbp.nbp_user U ON D.USER_ID = U.ID WHERE U.USERNAME = 'nmaric';
+
+                        INSERT INTO TRAFFIC_FINE (ISSUE_DATE, PAYMENT_DUE_DATE, VIOLATION_DESCRIPTION, VIOLATION_TYPE, LOCATION, PAYMENT_STATUS, AMOUNT, VEHICLE_ID, DRIVER_ID)
+                        VALUES (DATE '2025-04-01', DATE '2025-05-01', 'Prekoračenje brzine', 1, 'Sarajevo', 1, 150.0, V1, D1);
+
+                        INSERT INTO TRAFFIC_FINE (ISSUE_DATE, PAYMENT_DUE_DATE, VIOLATION_DESCRIPTION, VIOLATION_TYPE, LOCATION, PAYMENT_STATUS, AMOUNT, VEHICLE_ID, DRIVER_ID)
+                        VALUES (DATE '2025-04-05', DATE '2025-05-05', 'Nepoštivanje saobraćajnih propisa', 5, 'Mostar', 1, 100.0, V2, D2);
+
+                        INSERT INTO TRAFFIC_FINE (ISSUE_DATE, PAYMENT_DUE_DATE, VIOLATION_DESCRIPTION, VIOLATION_TYPE, LOCATION, PAYMENT_STATUS, AMOUNT, VEHICLE_ID, DRIVER_ID)
+                        VALUES (DATE '2025-04-10', DATE '2025-05-10', 'Nepropisno parkiranje', 3, 'Zenica', 2, 75.0, V3, D1);
+
+                        INSERT INTO TRAFFIC_FINE (ISSUE_DATE, PAYMENT_DUE_DATE, VIOLATION_DESCRIPTION, VIOLATION_TYPE, LOCATION, PAYMENT_STATUS, AMOUNT, VEHICLE_ID, DRIVER_ID)
+                        VALUES (DATE '2025-04-12', DATE '2025-05-12', 'Nema pojasa', 4, 'Tuzla', 1, 50.0, V4, D1);
+
+                        INSERT INTO TRAFFIC_FINE (ISSUE_DATE, PAYMENT_DUE_DATE, VIOLATION_DESCRIPTION, VIOLATION_TYPE, LOCATION, PAYMENT_STATUS, AMOUNT, VEHICLE_ID, DRIVER_ID)
+                        VALUES (DATE '2025-04-15', DATE '2025-05-15', 'Nepoštivanje saobraćajnih propisa', 5, 'Sarajevo', 2, 200.0, V5, D2);
+
+
+                        COMMIT;
+                    END;
+
+                    SELECT CAST(SYSTIMESTAMP AT TIME ZONE 'UTC' AS DATE) INTO NOW FROM DUAL;
+
+                    INSERT INTO SCRIPT_EXECUTION_HISTORY
+                    VALUES (SCRIPT_ID, 'traffic-fine-seed.sql', NOW);
+
+                    COMMIT;
+                END IF;
+            END;
+        END;
+    END;
+END;
