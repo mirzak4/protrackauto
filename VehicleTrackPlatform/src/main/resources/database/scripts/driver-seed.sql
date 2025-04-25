@@ -39,7 +39,7 @@ BEGIN
                     SELECT CAST(SYSTIMESTAMP AT TIME ZONE 'UTC' AS DATE) INTO NOW FROM DUAL;
 
                     INSERT INTO SCRIPT_EXECUTION_HISTORY
-                    VALUES (SCRIPT_ID, 'company-and-employee-seed.sql', NOW);
+                    VALUES (SCRIPT_ID, 'driver-seed.sql', NOW);
                     COMMIT;
                 END IF;
             END;

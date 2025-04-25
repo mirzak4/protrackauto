@@ -41,7 +41,7 @@ BEGIN
                     SELECT CAST(SYSTIMESTAMP AT TIME ZONE 'UTC' AS DATE) INTO NOW FROM DUAL;
 
                     INSERT INTO SCRIPT_EXECUTION_HISTORY
-                    VALUES (SCRIPT_ID, '0-role-seed.sql', NOW);
+                    VALUES (SCRIPT_ID, 'employee-seed.sql', NOW);
                     COMMIT;
                 END IF;
             END;
