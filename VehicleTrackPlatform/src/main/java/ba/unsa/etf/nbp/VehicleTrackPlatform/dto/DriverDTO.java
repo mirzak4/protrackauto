@@ -1,46 +1,43 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.dto;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.AuditableEntity;
-import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.DriverStatus;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 public class DriverDTO extends AuditableEntity {
     private Long id;
-    private String firstName;
-    private String lastName;
-    private LocalDate birthDate;
+    private Long userId;
     private String licenseNumber;
-    private LocalDate licenseExpiry;
-    private String address;
-    private String phoneNumber;
-    private String email;
-    private LocalDate employmentDate;
+    private Instant licenseExpiry;
+    private Instant employmentDate;
 
-    public DriverDTO() {
+    private UserDTO user;
+
+    public DriverDTO(){}
+
+    public DriverDTO(
+            Long id,
+            UserDTO user,
+            String licenseNumber,
+            Instant licenseExpiry) {
+        this.id = id;
+
+        this.user = user;
+        this.userId = user.getId();
+
+        this.licenseNumber = licenseNumber;
+        this.licenseExpiry = licenseExpiry;
     }
 
     public DriverDTO(
             Long id,
-            String firstName,
-            String lastName,
-            LocalDate birthDate,
+            Long userId,
             String licenseNumber,
-            LocalDate licenseExpiry,
-            String address,
-            String phoneNumber,
-            String email,
-            LocalDate employmentDate) {
+            Instant licenseExpiry) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthDate = birthDate;
+        this.userId = userId;
         this.licenseNumber = licenseNumber;
         this.licenseExpiry = licenseExpiry;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.employmentDate = employmentDate;
     }
 
     public Long getId() {
@@ -51,30 +48,6 @@ public class DriverDTO extends AuditableEntity {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDate getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
     public String getLicenseNumber() {
         return licenseNumber;
     }
@@ -83,44 +56,37 @@ public class DriverDTO extends AuditableEntity {
         this.licenseNumber = licenseNumber;
     }
 
-    public LocalDate getLicenseExpiry() {
+    public Instant getLicenseExpiry() {
         return licenseExpiry;
     }
 
-    public void setLicenseExpiry(LocalDate licenseExpiry) {
+    public void setLicenseExpiry(Instant licenseExpiry) {
         this.licenseExpiry = licenseExpiry;
     }
 
-    public String getAddress() {
-        return address;
-    }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public LocalDate getEmploymentDate() {
+    public Instant getEmploymentDate() {
         return employmentDate;
     }
 
-    public void setEmploymentDate(LocalDate employmentDate) {
+    public void setEmploymentDate(Instant employmentDate) {
         this.employmentDate = employmentDate;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
 }

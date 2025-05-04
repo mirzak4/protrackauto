@@ -1,14 +1,13 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
 import java.time.Instant;
-import java.time.LocalDate;
 
-public class Driver {
+public class Driver extends AuditableEntity {
     private Long id;
     private Long userId;
     private String licenseNumber;
-    private LocalDate licenseExpiry;
-    private LocalDate employmentDate;
+    private Instant licenseExpiry;
+    private Instant employmentDate;
 
     private User user;
 
@@ -16,8 +15,7 @@ public class Driver {
             Long id,
             User user,
             String licenseNumber,
-            LocalDate licenseExpiry,
-            LocalDate employmentDate) {
+            Instant licenseExpiry) {
         this.id = id;
 
         this.user = user;
@@ -25,20 +23,17 @@ public class Driver {
 
         this.licenseNumber = licenseNumber;
         this.licenseExpiry = licenseExpiry;
-        this.employmentDate = employmentDate;
     }
 
     public Driver(
             Long id,
             Long userId,
             String licenseNumber,
-            LocalDate licenseExpiry,
-            LocalDate employmentDate) {
+            Instant licenseExpiry) {
         this.id = id;
         this.userId = userId;
         this.licenseNumber = licenseNumber;
         this.licenseExpiry = licenseExpiry;
-        this.employmentDate = employmentDate;
     }
 
     public Long getId() {
@@ -57,20 +52,20 @@ public class Driver {
         this.licenseNumber = licenseNumber;
     }
 
-    public LocalDate getLicenseExpiry() {
+    public Instant getLicenseExpiry() {
         return licenseExpiry;
     }
 
-    public void setLicenseExpiry(LocalDate licenseExpiry) {
+    public void setLicenseExpiry(Instant licenseExpiry) {
         this.licenseExpiry = licenseExpiry;
     }
 
 
-    public LocalDate getEmploymentDate() {
+    public Instant getEmploymentDate() {
         return employmentDate;
     }
 
-    public void setEmploymentDate(LocalDate employmentDate) {
+    public void setEmploymentDate(Instant employmentDate) {
         this.employmentDate = employmentDate;
     }
 

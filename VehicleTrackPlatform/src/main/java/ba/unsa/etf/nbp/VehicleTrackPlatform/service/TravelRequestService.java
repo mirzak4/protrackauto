@@ -2,7 +2,6 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.service;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.TravelRequestDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.TravelRequest;
-import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.TravelRequestStatus;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.TravelRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

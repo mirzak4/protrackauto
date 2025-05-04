@@ -2,8 +2,6 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.CompanyType;
 
-import java.time.Instant;
-
 public class Company extends AuditableEntity {
     private Long id;
     private CompanyType companyType;

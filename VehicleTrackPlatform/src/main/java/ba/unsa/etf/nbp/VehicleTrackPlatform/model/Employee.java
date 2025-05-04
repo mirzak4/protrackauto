@@ -1,6 +1,6 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.model;
 
-public class Employee {
+public class Employee extends AuditableEntity {
     private Long id;
     private Long companyId;
     private Long userId;
