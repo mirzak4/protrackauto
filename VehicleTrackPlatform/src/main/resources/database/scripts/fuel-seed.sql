@@ -12,6 +12,16 @@ BEGIN
                     INSERT INTO FUEL (NAME) VALUES ('LPG');
                     INSERT INTO FUEL (NAME) VALUES ('CNG');
                     INSERT INTO FUEL (NAME) VALUES ('Electric');
+                    INSERT INTO FUEL (NAME) VALUES ('Hydrogen');
+                    INSERT INTO FUEL (NAME) VALUES ('Biodiesel');
+                    INSERT INTO FUEL (NAME) VALUES ('Ethanol');
+                    INSERT INTO FUEL (NAME) VALUES ('Methanol');
+                    INSERT INTO FUEL (NAME) VALUES ('Propane');
+                    INSERT INTO FUEL (NAME) VALUES ('Butane');
+                    INSERT INTO FUEL (NAME) VALUES ('Kerosene');
+                    INSERT INTO FUEL (NAME) VALUES ('NaturalGas');
+                    INSERT INTO FUEL (NAME) VALUES ('E85');
+                    INSERT INTO FUEL (NAME) VALUES ('Bioethanol');
 
                     COMMIT;
 
