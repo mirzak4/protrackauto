@@ -107,6 +107,81 @@ BEGIN
                         (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE = 'BG222VV'),
                         ELITE_ID
                     );
+
+                    -- f) Scheduled regular service at FixFast Garage
+                    INSERT INTO SERVICE_REQUEST (
+                        SERVICE_TYPE, FISCAL_RECEIPT_NUMBER, COST, STATUS,
+                        REQUEST_DATE, REQUESTED_BY, VEHICLE_ID, SERVICER_ID
+                    ) VALUES (
+                        1,
+                        3006,
+                        250.00,
+                        2,  -- SCHEDULED
+                        TO_DATE('2025-03-20','YYYY-MM-DD'),
+                        'Frank Scheduler',
+                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE = 'BG789TT'),
+                        FIXFAST_ID
+                    );
+
+                    -- g) Canceled technical inspection at Speedy Auto Services
+                    INSERT INTO SERVICE_REQUEST (
+                        SERVICE_TYPE, FISCAL_RECEIPT_NUMBER, COST, STATUS,
+                        REQUEST_DATE, REQUESTED_BY, VEHICLE_ID, SERVICER_ID
+                    ) VALUES (
+                        2,
+                        3007,
+                        160.00,
+                        6,  -- CANCELED
+                        TO_DATE('2025-03-21','YYYY-MM-DD'),
+                        'Gina Cancelled',
+                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE = 'BG456MM'),
+                        SPEEDY_ID
+                    );
+
+                    -- h) New request for technnical inspection at Elite Car Care
+                    INSERT INTO SERVICE_REQUEST (
+                        SERVICE_TYPE, FISCAL_RECEIPT_NUMBER, COST, STATUS,
+                        REQUEST_DATE, REQUESTED_BY, VEHICLE_ID, SERVICER_ID
+                    ) VALUES (
+                        2,
+                        3008,
+                        170.00,
+                        1,  -- REQUESTED
+                        TO_DATE('2025-03-22','YYYY-MM-DD'),
+                        'Hanna Requestor',
+                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE = 'BG123AA'),
+                        ELITE_ID
+                    );
+
+                    -- i) Service in progress for van at FixFast Garage
+                    INSERT INTO SERVICE_REQUEST (
+                        SERVICE_TYPE, FISCAL_RECEIPT_NUMBER, COST, STATUS,
+                        REQUEST_DATE, REQUESTED_BY, VEHICLE_ID, SERVICER_ID
+                    ) VALUES (
+                        1,
+                        3009,
+                        900.00,
+                        3,  -- IN_PROGRESS
+                        TO_DATE('2025-03-25','YYYY-MM-DD'),
+                        'John Vanman',
+                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE = 'BG111BB'),
+                        FIXFAST_ID
+                    );
+
+                    -- j) Completed regular service at Speedy Auto Services
+                    INSERT INTO SERVICE_REQUEST (
+                        SERVICE_TYPE, FISCAL_RECEIPT_NUMBER, COST, STATUS,
+                        REQUEST_DATE, REQUESTED_BY, VEHICLE_ID, SERVICER_ID
+                    ) VALUES (
+                        1,
+                        3010,
+                        320.00,
+                        5,  -- COMPLETED
+                        TO_DATE('2025-03-27','YYYY-MM-DD'),
+                        'Jenna Mechanic',
+                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE = 'BG333SS'),
+                        SPEEDY_ID
+                    );
                     COMMIT;
 
                     SELECT CAST(SYSTIMESTAMP AT TIME ZONE 'UTC' AS DATE) INTO NOW FROM DUAL;

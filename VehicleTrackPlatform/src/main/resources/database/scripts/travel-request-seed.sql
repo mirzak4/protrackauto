@@ -26,6 +26,8 @@ BEGIN
 
                         SELECT D.ID INTO D1 FROM DRIVER D JOIN nbp.nbp_user U ON D.USER_ID = U.ID WHERE U.USERNAME = 'anezovic';
                         SELECT D.ID INTO D2 FROM DRIVER D JOIN nbp.nbp_user U ON D.USER_ID = U.ID WHERE U.USERNAME = 'nmaric';
+                        SELECT D.ID INTO D3 FROM DRIVER D JOIN nbp.nbp_user U ON D.USER_ID = U.ID WHERE U.USERNAME = 'lkovac';
+                        SELECT D.ID INTO D4 FROM DRIVER D JOIN nbp.nbp_user U ON D.USER_ID = U.ID WHERE U.USERNAME = 'mpetrovic';
 
 
                         INSERT INTO TRAVEL_REQUEST
@@ -147,6 +149,30 @@ BEGIN
                            'Tuzla', 'Banja Luka',
                            DATE '2025-05-15', DATE '2025-05-17',
                            4, V10, D2);
+
+                        INSERT INTO TRAVEL_REQUEST
+                          (APPROVED_BY, APPROVAL_DATE,
+                           DEPARTURE_LOCATION, DESTINATION,
+                           START_DATE, END_DATE,
+                           REQUEST_STATUS,
+                           VEHICLE_ID, DRIVER_ID)
+                        VALUES
+                          ('Mgr One', DATE '2025-03-25',
+                           'Tuzla', 'Sarajevo',
+                           DATE '2025-05-20', DATE '2025-05-22',
+                           5, V1, D3);
+
+                        INSERT INTO TRAVEL_REQUEST
+                          (APPROVED_BY, APPROVAL_DATE,
+                           DEPARTURE_LOCATION, DESTINATION,
+                           START_DATE, END_DATE,
+                           REQUEST_STATUS,
+                           VEHICLE_ID, DRIVER_ID)
+                        VALUES
+                          ('Mgr Two', DATE '2025-03-26',
+                           'Mostar', 'Tuzla',
+                           DATE '2025-06-01', DATE '2025-06-03',
+                           6, V2, D4);
 
                         COMMIT;
                     END;
