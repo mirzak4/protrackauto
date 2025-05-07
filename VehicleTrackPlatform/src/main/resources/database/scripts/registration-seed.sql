@@ -66,6 +66,46 @@ BEGIN
                             'POL100005', 2, TO_DATE('2020-09-01', 'YYYY-MM-DD'), TO_DATE('2021-09-01', 'YYYY-MM-DD'), 700.00,
                             70.00, V_ID5, C_ID2
                         );
+
+                        INSERT INTO REGISTRATION (
+                            POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
+                            ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
+                        ) VALUES (
+                            'POL100006', 1, TO_DATE('2021-06-15', 'YYYY-MM-DD'), TO_DATE('2022-06-15', 'YYYY-MM-DD'), 520.00,
+                            35.00, V_ID1, C_ID2
+                        );
+
+                        INSERT INTO REGISTRATION (
+                            POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
+                            ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
+                        ) VALUES (
+                            'POL100007', 3, TO_DATE('2023-10-01', 'YYYY-MM-DD'), TO_DATE('2024-10-01', 'YYYY-MM-DD'), 330.00,
+                            25.00, V_ID2, C_ID1
+                        );
+
+                        INSERT INTO REGISTRATION (
+                            POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
+                            ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
+                        ) VALUES (
+                            'POL100008', 2, TO_DATE('2022-02-10', 'YYYY-MM-DD'), TO_DATE('2023-02-10', 'YYYY-MM-DD'), 410.00,
+                            20.00, V_ID3, C_ID2
+                        );
+
+                        INSERT INTO REGISTRATION (
+                            POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
+                            ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
+                        ) VALUES (
+                            'POL100009', 1, TO_DATE('2020-11-01', 'YYYY-MM-DD'), TO_DATE('2021-11-01', 'YYYY-MM-DD'), 580.00,
+                            60.00, V_ID4, C_ID1
+                        );
+
+                        INSERT INTO REGISTRATION (
+                            POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
+                            ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
+                        ) VALUES (
+                            'POL100010', 3, TO_DATE('2021-08-20', 'YYYY-MM-DD'), TO_DATE('2022-08-20', 'YYYY-MM-DD'), 295.00,
+                            18.00, V_ID5, C_ID3
+                        );
                         COMMIT;
 
                         SELECT CAST(SYSTIMESTAMP AT TIME ZONE 'UTC' AS DATE) INTO NOW FROM DUAL;

@@ -461,6 +461,7 @@ BEGIN
                         0.35, 1, 0.0, 0.0,
                         'Electric', 'No', 'MOTORHB025'
                     );
+
                     COMMIT;
 
                     SELECT CAST(SYSTIMESTAMP AT TIME ZONE 'UTC' AS DATE) INTO NOW FROM DUAL;
