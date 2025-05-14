@@ -17,7 +17,7 @@ BEGIN
                         DECLARE ANIDA_USER_ID INTEGER;
                         BEGIN
                             INSERT INTO nbp.nbp_user (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, USERNAME, PHONE_NUMBER, BIRTH_DATE, ROLE_ID)
-                            VALUES ('Anida', 'Nezovic', 'anezovic@nbp.com', 'pass_123', 'anezovic', '111-333', TO_DATE('2000-04-20', 'YYYY-MM-DD'), DRIVER_ROLE_ID)
+                            VALUES ('Anida', 'Nezovic', 'anezovic@nbp.com', '$2a$12$JhweS6xXjWMgmTcVcUDcpuPA4K8jKWCq651hrQvfxsS6/MuzJOaVq', 'anezovic', '111-333', TO_DATE('2000-04-20', 'YYYY-MM-DD'), DRIVER_ROLE_ID)
                             RETURNING ID INTO ANIDA_USER_ID;
 
                             INSERT INTO NBP04.DRIVER (USER_ID, LICENSE_NUMBER, LICENSE_EXPIRY)
@@ -27,7 +27,7 @@ BEGIN
                         DECLARE NADA_USER_ID INTEGER;
                         BEGIN
                             INSERT INTO nbp.nbp_user (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, USERNAME, PHONE_NUMBER, BIRTH_DATE, ROLE_ID)
-                            VALUES ('Nada', 'Maric', 'nmaric@nbp.com', 'pass_123', 'nmaric', '111-333', TO_DATE('2000-04-20', 'YYYY-MM-DD'), DRIVER_ROLE_ID)
+                            VALUES ('Nada', 'Maric', 'nmaric@nbp.com', '$2a$12$JhweS6xXjWMgmTcVcUDcpuPA4K8jKWCq651hrQvfxsS6/MuzJOaVq', 'nmaric', '111-333', TO_DATE('2000-04-20', 'YYYY-MM-DD'), DRIVER_ROLE_ID)
                             RETURNING ID INTO NADA_USER_ID;
 
                             INSERT INTO NBP04.DRIVER (USER_ID, LICENSE_NUMBER, LICENSE_EXPIRY)
