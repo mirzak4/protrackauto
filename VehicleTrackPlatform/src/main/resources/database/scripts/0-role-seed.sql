@@ -31,12 +31,16 @@ BEGIN
 
                     DECLARE DRIVER_ID INTEGER;
                     BEGIN
-                        -- Employee in Gas Station Company
+                        -- Driver
                         INSERT INTO nbp.nbp_role (NAME) VALUES
                             ('NBP04.DRIVER') RETURNING id INTO DRIVER_ID;
+                    END;
 
---                         INSERT INTO nbp.nbp_user (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, USERNAME, PHONE_NUMBER, BIRTH_DATE, ROLE_ID)
---                         VALUES ('Amina', 'Pandzic', 'apandzic@nbp.com', 'pass_123', 'apandzic', '111-333', TO_DATE('2000-04-20', 'YYYY-MM-DD'), STATION_MANAGER_ID);
+                    DECLARE ADMIN_ID INTEGER;
+                    BEGIN
+                        -- Driver
+                        INSERT INTO nbp.nbp_role (NAME) VALUES
+                            ('NBP04.ADMIN') RETURNING id INTO DRIVER_ID;
                     END;
 
                     SELECT CAST(SYSTIMESTAMP AT TIME ZONE 'UTC' AS DATE) INTO NOW FROM DUAL;
