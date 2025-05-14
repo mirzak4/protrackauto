@@ -20,6 +20,7 @@ public class DriverMapping {
         if (driver.getEmploymentDate() != null) {
             dto.setEmploymentDate(driver.getEmploymentDate());
         }
+
         dto.setCreatedAt(driver.getCreatedAt());
         dto.setCreatedBy(driver.getCreatedBy());
         dto.setModifiedAt(driver.getModifiedAt());
@@ -44,10 +45,6 @@ public class DriverMapping {
         if (dto.getEmploymentDate() != null) {
             driver.setEmploymentDate(dto.getEmploymentDate());
         }
-        driver.setCreatedAt(driver.getCreatedAt());
-        driver.setCreatedBy(driver.getCreatedBy());
-        driver.setModifiedAt(driver.getModifiedAt());
-        driver.setModifiedBy(driver.getModifiedBy());
 
         return driver;
     }
