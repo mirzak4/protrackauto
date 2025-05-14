@@ -235,6 +235,7 @@ BEGIN
                         'Euro 6', 'Yes', 'ENGBMW123456'
                     );
 
+                    -- Vehicle 13
                     INSERT INTO VEHICLE (
                         LICENSE_PLATE, FIRST_REGISTRATION_DATE, FIRST_REGISTRATION_PLACE,
                         FIRST_LICENSE_PLATE, REGISTRATION_ISSUE_DATE, REGISTRATION_ISSUE_PLACE,
@@ -367,7 +368,7 @@ BEGIN
                         'Euro 5', 'Yes', 'ENGTRI019'
                     );
 
-                    -- Vehicle 21 (SUV - SUV) - Hybrid
+                    -- Vehicle 20 (SUV - SUV) - Hybrid
                     INSERT INTO VEHICLE (
                         LICENSE_PLATE, FIRST_REGISTRATION_DATE, FIRST_REGISTRATION_PLACE,
                         FIRST_LICENSE_PLATE, REGISTRATION_ISSUE_DATE, REGISTRATION_ISSUE_PLACE,
@@ -386,7 +387,7 @@ BEGIN
                         'Euro 6', 'Yes', 'ENGTOY021'
                     );
 
-                    -- Vehicle 22 (Pickup - Pickup Truck) - American style
+                    -- Vehicle 21 (Pickup - Pickup Truck) - American style
                     INSERT INTO VEHICLE (
                         LICENSE_PLATE, FIRST_REGISTRATION_DATE, FIRST_REGISTRATION_PLACE,
                         FIRST_LICENSE_PLATE, REGISTRATION_ISSUE_DATE, REGISTRATION_ISSUE_PLACE,
@@ -405,7 +406,7 @@ BEGIN
                         'Euro 5', 'Yes', 'ENGFOR022'
                     );
 
-                    -- Vehicle 23 (Tractor - Truck) - Agricultural
+                    -- Vehicle 22 (Tractor - Truck) - Agricultural
                     INSERT INTO VEHICLE (
                         LICENSE_PLATE, FIRST_REGISTRATION_DATE, FIRST_REGISTRATION_PLACE,
                         FIRST_LICENSE_PLATE, REGISTRATION_ISSUE_DATE, REGISTRATION_ISSUE_PLACE,
@@ -424,7 +425,7 @@ BEGIN
                         'Euro 4', 'Yes', 'ENGFEN023'
                     );
 
-                    -- Vehicle 24 (Scooter - Motorcycle) - Electric
+                    -- Vehicle 23 (Scooter - Motorcycle) - Electric
                     INSERT INTO VEHICLE (
                         LICENSE_PLATE, FIRST_REGISTRATION_DATE, FIRST_REGISTRATION_PLACE,
                         FIRST_LICENSE_PLATE, REGISTRATION_ISSUE_DATE, REGISTRATION_ISSUE_PLACE,
@@ -443,7 +444,7 @@ BEGIN
                         'Electric', 'No', 'ENGNIU024'
                     );
 
-                    -- Vehicle 25 (Bicycle - Motorcycle) - Mountain e-bike
+                    -- Vehicle 24 (Bicycle - Motorcycle) - Mountain e-bike
                     INSERT INTO VEHICLE (
                         LICENSE_PLATE, FIRST_REGISTRATION_DATE, FIRST_REGISTRATION_PLACE,
                         FIRST_LICENSE_PLATE, REGISTRATION_ISSUE_DATE, REGISTRATION_ISSUE_PLACE,
@@ -461,6 +462,7 @@ BEGIN
                         0.35, 1, 0.0, 0.0,
                         'Electric', 'No', 'MOTORHB025'
                     );
+
                     COMMIT;
 
                     SELECT CAST(SYSTIMESTAMP AT TIME ZONE 'UTC' AS DATE) INTO NOW FROM DUAL;
