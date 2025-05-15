@@ -14,7 +14,8 @@ public class UserMapping {
                 user.getUsername(),
                 user.getPhoneNumber(),
                 user.getBirthDate(),
-                user.getRoleId()
+                user.getRoleId(),
+                user.isActive()
         );
     }
 

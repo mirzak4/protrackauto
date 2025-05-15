@@ -12,8 +12,9 @@ public class UserDTO {
     private String phoneNumber;
     private Instant birthDate;
     private Long roleId;
+    private boolean active;
 
-    public UserDTO(Long id, String firstName, String lastName, String email, String password, String username, String phoneNumber, Instant birthDate, Long roleId) {
+    public UserDTO(Long id, String firstName, String lastName, String email, String password, String username, String phoneNumber, Instant birthDate, Long roleId, boolean active) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,6 +24,7 @@ public class UserDTO {
         this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
         this.roleId = roleId;
+        this.active = active;
     }
 
 
@@ -96,6 +98,14 @@ public class UserDTO {
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
 

@@ -6,8 +6,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -40,6 +42,7 @@ public class DriverController {
             @ApiResponse(responseCode = "404", description = "Driver not found", content = @Content)
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.FIELD_TECHNICIAN)")
     public ResponseEntity<DriverDTO> getDriverById(@PathVariable Long id) {
         return driverService.getDriverById(id)
                 .map(ResponseEntity::ok)
@@ -52,7 +55,8 @@ public class DriverController {
             @ApiResponse(responseCode = "400", description = "Invalid driver payload supplied", content = @Content)
     })
     @PostMapping
-    public ResponseEntity<Long> createDriver(@RequestBody DriverDTO driverDTO) {
+    @PreAuthorize("hasAuthority(@roles.FIELD_TECHNICIAN)")
+    public ResponseEntity<Long> createDriver(@RequestBody DriverDTO driverDTO) throws MessagingException {
         Long driverId = driverService.createDriver(driverDTO);
         return ResponseEntity.created(URI.create("/api/driver/" + driverId))
                 .body(driverId);

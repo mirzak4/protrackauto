@@ -22,29 +22,35 @@ import java.util.Optional;
 @Repository
 public class DriverRepository {
     private final JdbcTemplate jdbcTemplate;
+    private final UserRepository userRepository;
     private final String driverQuerySql = """
-                            SELECT
-                d.ID,
-                d.USER_ID,
-                d.LICENSE_NUMBER,
-                d.LICENSE_EXPIRY,
-                d.EMPLOYMENT_DATE,
-                d.CREATED_AT,
-                d.CREATED_BY,
-                d.MODIFIED_AT,
-                d.MODIFIED_BY,
-                u.FIRST_NAME,
-                u.LAST_NAME,
-                u.EMAIL,
-                u.USERNAME,
-                u.PHONE_NUMBER,
-                u.BIRTH_DATE
-                   FROM DRIVER d INNER JOIN NBP.NBP_USER u ON d.USER_ID=u.ID
+                SELECT
+                    d.ID,
+                    d.USER_ID,
+                    d.LICENSE_NUMBER,
+                    d.LICENSE_EXPIRY,
+                    d.EMPLOYMENT_DATE,
+                    d.CREATED_AT,
+                    d.CREATED_BY,
+                    d.MODIFIED_AT,
+                    d.MODIFIED_BY,
+                    u.FIRST_NAME,
+                    u.LAST_NAME,
+                    u.EMAIL,
+                    u.USERNAME,
+                    u.PHONE_NUMBER,
+                    u.BIRTH_DATE,
+                    ai.ACTIVE,
+                    ai.LAST_VERIFICATION_CODE
+               FROM DRIVER d
+               INNER JOIN NBP.NBP_USER u ON d.USER_ID=u.ID
+               INNER JOIN ACCOUNT_INFO ai ON ai.USER_ID=u.ID
             """;
 
     @Autowired
-    public DriverRepository(JdbcTemplate jdbcTemplate) {
+    public DriverRepository(JdbcTemplate jdbcTemplate, UserRepository userRepository) {
         this.jdbcTemplate = jdbcTemplate;
+        this.userRepository = userRepository;
     }
 
     private static final class DriverRowMapper implements RowMapper<Driver> {
@@ -62,6 +68,9 @@ public class DriverRepository {
                     null,
                     null
             );
+            driverUser.setActive(rs.getString("ACTIVE").equals("1"));
+            driverUser.setLastVerificationCode(rs.getString("LAST_VERIFICATION_CODE"));
+
             var driver = new Driver(
                     rs.getLong("ID"),
                     driverUser,
@@ -96,7 +105,7 @@ public class DriverRepository {
 
     @Transactional
     public Long create(Driver driver) {
-        var userId = insertUser(driver.getUser());
+        var userId = this.userRepository.insertUser(driver.getUser());
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -117,7 +126,7 @@ public class DriverRepository {
 
     @Transactional
     public Driver update(Driver driver) {
-        updateUser(driver.getUser());
+        this.userRepository.updateUser(driver.getUser());
 
         jdbcTemplate.update(
                 "UPDATE DRIVER SET LICENSE_NUMBER = ?, LICENSE_EXPIRY = ?, " +
@@ -130,44 +139,6 @@ public class DriverRepository {
         );
 
         return driver;
-    }
-
-    private void updateUser(User user) {
-        jdbcTemplate.update(
-                "UPDATE NBP.NBP_USER SET FIRST_NAME = ?, LAST_NAME = ?, " +
-                        "EMAIL = ?, PASSWORD = ?, USERNAME = ?, PHONE_NUMBER = ?, BIRTH_DATE = ? " +
-                        "WHERE ID = ?",
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getUsername(),
-                user.getPhoneNumber(),
-                Timestamp.from(user.getBirthDate()),
-                user.getId()
-        );
-    }
-
-    private Long insertUser(User user) {
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-
-        jdbcTemplate.update(connection -> {
-            String userSql = "INSERT INTO NBP.NBP_USER (FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, USERNAME, PHONE_NUMBER, BIRTH_DATE, ROLE_ID)" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-            PreparedStatement ps = connection.prepareStatement(userSql, new String[] {"ID"});
-            ps.setString(1, user.getFirstName());
-            ps.setString(2, user.getLastName());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPassword());
-            ps.setString(5, user.getUsername());
-            ps.setString(6, user.getPhoneNumber());
-            ps.setTimestamp(7, Timestamp.from(user.getBirthDate()));
-            ps.setLong(8, user.getRoleId());
-            return ps;
-        }, keyHolder);
-
-        return keyHolder.getKey().longValue();
     }
 
     public void deleteByUserId(Long userId) {

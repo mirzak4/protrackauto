@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -31,6 +32,7 @@ public class CompanyController {
             @ApiResponse(responseCode = "400", description = "Invalid company type supplied", content = @Content),
     })
     @GetMapping
+    @PreAuthorize("hasAnyAuthority(@roles.ADMIN, @roles.CLAIMS_ADJUSTER, @roles.FIELD_TECHNICIAN, @roles.STATION_MANAGER)")
     public List<CompanyDTO> getAllCompanies(@RequestParam CompanyType companyType) {
         return companyService.getAllCompanies(companyType);
     }

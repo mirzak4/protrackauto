@@ -88,5 +88,4 @@ public class DriverDTO extends AuditableEntity {
     public void setUser(UserDTO user) {
         this.user = user;
     }
-
 }
