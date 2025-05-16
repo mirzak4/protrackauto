@@ -1,9 +1,31 @@
 import { Routes } from '@angular/router';
 import { CompaniesListComponent } from './pages/companies/companies-list.component';
 import { CompanyFormComponent } from './pages/companies/company-form.component';
+import { HomeComponent } from './pages/home/home.component';
+import { VehiclesComponent } from './pages/vehicles/vehicles.component';
+import { DriversComponent } from './pages/drivers/drivers.component';
+import { ServicesComponent } from './pages/services/services.component';
+import { FuelComponent } from './pages/fuel/fuel.component';
+import { InsuranceComponent } from './pages/insurance/insurance.component';
+import { FinesComponent } from './pages/fines/fines.component';
+import { InspectionsComponent } from './pages/inspections/inspections.component';
+import { TravelRequestsComponent } from './pages/travel-requests/travel-requests.component';
+import { ServiceRequestsComponent } from './pages/service-requests/service-requests.component';
+import { AccountComponent } from './pages/account/account.component';
 
 export const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'companies', component: CompaniesListComponent },
   { path: 'companies/new', component: CompanyFormComponent },
   { path: 'companies/:id', component: CompanyFormComponent },
+  { path: 'vehicles', component: VehiclesComponent },
+  { path: 'drivers', component: DriversComponent },
+  { path: 'services', component: ServicesComponent },
+  { path: 'fuel', component: FuelComponent },
+  { path: 'insurance', component: InsuranceComponent },
+  { path: 'fines', component: FinesComponent },
+  { path: 'inspections', component: InspectionsComponent },
+  { path: 'travel-requests', component: TravelRequestsComponent },
+  { path: 'service-requests', component: ServiceRequestsComponent },
+  { path: 'account', component: AccountComponent }
 ];
