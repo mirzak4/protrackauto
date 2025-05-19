@@ -68,6 +68,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "Employee not found", content = @Content)
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDTO employeeDTO) {
         employeeDTO.setId(id);
         return ResponseEntity.ok(employeeService.updateEmployee(employeeDTO));
@@ -80,6 +81,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "404", description = "Employee not found", content = @Content)
     })
     @DeleteMapping("/{userId}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long userId) {
         employeeService.deleteEmployee(userId);
         return ResponseEntity.noContent().build();

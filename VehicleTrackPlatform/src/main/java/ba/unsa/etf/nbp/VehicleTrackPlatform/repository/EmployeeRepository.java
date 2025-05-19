@@ -4,6 +4,7 @@ import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Company;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Driver;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Employee;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.User;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.CompanyType;
 import io.micrometer.common.lang.NonNull;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -41,10 +42,17 @@ public class EmployeeRepository {
                     u.PHONE_NUMBER,
                     u.BIRTH_DATE,
                     ai.ACTIVE,
-                    ai.LAST_VERIFICATION_CODE
+                    ai.LAST_VERIFICATION_CODE,
+                    c.COMPANY_TYPE,
+                    c.NAME,
+                    c.ADDRESS,
+                    c.PHONE_NUMBER as COMPANY_PHONE,
+                    c.EMAIL as COMPANY_EMAIL,
+                    c.CONTACT_PERSON
                FROM EMPLOYEE e
                INNER JOIN NBP.NBP_USER u ON e.USER_ID=u.ID
-               INNER JOIN ACCOUNT_INFO ai ON ai.USER_ID=u.ID
+               LEFT JOIN ACCOUNT_INFO ai ON ai.USER_ID=u.ID
+               LEFT JOIN COMPANY c ON e.COMPANY_ID = c.ID
             """;
 
     public EmployeeRepository(JdbcTemplate jdbcTemplate, UserRepository userRepository) {
@@ -67,11 +75,19 @@ public class EmployeeRepository {
                     null,
                     null
             );
-            employeeUser.setActive(rs.getString("ACTIVE").equals("1"));
+            //employeeUser.setActive(rs.getString("ACTIVE").equals("1"));
+            String activeStr = rs.getString("ACTIVE");
+            employeeUser.setActive("1".equals(activeStr));
             employeeUser.setLastVerificationCode(rs.getString("LAST_VERIFICATION_CODE"));
 
-            var company = new Company();
+            Company company = new Company();
             company.setId(rs.getLong("COMPANY_ID"));
+            company.setCompanyType(CompanyType.fromCode(rs.getInt("COMPANY_TYPE")));
+            company.setName(rs.getString("NAME"));
+            company.setAddress(rs.getString("ADDRESS"));
+            company.setPhoneNumber(rs.getString("COMPANY_PHONE"));
+            company.setEmail(rs.getString("COMPANY_EMAIL"));
+            company.setContactPerson(rs.getString("CONTACT_PERSON"));
 
             var employee = new Employee(
                     rs.getLong("ID"),
@@ -128,7 +144,9 @@ public class EmployeeRepository {
                 employee.getId()
         );
 
-        return employee;
+        //return employee;
+        return findById(employee.getId()).orElseThrow(() ->
+                new RuntimeException("Employee not found after update"));
     }
 
     public void deleteByUserId(Long userId) {
