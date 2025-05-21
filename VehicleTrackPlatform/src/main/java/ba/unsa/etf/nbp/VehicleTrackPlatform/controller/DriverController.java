@@ -55,7 +55,7 @@ public class DriverController {
             @ApiResponse(responseCode = "400", description = "Invalid driver payload supplied", content = @Content)
     })
     @PostMapping
-    @PreAuthorize("hasAuthority(@roles.FIELD_TECHNICIAN)")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Long> createDriver(@RequestBody DriverDTO driverDTO) throws MessagingException {
         Long driverId = driverService.createDriver(driverDTO);
         return ResponseEntity.created(URI.create("/api/driver/" + driverId))
