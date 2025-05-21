@@ -7,6 +7,7 @@ BEGIN
             BEGIN
                 SELECT COUNT(1) INTO EXEC_COUNT FROM SCRIPT_EXECUTION_HISTORY WHERE ID = SCRIPT_ID;
                 IF EXEC_COUNT = 0 THEN
+
                     DECLARE
                         V_ID1 NUMBER; V_ID2 NUMBER; V_ID3 NUMBER;
                         V_ID4 NUMBER; V_ID5 NUMBER; V_ID6 NUMBER;
@@ -56,45 +57,45 @@ BEGIN
                         SELECT ID INTO C_ID8 FROM COMPANY WHERE NAME = 'Zenith Auto Assurance' AND COMPANY_TYPE = 1;
                         SELECT ID INTO C_ID9 FROM COMPANY WHERE NAME = 'Velocity Car Insurance' AND COMPANY_TYPE = 1;
 
-                       --INSERT INTO REGISTRATION (
-                       --     POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
-                       --     ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
-                       -- ) VALUES (
-                       --     'POL100001', 1, TO_DATE('2022-05-01', 'YYYY-MM-DD'), TO_DATE('2023-05-01', 'YYYY-MM-DD'), 500.00,
-                       --     50.00, V_ID1, C_ID1
-                       --);
+                       INSERT INTO REGISTRATION (
+                            POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
+                            ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
+                       ) VALUES (
+                            'POL100001', 1, TO_DATE('2022-05-01', 'YYYY-MM-DD'), TO_DATE('2023-05-01', 'YYYY-MM-DD'), 500.00,
+                            50.00, V_ID1, C_ID1
+                       );
 
-                        --INSERT INTO REGISTRATION (
-                        --    POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
-                        --    ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
-                        --) VALUES (
-                        --    'POL100002', 2, TO_DATE('2021-07-01', 'YYYY-MM-DD'), TO_DATE('2022-07-01', 'YYYY-MM-DD'), 600.00,
-                        --    30.00, V_ID2, C_ID2
-                        --);
+                        INSERT INTO REGISTRATION (
+                            POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
+                            ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
+                        ) VALUES (
+                            'POL100002', 2, TO_DATE('2021-07-01', 'YYYY-MM-DD'), TO_DATE('2022-07-01', 'YYYY-MM-DD'), 600.00,
+                            30.00, V_ID2, C_ID2
+                        );
 
-                        --INSERT INTO REGISTRATION (
-                        --    POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
-                        --    ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
-                        --) VALUES (
-                        --    'POL100003', 3, TO_DATE('2023-01-01', 'YYYY-MM-DD'), TO_DATE('2024-01-01', 'YYYY-MM-DD'), 200.00,
-                        --    20.00, V_ID3, C_ID3
-                        --);
+                        INSERT INTO REGISTRATION (
+                            POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
+                            ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
+                        ) VALUES (
+                            'POL100003', 3, TO_DATE('2023-01-01', 'YYYY-MM-DD'), TO_DATE('2024-01-01', 'YYYY-MM-DD'), 200.00,
+                            20.00, V_ID3, C_ID3
+                        );
 
-                        --INSERT INTO REGISTRATION (
-                        --    POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
-                        --    ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
-                        --) VALUES (
-                        --    'POL100004', 1, TO_DATE('2022-03-01', 'YYYY-MM-DD'), TO_DATE('2023-03-01', 'YYYY-MM-DD'), 450.00,
-                        --    40.00, V_ID4, C_ID3
-                        --);
+                        INSERT INTO REGISTRATION (
+                            POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
+                            ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
+                        ) VALUES (
+                            'POL100004', 1, TO_DATE('2022-03-01', 'YYYY-MM-DD'), TO_DATE('2023-03-01', 'YYYY-MM-DD'), 450.00,
+                            40.00, V_ID4, C_ID3
+                        );
 
-                        --INSERT INTO REGISTRATION (
-                        --    POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
-                        --    ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
-                        --) VALUES (
-                        --    'POL100005', 2, TO_DATE('2020-09-01', 'YYYY-MM-DD'), TO_DATE('2021-09-01', 'YYYY-MM-DD'), 700.00,
-                        --    70.00, V_ID5, C_ID2
-                        --);
+                        INSERT INTO REGISTRATION (
+                            POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
+                            ADDITIONAL_COSTS, VEHICLE_ID, INSURANCE_COMPANY_ID
+                        ) VALUES (
+                            'POL100005', 2, TO_DATE('2020-09-01', 'YYYY-MM-DD'), TO_DATE('2021-09-01', 'YYYY-MM-DD'), 700.00,
+                            70.00, V_ID5, C_ID2
+                        );
 
                         INSERT INTO REGISTRATION (
                             POLICY_NUMBER, INSURANCE_TYPE, INSURED_FROM, INSURED_UNTIL, INSURANCE_COST,
@@ -247,15 +248,16 @@ BEGIN
                             'POL100024', 3, TO_DATE('2024-02-14', 'YYYY-MM-DD'), TO_DATE('2025-02-14', 'YYYY-MM-DD'), 695.00,
                             55.00, V_ID24, C_ID6
                         );
-                        COMMIT;
-
-                        SELECT CAST(SYSTIMESTAMP AT TIME ZONE 'UTC' AS DATE) INTO NOW FROM DUAL;
-
-                        INSERT INTO SCRIPT_EXECUTION_HISTORY
-                        VALUES (SCRIPT_ID, 'registration-seed.sql', NOW);
-
-                        COMMIT;
                     END;
+
+                    COMMIT;
+
+                    SELECT CAST(SYSTIMESTAMP AT TIME ZONE 'UTC' AS DATE) INTO NOW FROM DUAL;
+
+                    INSERT INTO SCRIPT_EXECUTION_HISTORY
+                    VALUES (SCRIPT_ID, 'registration-seed.sql', NOW);
+
+                    COMMIT;
                 END IF;
             END;
         END;

@@ -115,11 +115,9 @@ BEGIN
 
                         INSERT INTO TRAFFIC_FINE (ISSUE_DATE, PAYMENT_DUE_DATE, VIOLATION_DESCRIPTION, VIOLATION_TYPE, LOCATION, PAYMENT_STATUS, AMOUNT, VEHICLE_ID, DRIVER_ID)
                         VALUES (DATE '2025-05-20', DATE '2025-06-20', 'Vožnja bez pojasa', 4, 'Goražde', 1, 50.0, V_ID20, D_ID8);
-
-
-                        COMMIT;
-
                     END;
+
+                    COMMIT;
 
                     SELECT CAST(SYSTIMESTAMP AT TIME ZONE 'UTC' AS DATE) INTO NOW FROM DUAL;
 

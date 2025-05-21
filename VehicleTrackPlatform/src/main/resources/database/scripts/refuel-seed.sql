@@ -5,164 +5,128 @@ BEGIN
         BEGIN
             DECLARE EXEC_COUNT INT := 0;
             BEGIN
-
                 SELECT COUNT(1) INTO EXEC_COUNT FROM SCRIPT_EXECUTION_HISTORY WHERE ID = SCRIPT_ID;
                 IF EXEC_COUNT = 0 THEN
 
-                    -- Vehicle 1 (Travel Car - Hatchback)
-                    --INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    --VALUES (
-                    --    1001,
-                    --    TO_DATE('2023-03-01', 'YYYY-MM-DD'),
-                    --    40.00,
-                    --    100.00,
-                    --    (SELECT ID FROM COMPANY WHERE COMPANY_TYPE = 3 AND NAME = 'FuelExpress Station'),
-                    --    (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE = 'BG888HH')
-                    --);
+                    DECLARE
+                        V_ID1 NUMBER; V_ID2 NUMBER; V_ID3 NUMBER;
+                        V_ID4 NUMBER; V_ID5 NUMBER; V_ID6 NUMBER;
+                        V_ID7 NUMBER; V_ID8 NUMBER; V_ID9 NUMBER;
+                        V_ID10 NUMBER; V_ID11 NUMBER; V_ID12 NUMBER;
+                        V_ID13 NUMBER; V_ID14 NUMBER; V_ID15 NUMBER;
+                        V_ID16 NUMBER; V_ID17 NUMBER; V_ID18 NUMBER;
+                        V_ID19 NUMBER; V_ID20 NUMBER; V_ID21 NUMBER;
+                        V_ID22 NUMBER; V_ID23 NUMBER; V_ID24 NUMBER;
 
-                    -- Vehicle 2 (SUV - SUV)
-                    --INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    --VALUES (
-                    --    1002,
-                    --    TO_DATE('2023-04-12', 'YYYY-MM-DD'),
-                    --    60.00,
-                    --    144.00,
-                    --    (SELECT ID FROM COMPANY WHERE COMPANY_TYPE = 3 AND NAME = 'GoGas Plus'),
-                    --    (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE = 'BG333SS')
-                    --);
+                        C_ID1 NUMBER; C_ID2 NUMBER; C_ID3 NUMBER;
+                        C_ID4 NUMBER; C_ID5 NUMBER; C_ID6 NUMBER;
+                        C_ID7 NUMBER; C_ID8 NUMBER; C_ID9 NUMBER;
+                    BEGIN
+                        SELECT ID INTO V_ID1 FROM VEHICLE WHERE LICENSE_PLATE = 'BG123AA';
+                        SELECT ID INTO V_ID2 FROM VEHICLE WHERE LICENSE_PLATE = 'BG789TT';
+                        SELECT ID INTO V_ID3 FROM VEHICLE WHERE LICENSE_PLATE = 'BG456MM';
+                        SELECT ID INTO V_ID4 FROM VEHICLE WHERE LICENSE_PLATE = 'BG111BB';
+                        SELECT ID INTO V_ID5 FROM VEHICLE WHERE LICENSE_PLATE = 'BG222VV';
+                        SELECT ID INTO V_ID6 FROM VEHICLE WHERE LICENSE_PLATE = 'BG333SS';
+                        SELECT ID INTO V_ID7 FROM VEHICLE WHERE LICENSE_PLATE = 'BG444PP';
+                        SELECT ID INTO V_ID8 FROM VEHICLE WHERE LICENSE_PLATE = 'BG555TT';
+                        SELECT ID INTO V_ID9 FROM VEHICLE WHERE LICENSE_PLATE = 'BG666SS';
+                        SELECT ID INTO V_ID10 FROM VEHICLE WHERE LICENSE_PLATE = 'BG777BB';
+                        SELECT ID INTO V_ID11 FROM VEHICLE WHERE LICENSE_PLATE = 'BG888HH';
+                        SELECT ID INTO V_ID12 FROM VEHICLE WHERE LICENSE_PLATE = 'BG999CC';
+                        SELECT ID INTO V_ID13 FROM VEHICLE WHERE LICENSE_PLATE = 'BG101CV';
+                        SELECT ID INTO V_ID14 FROM VEHICLE WHERE LICENSE_PLATE = 'BG202WG';
+                        SELECT ID INTO V_ID15 FROM VEHICLE WHERE LICENSE_PLATE = 'BG303MV';
+                        SELECT ID INTO V_ID16 FROM VEHICLE WHERE LICENSE_PLATE = 'BG404JP';
+                        SELECT ID INTO V_ID17 FROM VEHICLE WHERE LICENSE_PLATE = 'BG505LM';
+                        SELECT ID INTO V_ID18 FROM VEHICLE WHERE LICENSE_PLATE = 'BG606CM';
+                        SELECT ID INTO V_ID19 FROM VEHICLE WHERE LICENSE_PLATE = 'BG707RD';
+                        SELECT ID INTO V_ID20 FROM VEHICLE WHERE LICENSE_PLATE = 'BG909HY';
+                        SELECT ID INTO V_ID21 FROM VEHICLE WHERE LICENSE_PLATE = 'BG010FT';
+                        SELECT ID INTO V_ID22 FROM VEHICLE WHERE LICENSE_PLATE = 'BG111TR';
+                        SELECT ID INTO V_ID23 FROM VEHICLE WHERE LICENSE_PLATE = 'BG212ES';
+                        SELECT ID INTO V_ID24 FROM VEHICLE WHERE LICENSE_PLATE = 'BG313MB';
 
-                    -- Vehicle 3 (Motorcycle - Motorcycle)
-                    --INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    --VALUES (
-                    --    1003,
-                    --    TO_DATE('2023-05-10', 'YYYY-MM-DD'),
-                    --    10.00,
-                    --    30.00,
-                    --    (SELECT ID FROM COMPANY WHERE COMPANY_TYPE = 3 AND NAME = 'Highway Fuel Hub'),
-                    --    (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE = 'BG456MM')
-                    --);
+                        SELECT ID INTO C_ID1 FROM COMPANY WHERE NAME = 'FuelExpress Station' AND COMPANY_TYPE = 3;
+                        SELECT ID INTO C_ID2 FROM COMPANY WHERE NAME = 'GoGas Plus' AND COMPANY_TYPE = 3;
+                        SELECT ID INTO C_ID3 FROM COMPANY WHERE NAME = 'Highway Fuel Hub' AND COMPANY_TYPE = 3;
+                        SELECT ID INTO C_ID4 FROM COMPANY WHERE NAME = 'PetroMax Station' AND COMPANY_TYPE = 3;
+                        SELECT ID INTO C_ID5 FROM COMPANY WHERE NAME = 'EcoFuel Stop' AND COMPANY_TYPE = 3;
+                        SELECT ID INTO C_ID6 FROM COMPANY WHERE NAME = 'TurboCharge Fuel' AND COMPANY_TYPE = 3;
+                        SELECT ID INTO C_ID7 FROM COMPANY WHERE NAME = 'RoadRunner Gas' AND COMPANY_TYPE = 3;
 
-                    -- Vehicle 4 (Bus - Bus)
-                    --INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    --VALUES (
-                    --   1004,
-                    --    TO_DATE('2023-06-15', 'YYYY-MM-DD'),
-                    --    150.00,
-                    --    390.00,
-                    --    (SELECT ID FROM COMPANY WHERE COMPANY_TYPE = 3 AND NAME = 'FuelExpress Station'),
-                    --    (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE = 'BG111BB')
-                    --);
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1001, TO_DATE('2024-03-01', 'YYYY-MM-DD'), 40.00, 100.00, C_ID1, V_ID1);
 
-                    -- Vehicle 5 (Van - Van)
-                    --INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    --VALUES (
-                    --    1005,
-                    --    TO_DATE('2023-07-20', 'YYYY-MM-DD'),
-                    --    70.00,
-                    --    178.50,
-                    --    (SELECT ID FROM COMPANY WHERE COMPANY_TYPE = 3 AND NAME = 'GoGas Plus'),
-                    --    (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE = 'BG222VV')
-                    --);
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1002, TO_DATE('2024-04-12', 'YYYY-MM-DD'), 60.00, 144.00, C_ID2, V_ID2);
 
-                    INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    VALUES (
-                        1006,
-                        TO_DATE('2023-08-05','YYYY-MM-DD'),
-                        55.00,
-                        151.25,
-                        (SELECT ID FROM COMPANY WHERE COMPANY_TYPE=3 AND NAME='PetroMax Station'),
-                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE='BG333SS')
-                    );
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1003, TO_DATE('2025-05-10', 'YYYY-MM-DD'), 10.00, 30.00, C_ID3, V_ID3);
 
-                    INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    VALUES (
-                        1007,
-                        TO_DATE('2023-08-18','YYYY-MM-DD'),
-                        35.00,
-                        78.40,
-                        (SELECT ID FROM COMPANY WHERE COMPANY_TYPE=3 AND NAME='TurboCharge Fuel'),
-                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE='BG444PP')
-                    );
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1004, TO_DATE('2025-06-15', 'YYYY-MM-DD'), 150.00, 390.00, C_ID4, V_ID4);
 
-                    INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    VALUES (
-                        1008,
-                        TO_DATE('2023-09-02','YYYY-MM-DD'),
-                        90.00,
-                        234.00,
-                        (SELECT ID FROM COMPANY WHERE COMPANY_TYPE=3 AND NAME='EcoFuel Stop'),
-                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE='BG555TT')
-                    );
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1005, TO_DATE('2025-07-20', 'YYYY-MM-DD'), 70.00, 178.50, C_ID5, V_ID5);
 
-                    INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    VALUES (
-                        1009,
-                        TO_DATE('2023-09-15','YYYY-MM-DD'),
-                        120.00,
-                        360.00,
-                        (SELECT ID FROM COMPANY WHERE COMPANY_TYPE=3 AND NAME='RoadRunner Gas'),
-                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE='BG666SS')
-                    );
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1006, TO_DATE('2024-08-05','YYYY-MM-DD'), 55.00, 151.25, C_ID6, V_ID6);
 
-                    INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    VALUES (
-                        1010,
-                        TO_DATE('2023-10-01','YYYY-MM-DD'),
-                        25.00,
-                        62.50,
-                        (SELECT ID FROM COMPANY WHERE COMPANY_TYPE=3 AND NAME='FuelExpress Station'),
-                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE='BG777BB')
-                    );
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1007, TO_DATE('2025-08-18','YYYY-MM-DD'), 35.00, 78.40, C_ID7, V_ID7);
 
-                    INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    VALUES (
-                        1011,
-                        TO_DATE('2023-10-10','YYYY-MM-DD'),
-                        80.00,
-                        224.00,
-                        (SELECT ID FROM COMPANY WHERE COMPANY_TYPE=3 AND NAME='GoGas Plus'),
-                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE='BG888HH')
-                    );
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1008, TO_DATE('2024-09-02','YYYY-MM-DD'), 90.00, 234.00, C_ID1, V_ID8);
 
-                    INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    VALUES (
-                        1012,
-                        TO_DATE('2023-10-22','YYYY-MM-DD'),
-                        45.00,
-                        121.50,
-                        (SELECT ID FROM COMPANY WHERE COMPANY_TYPE=3 AND NAME='Highway Fuel Hub'),
-                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE='BG999CC')
-                     );
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1009, TO_DATE('2025-09-15','YYYY-MM-DD'), 120.00, 360.00, C_ID2, V_ID9);
 
-                    INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    VALUES (
-                        1013,
-                        TO_DATE('2023-11-05','YYYY-MM-DD'),
-                        100.00,
-                        300.00,
-                        (SELECT ID FROM COMPANY WHERE COMPANY_TYPE=3 AND NAME='PetroMax Station'),
-                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE='BG101CV')
-                    );
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1010, TO_DATE('2024-10-01','YYYY-MM-DD'), 25.00, 62.50, C_ID3, V_ID10);
 
-                    INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    VALUES (
-                        1014,
-                        TO_DATE('2023-11-18','YYYY-MM-DD'),
-                        60.00,
-                        174.00,
-                        (SELECT ID FROM COMPANY WHERE COMPANY_TYPE=3 AND NAME='TurboCharge Fuel'),
-                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE='BG202WG')
-                    );
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1011, TO_DATE('2025-10-10','YYYY-MM-DD'), 80.00, 224.00, C_ID4, V_ID11);
 
-                    INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
-                    VALUES (
-                        1015,
-                        TO_DATE('2023-12-01','YYYY-MM-DD'),
-                        30.00,
-                        81.00,
-                        (SELECT ID FROM COMPANY WHERE COMPANY_TYPE=3 AND NAME='EcoFuel Stop'),
-                        (SELECT ID FROM VEHICLE WHERE LICENSE_PLATE='BG303MV')
-                    );
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1012, TO_DATE('2024-10-22','YYYY-MM-DD'), 45.00, 121.50, C_ID5, V_ID12);
+
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1013, TO_DATE('2025-11-05','YYYY-MM-DD'), 100.00, 300.00, C_ID6, V_ID13);
+
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1014, TO_DATE('2023-11-18','YYYY-MM-DD'), 60.00, 174.00, C_ID7, V_ID14);
+
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1015, TO_DATE('2023-12-01','YYYY-MM-DD'), 30.00, 81.00, C_ID1, V_ID15);
+
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1016, TO_DATE('2025-10-01','YYYY-MM-DD'), 25.00, 62.50, C_ID2, V_ID16);
+
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1017, TO_DATE('2025-10-10','YYYY-MM-DD'), 80.00, 224.00, C_ID3, V_ID17);
+
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1018, TO_DATE('2025-10-22','YYYY-MM-DD'), 45.00, 121.50, C_ID4, V_ID18);
+
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1019, TO_DATE('2025-11-05','YYYY-MM-DD'), 100.00, 300.00, C_ID5, V_ID19);
+
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1020, TO_DATE('2025-11-18','YYYY-MM-DD'), 60.00, 174.00, C_ID6, V_ID20);
+
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1021, TO_DATE('2025-12-01','YYYY-MM-DD'), 30.00, 81.00, C_ID7, V_ID21);
+
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1022, TO_DATE('2025-09-01','YYYY-MM-DD'), 25.00, 62.50, C_ID1, V_ID22);
+
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1023, TO_DATE('2025-09-10','YYYY-MM-DD'), 80.00, 224.00, C_ID2, V_ID23);
+
+                        INSERT INTO REFUEL (FISCAL_RECEIPT_NUMBER, REFUEL_DATE, QUANTITY, TOTAL_CHARGE_AMOUNT, GAS_STATION_ID, VEHICLE_ID)
+                        VALUES (1024, TO_DATE('2025-09-22','YYYY-MM-DD'), 45.00, 121.50, C_ID3, V_ID24);
+                    END;
 
                     COMMIT;
 

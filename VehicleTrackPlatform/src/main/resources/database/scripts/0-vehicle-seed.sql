@@ -7,6 +7,7 @@ BEGIN
             BEGIN
                 SELECT COUNT(1) INTO EXEC_COUNT FROM SCRIPT_EXECUTION_HISTORY WHERE ID = SCRIPT_ID;
                 IF EXEC_COUNT = 0 THEN
+
                 -- Vehicle 1 (Travel Car - Sedan)
                     INSERT INTO VEHICLE (
                         LICENSE_PLATE, FIRST_REGISTRATION_DATE, FIRST_REGISTRATION_PLACE,

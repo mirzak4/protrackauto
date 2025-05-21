@@ -20,7 +20,7 @@ BEGIN
                         C_ID1 NUMBER; C_ID2 NUMBER; C_ID3 NUMBER;
                         C_ID4 NUMBER; C_ID5 NUMBER; C_ID6 NUMBER;
 
-                        FULL_NAME VARCHAR2(200);
+                        FULL_NAME VARCHAR2(200) := 'Admin';
                     BEGIN
                         SELECT ID INTO V_ID1 FROM VEHICLE WHERE LICENSE_PLATE = 'BG123AA';
                         SELECT ID INTO V_ID2 FROM VEHICLE WHERE LICENSE_PLATE = 'BG789TT';
@@ -49,11 +49,6 @@ BEGIN
                         SELECT ID INTO C_ID4 FROM COMPANY WHERE COMPANY_TYPE = 2 AND NAME = 'QuickFix Auto';
                         SELECT ID INTO C_ID5 FROM COMPANY WHERE COMPANY_TYPE = 2 AND NAME = 'ProTune Mechanics';
                         SELECT ID INTO C_ID6 FROM COMPANY WHERE COMPANY_TYPE = 2 AND NAME = 'UrbanCar Service';
-
-                        SELECT u.FIRST_NAME || ' ' || u.LAST_NAME INTO FULL_NAME
-                        FROM nbp.nbp_user u JOIN nbp.nbp_role r ON u.ROLE_ID = r.ID
-                        WHERE u.USERNAME = 'mkadric' AND r.NAME = 'NBP04.FIELD_TECHNICIAN';
-
 
                         ----------------------------------------------------------------
                         -- 2) Insert seed data into SERVICE_REQUEST
@@ -202,8 +197,9 @@ BEGIN
                         ) VALUES (
                             2, 3020, 185.00, 2, TO_DATE('2025-04-08','YYYY-MM-DD'), FULL_NAME, V_ID20, C_ID2
                         );
-                        COMMIT;
                     END;
+
+                    COMMIT;
 
                     SELECT CAST(SYSTIMESTAMP AT TIME ZONE 'UTC' AS DATE) INTO NOW FROM DUAL;
 
