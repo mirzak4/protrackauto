@@ -1,0 +1,13 @@
+<div class="container">
+  <h2>Companies</h2>
+  <button class="primary-btn" routerLink="/company/create">Create Company</button>
+  <div class="card" *ngFor="let company of companies">
+    <h3>{{ company.name }}</h3>
+    <p><strong>Type:</strong> {{ company.companyType }}</p>
+    <p><strong>Email:</strong> {{ company.email }}</p>
+    <div class="button-group">
+      <button class="secondary-btn" [routerLink]="['/company/detail', company.id]">More Details</button>
+      <button class="danger-btn" (click)="deleteCompany(company.id)">Delete</button>
+    </div>
+  </div>
+</div>
