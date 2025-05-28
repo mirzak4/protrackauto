@@ -118,10 +118,13 @@
 .modal input,
 .modal select {
   width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.3rem;
+  padding: 8px;
+  font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
+  box-sizing: border-box;
+  margin-top: 4px;
+  margin-bottom: 12px;
 }
 
 .modal-buttons {

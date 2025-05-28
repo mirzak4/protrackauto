@@ -1,1 +1,90 @@
-<p>drivers works!</p>
+<section class="vehicles-section">
+  <div class="container">
+    <div class="header">
+      <h2>Drivers</h2>
+      <button class="add-btn" (click)="openAddModal()">
+        <i class="fas fa-plus"></i> Add Driver
+      </button>
+    </div>
+
+    <table class="vehicles-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>License #</th>
+          <th>Phone</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let driver of drivers">
+          <td>{{ driver.name }}</td>
+          <td>{{ driver.licenseNumber }}</td>
+          <td>{{ driver.phone }}</td>
+          <td>
+            <span class="badge" [ngClass]="{
+              'badge-green': driver.status === 'active',
+              'badge-red': driver.status === 'inactive'
+            }">
+              {{ driver.status | titlecase }}
+            </span>
+          </td>
+          <td>
+            <button class="action-btn" (click)="openEditModal(driver)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-btn" (click)="deleteDriver(driver.id)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal-backdrop" *ngIf="isModalOpen">
+    <div class="modal">
+      <h2>{{ isEditMode ? 'Edit Driver' : 'Add Driver' }}</h2>
+      <form (ngSubmit)="saveDriver()">
+        <label>
+          Name:
+          <input [(ngModel)]="currentDriver.name" name="name" required />
+        </label>
+        <label>
+          License Number:
+          <input [(ngModel)]="currentDriver.licenseNumber" name="licenseNumber" required />
+        </label>
+        <label>
+          Phone:
+          <input [(ngModel)]="currentDriver.phone" name="phone" required />
+        </label>
+        <label>
+          Status:
+          <select [(ngModel)]="currentDriver.status" name="status">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </label>
+        <div class="modal-buttons">
+          <button type="submit" class="btn-primary">
+            {{ isEditMode ? 'Save Changes' : 'Add Driver' }}
+          </button>
+          <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Confirm Delete Modal -->
+<div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">
+  <div class="modal">
+    <h2>Confirm Deletion</h2>
+    <p>Are you sure you want to delete <strong>{{ driverToDelete?.name }}</strong>?</p>
+    <div class="modal-buttons">
+      <button class="btn-primary" (click)="confirmDelete()">Delete</button>
+      <button class="btn-secondary" (click)="cancelDelete()">Cancel</button>
+    </div>
+  </div>
+</div>
+</section>

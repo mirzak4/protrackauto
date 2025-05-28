@@ -27,7 +27,6 @@ export const routes: Routes = [
   { path: 'companies', component: CompanyListComponent },
   { path: 'companies/create', component: CompanyCreateComponent },
   { path: 'companies/:id', component: CompanyDetailComponent },
-  
   { path: 'vehicles', component: VehiclesComponent },
   { path: 'drivers', component: DriversComponent },
   { path: 'services', component: ServicesComponent },
