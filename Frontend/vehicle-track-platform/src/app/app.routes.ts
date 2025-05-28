@@ -18,6 +18,8 @@ import { CompanyCreateComponent } from './pages/company/company-create/company-c
 import { CompanyDetailComponent } from './pages/company/company-detail/company-detail.component';
 
 export const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'dashboard', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },

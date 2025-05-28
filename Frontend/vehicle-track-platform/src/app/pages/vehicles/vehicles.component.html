@@ -1,1 +1,79 @@
-<h2>Vehicles Page</h2>
+<section class="vehicles-section">
+    <div class="container">
+        <div class="header">
+            <h2>Vehicles</h2>
+            <button class="add-btn" (click)="openAddModal()">
+                <i class="fas fa-plus"></i> Add Vehicle
+            </button>
+        </div>
+
+        <table class="vehicles-table">
+            <thead>
+                <tr>
+                    <th>License Plate</th>
+                    <th>Model</th>
+                    <th>Driver</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let vehicle of vehicles">
+                    <td>{{ vehicle.plate }}</td>
+                    <td>{{ vehicle.model }}</td>
+                    <td>{{ vehicle.driver }}</td>
+                    <td>
+                        <span class="badge" [ngClass]="{
+                  'badge-green': vehicle.status === 'active',
+                  'badge-red': vehicle.status === 'inactive'
+                }">
+                            {{ vehicle.status | titlecase }}
+                        </span>
+                    </td>
+                    <td>
+                        <button class="action-btn" (click)="openEditModal(vehicle)">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn" (click)="deleteVehicle(vehicle.id)">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <!-- MODAL -->
+            <div class="modal-backdrop" *ngIf="isModalOpen">
+                <div class="modal">
+                    <h2>{{ isEditMode ? 'Edit Vehicle' : 'Add Vehicle' }}</h2>
+                    <form (ngSubmit)="saveVehicle()">
+                        <label>
+                            Plate:
+                            <input [(ngModel)]="currentVehicle.plate" name="plate" required />
+                        </label>
+                        <label>
+                            Model:
+                            <input [(ngModel)]="currentVehicle.model" name="model" required />
+                        </label>
+                        <label>
+                            Driver:
+                            <input [(ngModel)]="currentVehicle.driver" name="driver" required />
+                        </label>
+                        <label>
+                            Status:
+                            <select [(ngModel)]="currentVehicle.status" name="status">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </label>
+
+                        <div class="modal-buttons">
+                            <button type="submit" class="btn-primary">{{ isEditMode ? 'Save Changes' : 'Add Vehicle'
+                                }}</button>
+                            <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </table>
+    </div>
+</section>
