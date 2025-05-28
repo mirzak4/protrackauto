@@ -34,9 +34,9 @@
                         <button class="action-btn" (click)="openEditModal(vehicle)">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="action-btn" (click)="deleteVehicle(vehicle.id)">
+                        <button class="action-btn" (click)="openDeleteConfirm(vehicle)">
                             <i class="fas fa-trash-alt"></i>
-                        </button>
+                          </button>                          
                     </td>
                 </tr>
             </tbody>
@@ -73,6 +73,17 @@
                     </form>
                 </div>
             </div>
+            <div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">
+                <div class="modal">
+                  <h2>Confirm Deletion</h2>
+                  <p>Are you sure you want to delete <strong>{{ vehicleToDelete?.plate }}</strong>?</p>
+                  <div class="modal-buttons">
+                    <button class="btn-primary" (click)="confirmDelete()">Yes, Delete</button>
+                    <button class="btn-secondary" (click)="cancelDelete()">Cancel</button>
+                  </div>
+                </div>
+              </div>
+              
 
         </table>
     </div>

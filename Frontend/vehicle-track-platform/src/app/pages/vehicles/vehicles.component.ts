@@ -17,6 +17,10 @@ export class VehiclesComponent {
 
   isModalOpen = false;
   isEditMode = false;
+
+  isDeleteConfirmOpen = false;
+  vehicleToDelete: any = null;
+
   currentVehicle: any = { id: null, plate: '', model: '', driver: '', status: 'active' };
 
   openAddModal() {
@@ -54,4 +58,24 @@ export class VehiclesComponent {
       this.vehicles = this.vehicles.filter(v => v.id !== id);
     }
   }
+
+  openDeleteConfirm(vehicle: any) {
+    this.vehicleToDelete = vehicle;
+    this.isDeleteConfirmOpen = true;
+  }
+
+  cancelDelete() {
+    this.isDeleteConfirmOpen = false;
+    this.vehicleToDelete = null;
+  }
+  
+  confirmDelete() {
+    if (!this.vehicleToDelete) return;
+  
+    this.vehicles = this.vehicles.filter(v => v.id !== this.vehicleToDelete.id);
+    this.isDeleteConfirmOpen = false;
+    this.vehicleToDelete = null;
+  }
+  
+
 }
