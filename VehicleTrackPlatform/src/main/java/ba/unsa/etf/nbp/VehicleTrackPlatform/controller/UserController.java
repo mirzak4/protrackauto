@@ -2,6 +2,7 @@ package ba.unsa.etf.nbp.VehicleTrackPlatform.controller;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.common.authentication.JwtHelper;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.features.resetpassword.ResetPasswordRequest;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.User;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.service.UserDetailService;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.features.login.LoginRequest;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.features.login.LoginResponse;
@@ -39,11 +40,11 @@ public class UserController {
     @PostMapping("login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
         var authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        var userDetails = (UserDetails)authentication.getPrincipal();
+        var user = (User)authentication.getPrincipal();
 
-        String token = this.jwtHelper.generateToken(userDetails.getUsername(), userDetails.getAuthorities());
+        String token = this.jwtHelper.generateToken(user.getUsername(), user.getAuthorities());
 
-        return ResponseEntity.ok(new LoginResponse(request.getEmail(), token));
+        return ResponseEntity.ok(new LoginResponse(request.getEmail(), user.getFirstName(), user.getLastName(), token));
     }
 
     @Operation(summary = "Sends password reset link to the provided user email address", description = "Sends password reset link and returns no content")

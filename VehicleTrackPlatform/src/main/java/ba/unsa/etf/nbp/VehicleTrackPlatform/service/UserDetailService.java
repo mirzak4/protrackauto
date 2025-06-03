@@ -43,7 +43,7 @@ public class UserDetailService implements UserDetailsService {
         var userDetails = userRepository.findByEmail(email);
 
         if (userDetails.isEmpty()) {
-            throw new UsernameNotFoundException("User with provided email" + email + "does not exist");
+            throw new UsernameNotFoundException("User with provided email " + email + " does not exist");
         }
 
         var user = (User)userDetails.get();

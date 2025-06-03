@@ -6,12 +6,15 @@ import { routes } from './app.routes';
 //import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { authInterceptorFn } from './core/interceptors/auth.interceptor';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     // provideClientHydration(withEventReplay()),
-    provideHttpClient(withInterceptors([authInterceptorFn])), provideCharts(withDefaultRegisterables())
+    provideHttpClient(withInterceptors([authInterceptorFn])), 
+    provideCharts(withDefaultRegisterables()),
+    provideAnimations()
   ]
 };

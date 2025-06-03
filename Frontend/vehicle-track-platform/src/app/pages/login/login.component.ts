@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule, NgIf } from '@angular/common';
+import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -37,6 +39,8 @@ export class LoginComponent {
   }
 
   onSubmit(): void {
+    this.loginForm.markAllAsTouched();
+
     if (this.loginForm.invalid) {
       return;
     }
@@ -44,10 +48,18 @@ export class LoginComponent {
     this.isLoading = true;
     this.errorMessage = null;
 
-    setTimeout(() => {
-      this.isLoading = false;
-      this.router.navigate(['/home']); 
-    }, 1500);
+    const { email, password } = this.loginForm.value;
+
+    this.authService.login(email, password).subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.router.navigate(['/home']);
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.errorMessage = error.error?.message || 'An error occurred during login';
+      }
+    });
   }
 
   get email() {

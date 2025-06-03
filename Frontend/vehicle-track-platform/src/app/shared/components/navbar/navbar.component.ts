@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
+import { UserInfo } from '../../../core/models/user-info.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -12,22 +15,29 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent {
   menuOpen = false;
-  userName = 'John Doe';
-  userRole = 'Administrator';
   profileMenuOpen = false;
+  userInfo$: Observable<UserInfo | null>;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.userInfo$ = this.authService.getUserInfo$();
+  }
   
   toggleProfileMenu(): void {
     this.profileMenuOpen = !this.profileMenuOpen;
   }
 
-  toggleMenu(): void {
-    this.menuOpen = !this.menuOpen;
+  onProfileBlur(event: FocusEvent): void {
+    const target = event.relatedTarget as HTMLElement;
+    if (!target?.closest('.user-profile-dropdown')) {
+      this.profileMenuOpen = false;
+    }
   }
 
   logout(): void {
-    console.log('User logged out');
-    this.router.navigate(['/login']);
+    this.authService.logout();
+    this.router.navigate(['/logout']);
   }
 }

@@ -16,17 +16,11 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
 import { CompanyListComponent } from './pages/company/company-list/company-list.component';
 import { CompanyCreateComponent } from './pages/company/company-create/company-create.component';
 import { CompanyDetailComponent } from './pages/company/company-detail/company-detail.component';
+import { LogoutComponent } from './pages/logout/logout.component';
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'dashboard', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'companies', component: CompanyListComponent },
-  { path: 'companies/create', component: CompanyCreateComponent },
-  { path: 'companies/:id', component: CompanyDetailComponent },
   { path: 'vehicles', component: VehiclesComponent },
   { path: 'drivers', component: DriversComponent },
   { path: 'services', component: ServicesComponent },
@@ -36,5 +30,12 @@ export const routes: Routes = [
   { path: 'inspections', component: InspectionsComponent },
   { path: 'travel-requests', component: TravelRequestsComponent },
   { path: 'service-requests', component: ServiceRequestsComponent },
-  { path: 'account', component: AccountComponent }
+  { path: 'account', component: AccountComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'company', component: CompanyListComponent },
+  { path: 'company/create', component: CompanyCreateComponent },
+  { path: 'company/detail/:id', component: CompanyDetailComponent }
 ];

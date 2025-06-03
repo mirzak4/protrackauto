@@ -28,25 +28,30 @@
       </div>
       
       <div class="navbar-end">
-        <div class="user-profile-dropdown" (click)="toggleProfileMenu()">
-          <div class="user-profile">
-            <i class="fas fa-user-circle"></i>
-            <div class="user-info">
-              <span class="user-name">Admin User</span>
-              <span class="user-role">System Administrator</span>
+        @if (userInfo$ | async) {
+          <div class="user-profile-dropdown" 
+            (click)="toggleProfileMenu()"
+            (blur)="onProfileBlur($event)"
+            tabindex="0">
+            <div class="user-profile">
+              <i class="fas fa-user-circle"></i>
+              <div class="user-info">
+                <span class="user-name">{{ (userInfo$ | async)?.firstName || 'Guest' }}</span>
+                <span class="user-role">{{ (userInfo$ | async)?.email || 'Not logged in' }}</span>
+              </div>
+              <i class="fas fa-chevron-down profile-arrow"></i>
             </div>
-            <i class="fas fa-chevron-down profile-arrow"></i>
+            <div class="profile-dropdown-menu" [class.show]="profileMenuOpen">
+              <a class="profile-menu-item" routerLink="/settings">
+                <i class="fas fa-cog"></i> Settings
+              </a>
+              <div class="menu-divider"></div>
+              <a class="profile-menu-item logout-item" (click)="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </div>
           </div>
-          <div class="profile-dropdown-menu" [class.show]="profileMenuOpen">
-            <a class="profile-menu-item" routerLink="/settings">
-              <i class="fas fa-cog"></i> Settings
-            </a>
-            <div class="menu-divider"></div>
-            <a class="profile-menu-item logout-item" (click)="logout()">
-              <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
-          </div>
-        </div>
+        }
       </div>
     </div>
   </div>
