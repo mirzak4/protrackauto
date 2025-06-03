@@ -1,2 +1,119 @@
-<h1>Welcome to the Vehicle Tracking System</h1>
-<p>Use the navigation bar to access features.</p>
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 class="hero-title">Advanced Fleet Management System</h1>
+      <p class="hero-subtitle">Optimize your fleet operations with real-time tracking, analytics, and management tools</p>
+      <div class="hero-buttons">
+        <a routerLink="/demo" class="button button-primary">
+          <i class="fas fa-play-circle"></i> Live Demo
+        </a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Fleet management dashboard animation" preserveAspectRatio="xMidYMid meet">
+
+        <!-- Background panel -->
+        <rect x="10" y="20" width="580" height="360" rx="20" ry="20" fill="#e0f2fe" />
+
+        <!-- Header bar -->
+        <rect x="10" y="20" width="580" height="50" rx="10" fill="#3b82f6" />
+        <text x="30" y="55" fill="white" font-family="Segoe UI, Tahoma, Geneva, Verdana, sans-serif" font-size="20" font-weight="700">Fleet Management Dashboard</text>
+
+        <!-- Cards with fade-in animation -->
+        <rect class="card" x="30" y="90" width="160" height="100" rx="12" fill="white" filter="url(#shadow)" />
+        <text class="card-text" x="50" y="130" fill="#0f172a" font-family="Segoe UI" font-size="16" font-weight="600">Vehicles Online</text>
+        <text class="card-number" x="50" y="160" fill="#3b82f6" font-family="Segoe UI" font-size="28" font-weight="700">128</text>
+
+        <rect class="card" x="220" y="90" width="160" height="100" rx="12" fill="white" filter="url(#shadow)" />
+        <text class="card-text" x="240" y="130" fill="#0f172a" font-family="Segoe UI" font-size="16" font-weight="600">Fuel Usage</text>
+        <text class="card-number" x="240" y="160" fill="#3b82f6" font-family="Segoe UI" font-size="28" font-weight="700">2,345 L</text>
+
+        <rect class="card" x="410" y="90" width="160" height="100" rx="12" fill="white" filter="url(#shadow)" />
+        <text class="card-text" x="430" y="130" fill="#0f172a" font-family="Segoe UI" font-size="16" font-weight="600">Alerts Today</text>
+        <text class="card-number" x="430" y="160" fill="#ef4444" font-family="Segoe UI" font-size="28" font-weight="700">5</text>
+
+        <!-- Line chart -->
+        <polyline class="chart-line" fill="none" stroke="#3b82f6" stroke-width="3" points="50,250 110,230 170,240 230,210 290,220 350,190 410,200 470,180 530,200" />
+        <circle class="chart-dot" cx="50" cy="250" r="6" fill="#2563eb" />
+        <circle class="chart-dot" cx="110" cy="230" r="6" fill="#2563eb" />
+        <circle class="chart-dot" cx="170" cy="240" r="6" fill="#2563eb" />
+        <circle class="chart-dot" cx="230" cy="210" r="6" fill="#2563eb" />
+        <circle class="chart-dot" cx="290" cy="220" r="6" fill="#2563eb" />
+        <circle class="chart-dot" cx="350" cy="190" r="6" fill="#2563eb" />
+        <circle class="chart-dot" cx="410" cy="200" r="6" fill="#2563eb" />
+        <circle class="chart-dot" cx="470" cy="180" r="6" fill="#2563eb" />
+        <circle class="chart-dot" cx="530" cy="200" r="6" fill="#2563eb" />
+
+        <defs>
+          <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#2563eb" flood-opacity="0.2"/>
+          </filter>
+        </defs>
+      </svg>
+    </div>
+
+  </div>
+</section>
+
+<section class="features-section">
+  <div class="container">
+    <h2 class="section-title">Powerful Fleet Management Features</h2>
+    <p class="section-subtitle">Everything you need to manage your fleet efficiently</p>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-map-marked-alt"></i>
+        </div>
+        <h3 class="feature-title">Real-Time Tracking</h3>
+        <p class="feature-description">Monitor your vehicles in real-time with GPS tracking and geofencing capabilities.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-gas-pump"></i>
+        </div>
+        <h3 class="feature-title">Fuel Management</h3>
+        <p class="feature-description">Track fuel consumption, costs, and identify inefficient vehicles.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-tools"></i>
+        </div>
+        <h3 class="feature-title">Maintenance Scheduling</h3>
+        <p class="feature-description">Automated maintenance alerts and service history tracking.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3 class="feature-title">Advanced Analytics</h3>
+        <p class="feature-description">Comprehensive reports and data visualization for better decision making.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-file-invoice-dollar"></i>
+        </div>
+        <h3 class="feature-title">Expense Tracking</h3>
+        <p class="feature-description">Monitor all fleet-related expenses in one centralized platform.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-bell"></i>
+        </div>
+        <h3 class="feature-title">Alerts & Notifications</h3>
+        <p class="feature-description">Custom alerts for speeding, idling, maintenance, and more.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="designed-by-section">
+  <div class="container">
+    <p class="designed-by-text">© 2025 Designed & developed by Team10</p>
+  </div>
+</section>

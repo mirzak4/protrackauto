@@ -1,1 +1,40 @@
-<p>fuel works!</p>
+<section class="fuel-section">
+  <div class="container">
+    <div class="header">
+      <h2>Fuel Analytics</h2>
+    </div>
+
+    <table class="fuel-table">
+      <thead>
+        <tr>
+          <th>Vehicle</th>
+          <th>Date</th>
+          <th>Liters</th>
+          <th>Cost ($)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of fuelRecords">
+          <td>{{ record.vehicle }}</td>
+          <td>{{ record.date | date: 'MMM d, y' }}</td>
+          <td>{{ record.liters }}</td>
+          <td>{{ record.cost | number: '1.2-2' }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3"><strong>Total</strong></td>
+          <td><strong>{{ getTotalCost() | number: '1.2-2' }}</strong></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div style="max-width: 800px; margin: 2rem auto;">
+      <canvas baseChart
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [type]="barChartType">
+      </canvas>
+    </div>
+  </div>
+</section>

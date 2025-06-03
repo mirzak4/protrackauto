@@ -1,0 +1,18 @@
+<div class="container">
+  <h2>Create Company</h2>
+  <form (ngSubmit)="createCompany()" #form="ngForm">
+    <input type="text" placeholder="Name" name="name" [(ngModel)]="company.name" required>
+    <input type="text" placeholder="Address" name="address" [(ngModel)]="company.address" required>
+    <input type="email" placeholder="Email" name="email" [(ngModel)]="company.email" required>
+    <input type="text" placeholder="Phone Number" name="phoneNumber" [(ngModel)]="company.phoneNumber" required>
+    <input type="text" placeholder="Contact Person" name="contactPerson" [(ngModel)]="company.contactPerson" required>
+    <select name="companyType" [(ngModel)]="company.companyType" required>
+      <option value="" disabled selected>Select type</option>
+      <option value="INSURANCE_COMPANY">Insurance Company</option>
+      <option value="SERVICE_PROVIDER">Service Provider</option>
+      <option value="GAS_STATION">Gas Station</option>
+    </select>
+    <button type="submit" class="primary-btn" [disabled]="form.invalid">Submit</button>
+    <button type="button" class="secondary-btn" routerLink="/company">Cancel</button>
+  </form>
+</div>

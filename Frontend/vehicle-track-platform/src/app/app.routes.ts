@@ -1,6 +1,4 @@
 import { Routes } from '@angular/router';
-import { CompaniesListComponent } from './pages/companies/companies-list.component';
-import { CompanyFormComponent } from './pages/companies/company-form.component';
 import { HomeComponent } from './pages/home/home.component';
 import { VehiclesComponent } from './pages/vehicles/vehicles.component';
 import { DriversComponent } from './pages/drivers/drivers.component';
@@ -12,12 +10,23 @@ import { InspectionsComponent } from './pages/inspections/inspections.component'
 import { TravelRequestsComponent } from './pages/travel-requests/travel-requests.component';
 import { ServiceRequestsComponent } from './pages/service-requests/service-requests.component';
 import { AccountComponent } from './pages/account/account.component';
+import { LoginComponent } from './pages/login/login.component';
+import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { CompanyListComponent } from './pages/company/company-list/company-list.component';
+import { CompanyCreateComponent } from './pages/company/company-create/company-create.component';
+import { CompanyDetailComponent } from './pages/company/company-detail/company-detail.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'companies', component: CompaniesListComponent },
-  { path: 'companies/new', component: CompanyFormComponent },
-  { path: 'companies/:id', component: CompanyFormComponent },
+  { path: 'dashboard', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'home', component: HomeComponent },
+  { path: 'companies', component: CompanyListComponent },
+  { path: 'companies/create', component: CompanyCreateComponent },
+  { path: 'companies/:id', component: CompanyDetailComponent },
   { path: 'vehicles', component: VehiclesComponent },
   { path: 'drivers', component: DriversComponent },
   { path: 'services', component: ServicesComponent },
