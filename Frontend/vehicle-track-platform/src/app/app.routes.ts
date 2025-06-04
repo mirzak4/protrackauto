@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { VehiclesComponent } from './pages/vehicles/vehicles.component';
 import { DriversComponent } from './pages/drivers/drivers.component';
+import { DriverFormComponent } from './pages/drivers/driver-form/driver-form.component';
 import { ServicesComponent } from './pages/services/services.component';
 import { FuelComponent } from './pages/fuel/fuel.component';
 import { InsuranceComponent } from './pages/insurance/insurance.component';
@@ -21,8 +22,10 @@ import { LogoutComponent } from './pages/logout/logout.component';
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'vehicles', component: VehiclesComponent },
   { path: 'drivers', component: DriversComponent },
+  { path: 'drivers/new', component: DriverFormComponent },
+  { path: 'drivers/edit/:id', component: DriverFormComponent },
+  { path: 'vehicles', component: VehiclesComponent },
   { path: 'services', component: ServicesComponent },
   { path: 'fuel', component: FuelComponent },
   { path: 'insurance', component: InsuranceComponent },

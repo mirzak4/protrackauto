@@ -31,6 +31,7 @@ public class DriverController {
             @ApiResponse(responseCode = "200", description = "List of drivers")
     })
     @GetMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public List<DriverDTO> getAllDrivers() {
         return driverService.getAllDrivers();
     }
@@ -42,7 +43,7 @@ public class DriverController {
             @ApiResponse(responseCode = "404", description = "Driver not found", content = @Content)
     })
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority(@roles.FIELD_TECHNICIAN)")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<DriverDTO> getDriverById(@PathVariable Long id) {
         return driverService.getDriverById(id)
                 .map(ResponseEntity::ok)
@@ -69,6 +70,7 @@ public class DriverController {
             @ApiResponse(responseCode = "404", description = "Driver not found", content = @Content)
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<DriverDTO> updateDriver(@PathVariable Long id, @RequestBody DriverDTO driverDTO) {
         driverDTO.setId(id);
         return ResponseEntity.ok(driverService.updateDriver(driverDTO));
@@ -81,6 +83,7 @@ public class DriverController {
             @ApiResponse(responseCode = "404", description = "Driver not found", content = @Content)
     })
     @DeleteMapping("/{userId}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Void> deleteDriver(@PathVariable Long userId) {
         driverService.deleteDriver(userId);
         return ResponseEntity.noContent().build();

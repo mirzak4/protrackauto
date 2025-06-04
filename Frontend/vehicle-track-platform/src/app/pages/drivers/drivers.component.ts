@@ -1,74 +1,76 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DriverService } from 'app/core/services/driver.service';
+import { DriverDTO, UserDTO } from 'app/core/models/driver.model';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-drivers',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
   templateUrl: './drivers.component.html',
-  styleUrl: './drivers.component.css'
+  imports: [CommonModule],
+  styleUrls: ['./drivers.component.css']
 })
-export class DriversComponent {
-  drivers = [
-    { id: 1, name: 'John Doe', licenseNumber: 'XYZ12345', phone: '555-1234', status: 'active' },
-    { id: 2, name: 'Jane Smith', licenseNumber: 'ABC67890', phone: '555-5678', status: 'inactive' }
-  ];
-
-  isModalOpen = false;
-  isEditMode = false;
+export class DriversComponent implements OnInit {
+  drivers: DriverDTO[] = [];
   isDeleteConfirmOpen = false;
-  driverToDelete: any = null;
+  driverToDelete: DriverDTO | null = null;
 
-  currentDriver: any = { id: null, name: '', licenseNumber: '', phone: '', status: 'active' };
+  constructor(
+    private driverService: DriverService,
+    private router: Router
+  ) {}
 
-  openAddModal() {
-    this.isEditMode = false;
-    this.currentDriver = { id: null, name: '', licenseNumber: '', phone: '', status: 'active' };
-    this.isModalOpen = true;
+  ngOnInit() {
+    this.loadDrivers();
   }
 
-  openEditModal(driver: any) {
-    this.isEditMode = true;
-    this.currentDriver = { ...driver };
-    this.isModalOpen = true;
-  }
-
-  closeModal() {
-    this.isModalOpen = false;
-  }
-
-  saveDriver() {
-    if (this.isEditMode) {
-      const index = this.drivers.findIndex(d => d.id === this.currentDriver.id);
-      if (index > -1) {
-        this.drivers[index] = { ...this.currentDriver };
+  loadDrivers() {
+    this.driverService.getAllDrivers().subscribe({
+      next: (drivers) => {
+        this.drivers = drivers;
+      },
+      error: (error) => {
+        console.error('Error loading drivers:', error);
       }
-    } else {
-      const newId = Math.max(...this.drivers.map(d => d.id), 0) + 1;
-      this.drivers.push({ ...this.currentDriver, id: newId });
-    }
-    this.closeModal();
+    });
   }
 
-  deleteDriver(id: number) {
-    const driver = this.drivers.find(d => d.id === id);
+  addDriver() {
+    this.router.navigate(['/drivers/new']);
+  }
+
+  editDriver(driverId: number) {
+    this.router.navigate(['/drivers/edit', driverId]);
+  }
+
+  deleteDriver(driver: DriverDTO) {
     this.driverToDelete = driver;
     this.isDeleteConfirmOpen = true;
   }
   
   confirmDelete() {
     if (!this.driverToDelete) return;
-  
-    this.drivers = this.drivers.filter(d => d.id !== this.driverToDelete.id);
+    
+    this.driverService.deleteDriver(this.driverToDelete.userId).subscribe({
+      next: () => {
+        this.loadDrivers();
+        this.isDeleteConfirmOpen = false;
+        this.driverToDelete = null;
+      },
+      error: (error) => {
+        console.error('Error deleting driver:', error);
+        this.isDeleteConfirmOpen = false;
+        this.driverToDelete = null;
+      }
+    });
+  }
+
+  cancelDelete() {
     this.isDeleteConfirmOpen = false;
     this.driverToDelete = null;
   }
-  
 
-cancelDelete() {
-  this.isDeleteConfirmOpen = false;
-  this.driverToDelete = null;
-}
-
+  getFullName(user: UserDTO | undefined): string {
+    return user ? `${user.firstName} ${user.lastName}` : '';
+  }
 }
