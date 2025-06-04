@@ -1,5 +1,6 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.repository;
 
+import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.WeeklyFuelPriceDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Company;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.CompanyType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,45 @@ public class CompanyRepository {
 
             return company;
         }
+    }
+
+    private static final class WeeklyFuelPriceRowMapper implements RowMapper<WeeklyFuelPriceDTO> {
+        @Override
+        @NonNull
+        public WeeklyFuelPriceDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new WeeklyFuelPriceDTO(
+                rs.getLong("COMPANY_ID"),
+                rs.getString("COMPANY_NAME"),
+                rs.getLong("FUEL_ID"),
+                rs.getString("FUEL_NAME"),
+                rs.getString("YEAR"),
+                rs.getString("WEEK"),
+                rs.getDate("WEEK_START_DATE").toLocalDate(),
+                rs.getDate("WEEK_END_DATE").toLocalDate(),
+                rs.getDouble("AVG_PRICE")
+            );
+        }
+    }
+
+    public List<WeeklyFuelPriceDTO> getGasStationYearStatistic(Long companyId, String year) {
+        String sql = """
+            SELECT 
+                COMPANY_ID,
+                COMPANY_NAME,
+                FUEL_ID,
+                FUEL_NAME,
+                YEAR,
+                WEEK,
+                WEEK_START_DATE,
+                WEEK_END_DATE,
+                AVG_PRICE
+            FROM VW_WEEKLY_AVG_FUEL_PRICE
+            WHERE COMPANY_ID = ? 
+            AND YEAR = ?
+            ORDER BY FUEL_ID, WEEK
+            """;
+        
+        return jdbcTemplate.query(sql, new WeeklyFuelPriceRowMapper(), companyId, year);
     }
 
     public List<Company> findAll(CompanyType companyType) {

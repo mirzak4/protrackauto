@@ -29,6 +29,9 @@
       
       <div class="navbar-end">
         @if (userInfo$ | async) {
+          <button class="navbar-item report-btn" (click)="downloadReport()">
+            <i class="fas fa-file-pdf"></i> Download Report
+          </button>
           <div class="user-profile-dropdown" 
             (click)="toggleProfileMenu()"
             (blur)="onProfileBlur($event)"

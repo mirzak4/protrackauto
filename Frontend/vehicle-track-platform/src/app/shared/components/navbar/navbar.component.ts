@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { ReportService } from '../../../core/services/report.service';
 import { UserInfo } from '../../../core/models/user-info.model';
 import { Observable } from 'rxjs';
 
@@ -20,7 +21,8 @@ export class NavbarComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private reportService: ReportService
   ) {
     this.userInfo$ = this.authService.getUserInfo$();
   }
@@ -34,6 +36,10 @@ export class NavbarComponent {
     if (!target?.closest('.user-profile-dropdown')) {
       this.profileMenuOpen = false;
     }
+  }
+
+  downloadReport(): void {
+    this.reportService.downloadWeeklyFuelPriceReport(156);
   }
 
   logout(): void {
