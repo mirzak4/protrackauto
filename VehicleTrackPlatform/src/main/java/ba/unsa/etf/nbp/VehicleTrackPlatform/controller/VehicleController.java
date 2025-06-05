@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -27,6 +28,7 @@ public class VehicleController {
             @ApiResponse(responseCode = "200", description = "List of vehicles")
     })
     @GetMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public List<VehicleDTO> getAllVehicles() {
         return vehicleService.getAllVehicles();
     }
@@ -38,6 +40,7 @@ public class VehicleController {
             @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<VehicleDTO> getVehicleById(@Valid @PathVariable Long id) {
         return vehicleService.getVehicleById(id)
                 .map(ResponseEntity::ok)
@@ -50,6 +53,7 @@ public class VehicleController {
             @ApiResponse(responseCode = "400", description = "Invalid vehicle payload supplied", content = @Content)
     })
     @PostMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Long> createVehicle(@RequestBody VehicleDTO vehicleDTO) {
         Long vehicleId = vehicleService.createVehicle(vehicleDTO);
         return ResponseEntity.created(URI.create("/api/vehicle/" + vehicleId))
@@ -63,6 +67,7 @@ public class VehicleController {
             @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<VehicleDTO> updateVehicle(@PathVariable Long id, @RequestBody VehicleDTO vehicleDTO) {
         vehicleDTO.setId(id);
         return ResponseEntity.ok(vehicleService.updateVehicle(vehicleDTO));
@@ -76,6 +81,7 @@ public class VehicleController {
             @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Void> deleteVehicle(@PathVariable Long id) {
         vehicleService.deleteVehicle(id);
         return ResponseEntity.noContent().build();

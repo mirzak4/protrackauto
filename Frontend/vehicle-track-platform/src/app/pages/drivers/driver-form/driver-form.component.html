@@ -5,29 +5,40 @@
       <div class="form-divider"></div>
     </header>
 
-    <form (ngSubmit)="saveDriver()" class="driver-form">
+    <form (ngSubmit)="saveDriver()" class="driver-form" #driverForm="ngForm">
       <div class="form-section">
         <h3 class="section-title">Personal Information</h3>
         <div class="form-grid">
           <div class="input-group">
             <label for="firstName" class="input-label">First Name</label>
-            <input [(ngModel)]="driver.user!.firstName" name="firstName" id="firstName" 
-                   class="form-input" required placeholder="Enter first name" />
+            <input [(ngModel)]="driver.user.firstName" name="firstName" id="firstName" 
+                   class="form-input" required placeholder="Enter first name" (input)="onInputChange()"/>
           </div>
           <div class="input-group">
             <label for="lastName" class="input-label">Last Name</label>
-            <input [(ngModel)]="driver.user!.lastName" name="lastName" id="lastName" 
-                   class="form-input" required placeholder="Enter last name" />
+            <input [(ngModel)]="driver.user.lastName" name="lastName" id="lastName" 
+                   class="form-input" required placeholder="Enter last name" (input)="onInputChange()"/>
           </div>
           <div class="input-group">
             <label for="email" class="input-label">Email</label>
-            <input [(ngModel)]="driver.user!.email" name="email" id="email" 
-                   class="form-input" type="email" required placeholder="Enter email" />
+            <input [(ngModel)]="driver.user.email" name="email" id="email" 
+                   class="form-input" type="email" required placeholder="Enter email" (input)="onInputChange()" />
           </div>
           <div class="input-group">
+            <label for="username" class="input-label">Username</label>
+            <input [(ngModel)]="driver.user.username" name="username" id="username" 
+                   class="form-input" required placeholder="Enter username" (input)="onInputChange()"/>
+          </div>
+
+          <div class="input-group">
             <label for="phone" class="input-label">Phone</label>
-            <input [(ngModel)]="driver.user!.phoneNumber" name="phone" id="phone" 
-                   class="form-input" required placeholder="Enter phone number" />
+            <input [(ngModel)]="driver.user.phoneNumber" name="phone" id="phone" 
+                   class="form-input" required placeholder="Enter phone number" (input)="onInputChange()"/>
+          </div>
+          <div class="input-group">
+            <label for="birthDate" class="input-label">Birth Date</label>
+            <input [(ngModel)]="driver.user.birthDate" name="birthDate" id="birthDate" 
+                   class="form-input" type="date" placeholder="Enter birth date" (input)="onInputChange()"/>
           </div>
         </div>
       </div>
@@ -38,27 +49,29 @@
           <div class="input-group">
             <label for="licenseNumber" class="input-label">License Number</label>
             <input [(ngModel)]="driver.licenseNumber" name="licenseNumber" id="licenseNumber" 
-                   class="form-input" required placeholder="Enter license number" />
+                   class="form-input" required placeholder="Enter license number" (input)="onInputChange()"/>
           </div>
           <div class="input-group">
             <label for="licenseExpiry" class="input-label">License Expiry</label>
             <input [(ngModel)]="driver.licenseExpiry" name="licenseExpiry" id="licenseExpiry" 
-                   class="form-input" type="date" required />
+                   class="form-input" type="date" required (input)="onInputChange()"/>
           </div>
           <div class="input-group">
             <label for="employmentDate" class="input-label">Employment Date</label>
             <input [(ngModel)]="driver.employmentDate" name="employmentDate" id="employmentDate" 
-                   class="form-input" type="date" required />
+                   class="form-input" type="date" required (input)="onInputChange()"/>
           </div>
         </div>
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()">
-          <span>{{ isEditMode ? 'Update Driver' : 'Create Driver' }}</span>
+        <button type="submit" class="btn btn-primary"
+          [disabled]="!isFormValid() || (isEditMode && !hasChanges)">
+          {{ isEditMode ? 'Update Driver' : 'Create Driver' }}
         </button>
+
         <button type="button" class="btn btn-outline" (click)="router.navigate(['/drivers'])">
-          <span>Cancel</span>
+          Cancel
         </button>
       </div>
     </form>

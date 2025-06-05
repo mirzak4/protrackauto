@@ -3,14 +3,15 @@ export interface UserDTO {
   firstName: string;
   lastName: string;
   email: string;
+  username?: string;
   phoneNumber: string;
+  birthDate?: string;
 }
 
 export interface DriverDTO {
-  id: number;
-  userId: number;
+  id?: number;
   licenseNumber: string;
-  licenseExpiry: string;
-  employmentDate: string;
+  licenseExpiry: string;    
+  employmentDate: string;  
   user: UserDTO;
 }

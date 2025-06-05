@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { VehiclesComponent } from './pages/vehicles/vehicles.component';
-import { DriversComponent } from './pages/drivers/drivers.component';
+import { DriverListComponent } from './pages/drivers//driver-list/driver-list.component';
 import { DriverFormComponent } from './pages/drivers/driver-form/driver-form.component';
 import { ServicesComponent } from './pages/services/services.component';
 import { FuelComponent } from './pages/fuel/fuel.component';
@@ -18,14 +18,22 @@ import { CompanyListComponent } from './pages/company/company-list/company-list.
 import { CompanyCreateComponent } from './pages/company/company-create/company-create.component';
 import { CompanyDetailComponent } from './pages/company/company-detail/company-detail.component';
 import { LogoutComponent } from './pages/logout/logout.component';
+import { VehicleFormComponent } from './pages/vehicles/vehicle-form/vehicle-form.component';
+import { VehicleListComponent } from './pages/vehicles/vehicle-list/vehicle-list.component';
+import { VehicleDetailsComponent } from './pages/vehicles/vehicle-details/vehicle-details.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'drivers', component: DriversComponent },
+  { path: 'drivers', component: DriverListComponent },
   { path: 'drivers/new', component: DriverFormComponent },
   { path: 'drivers/edit/:id', component: DriverFormComponent },
-  { path: 'vehicles', component: VehiclesComponent },
+
+  { path: 'vehicles', component: VehicleListComponent },
+  { path: 'vehicles/new', component: VehicleFormComponent },
+  { path: 'vehicles/edit/:id', component: VehicleFormComponent },
+  { path: 'vehicles/details', component: VehicleDetailsComponent },
+
   { path: 'services', component: ServicesComponent },
   { path: 'fuel', component: FuelComponent },
   { path: 'insurance', component: InsuranceComponent },

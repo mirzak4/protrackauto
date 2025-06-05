@@ -19,7 +19,7 @@ export class DriverService {
     return this.http.get<DriverDTO>(`${environment.apiUrl}/api/driver/${id}`);
   }
 
-  createDriver(driverData: Omit<DriverDTO, 'id'>): Observable<DriverDTO> {
+  createDriver(driverData: DriverDTO): Observable<DriverDTO> {
     return this.http.post<DriverDTO>(`${environment.apiUrl}/api/driver`, driverData);
   }
 

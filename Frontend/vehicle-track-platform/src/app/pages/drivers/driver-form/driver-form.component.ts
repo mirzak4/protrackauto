@@ -2,17 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DriverService } from 'app/core/services/driver.service';
-import { DriverDTO } from 'app/core/models/driver.model';
+import { DriverDTO, UserDTO } from 'app/core/models/driver.model';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-driver-form',
+  standalone: true,
   templateUrl: './driver-form.component.html',
-  imports: [FormsModule],
+  imports: [FormsModule, MatSnackBarModule],
   styleUrls: ['./driver-form.component.css']
 })
 export class DriverFormComponent implements OnInit {
   isEditMode = false;
-  driver: Partial<DriverDTO> = {
+  hasChanges = false;
+  driver: DriverDTO = {
+    id: 0,
     licenseNumber: '',
     licenseExpiry: '',
     employmentDate: '',
@@ -21,14 +26,17 @@ export class DriverFormComponent implements OnInit {
       firstName: '',
       lastName: '',
       email: '',
-      phoneNumber: ''
+      username: '',
+      phoneNumber: '',
+      birthDate: ''
     }
   };
 
   constructor(
     private driverService: DriverService,
     private route: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -39,15 +47,19 @@ export class DriverFormComponent implements OnInit {
     }
   }
 
+  onInputChange() {
+    this.hasChanges = true;
+  }
+
+
   loadDriver(id: number) {
     this.driverService.getDriverById(id).subscribe({
       next: (driver) => {
         this.driver = driver;
-        if (driver.licenseExpiry) {
-          this.driver.licenseExpiry = this.formatDateForInput(driver.licenseExpiry);
-        }
-        if (driver.employmentDate) {
-          this.driver.employmentDate = this.formatDateForInput(driver.employmentDate);
+        this.driver.licenseExpiry = this.formatDateForInput(driver.licenseExpiry);
+        this.driver.employmentDate = this.formatDateForInput(driver.employmentDate);
+        if (driver.user.birthDate) {
+          this.driver.user.birthDate = this.formatDateForInput(driver.user.birthDate);
         }
       },
       error: (error) => {
@@ -59,31 +71,42 @@ export class DriverFormComponent implements OnInit {
   saveDriver() {
     if (!this.isFormValid()) return;
 
-    const driverData: DriverDTO = {
-      id: this.driver.id || 0,
-      userId: this.driver.userId || 0,
-      licenseNumber: this.driver.licenseNumber || '',
-      licenseExpiry: new Date(this.driver.licenseExpiry || '').toISOString(),
-      employmentDate: new Date(this.driver.employmentDate || '').toISOString(),
+    const driverToSave: DriverDTO = {
+      ...this.driver,
+      licenseExpiry: new Date(this.driver.licenseExpiry).toISOString(),
+      employmentDate: new Date(this.driver.employmentDate).toISOString(),
       user: {
-        id: this.driver.user?.id || 0,
-        firstName: this.driver.user?.firstName || '',
-        lastName: this.driver.user?.lastName || '',
-        email: this.driver.user?.email || '',
-        phoneNumber: this.driver.user?.phoneNumber || ''
+        ...this.driver.user,
+        birthDate: this.driver.user.birthDate
+          ? new Date(this.driver.user.birthDate).toISOString()
+          : ''
       }
     };
 
     const request = this.isEditMode
-      ? this.driverService.updateDriver(driverData.id, driverData)
-      : this.driverService.createDriver(driverData);
+      ? this.driverService.updateDriver(driverToSave.id!, driverToSave)
+      : this.driverService.createDriver(driverToSave);
 
     request.subscribe({
-      next: () => {
+      next: (response) => {
+        
+        this.snackBar.open(
+          this.isEditMode
+            ? 'Driver information updated successfully.'
+            : 'Driver created successfully.',
+          'Dismiss',
+          {
+            duration: 3500,
+            panelClass: ['snackbar-success']
+          }
+        );
+        this.hasChanges = false;
         this.router.navigate(['/drivers']);
       },
       error: (error) => {
         console.error('Error saving driver:', error);
+
+        this.snackBar.open('Error saving driver. Please try again.', 'Close', { duration: 3000 });
       }
     });
   }
@@ -93,15 +116,15 @@ export class DriverFormComponent implements OnInit {
       this.driver.licenseNumber &&
       this.driver.licenseExpiry &&
       this.driver.employmentDate &&
-      this.driver.user?.firstName &&
-      this.driver.user?.lastName &&
-      this.driver.user?.email &&
-      this.driver.user?.phoneNumber
+      this.driver.user.firstName &&
+      this.driver.user.lastName &&
+      this.driver.user.email &&
+      this.driver.user.username && 
+      this.driver.user.phoneNumber
     );
   }
 
   formatDateForInput(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toISOString().split('T')[0];
+    return dateString ? new Date(dateString).toISOString().split('T')[0] : '';
   }
 }

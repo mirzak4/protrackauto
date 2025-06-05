@@ -3,21 +3,24 @@ import { Router } from '@angular/router';
 import { DriverService } from 'app/core/services/driver.service';
 import { DriverDTO, UserDTO } from 'app/core/models/driver.model';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-drivers',
-  templateUrl: './drivers.component.html',
-  imports: [CommonModule],
-  styleUrls: ['./drivers.component.css']
+  selector: 'app-driver-list',
+  standalone: true,
+  templateUrl: './driver-list.component.html',
+  imports: [CommonModule, MatSnackBarModule],
+  styleUrls: ['./driver-list.component.css']
 })
-export class DriversComponent implements OnInit {
+export class DriverListComponent implements OnInit {
   drivers: DriverDTO[] = [];
   isDeleteConfirmOpen = false;
   driverToDelete: DriverDTO | null = null;
 
   constructor(
     private driverService: DriverService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -49,18 +52,27 @@ export class DriversComponent implements OnInit {
   }
   
   confirmDelete() {
-    if (!this.driverToDelete) return;
-    
-    this.driverService.deleteDriver(this.driverToDelete.userId).subscribe({
+    if (!this.driverToDelete?.id) return;
+
+    this.driverService.deleteDriver(this.driverToDelete.id).subscribe({
       next: () => {
         this.loadDrivers();
         this.isDeleteConfirmOpen = false;
+        this.snackBar.open('Driver deleted successfully.', 'Dismiss', {
+          duration: 3500,
+          panelClass: ['snackbar-success']
+        });
         this.driverToDelete = null;
       },
       error: (error) => {
         console.error('Error deleting driver:', error);
         this.isDeleteConfirmOpen = false;
         this.driverToDelete = null;
+
+        this.snackBar.open('Error deleting driver. Please try again.', 'Close', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
       }
     });
   }
