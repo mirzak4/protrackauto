@@ -13,11 +13,7 @@ import { ToastComponent } from './shared/components/toast/toast.component';
     NavbarComponent,
     ToastComponent
   ],
-  template: `
-    <app-navbar></app-navbar>
-    <app-toast></app-toast>
-    <router-outlet></router-outlet>
-  `,
+  templateUrl: './app.component.html',
   styles: []
 })
 export class AppComponent {

@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { CompanyDTO } from '../models/company.model';
+import { GasStationFuelPriceReport } from '../models/gas-station-fuel-price-report.model';
 
 @Injectable({ providedIn: 'root' })
 export class CompanyService {
-  private apiUrl = '/api/company';
+  private apiUrl = `${environment.apiUrl}/api/companies`;
 
   constructor(private http: HttpClient) {}
 
@@ -28,5 +30,21 @@ export class CompanyService {
 
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getCompanyReports(companyId: number): Observable<GasStationFuelPriceReport[]> {
+    return this.http.get<GasStationFuelPriceReport[]>(`${this.apiUrl}/${companyId}/reports`);
+  }
+
+  generateWeeklyFuelPriceReport(companyId: number): void {
+    this.http.post(`${this.apiUrl}/${companyId}/reports/weekly-fuel-prices`, null, { responseType: 'blob' })
+      .subscribe(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'weekly-fuel-prices.pdf';
+        link.click();
+        window.URL.revokeObjectURL(url);
+      });
   }
 }

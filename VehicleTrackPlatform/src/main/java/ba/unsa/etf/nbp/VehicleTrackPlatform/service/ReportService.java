@@ -1,7 +1,10 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.service;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.WeeklyFuelPriceDTO;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.GasStationFuelPriceReport;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.CompanyRepository;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.DocumentRepository;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.GasStationFuelPriceReportRepository;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
@@ -21,9 +24,11 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -35,11 +40,19 @@ import java.awt.image.BufferedImage;
 public class ReportService {
     private final CompanyRepository companyRepository;
     private final CompanyService companyService;
+    private final DocumentRepository documentRepository;
+    private final GasStationFuelPriceReportRepository gasStationFuelPriceReportRepository;
 
     @Autowired
-    public ReportService(CompanyRepository companyRepository, CompanyService companyService) {
+    public ReportService(
+            CompanyRepository companyRepository,
+            CompanyService companyService,
+            DocumentRepository documentRepository,
+            GasStationFuelPriceReportRepository gasStationFuelPriceReportRepository) {
         this.companyRepository = companyRepository;
         this.companyService = companyService;
+        this.documentRepository = documentRepository;
+        this.gasStationFuelPriceReportRepository = gasStationFuelPriceReportRepository;
     }
 
     private byte[] generateChart(String title, List<WeeklyFuelPriceDTO> prices) throws Exception {
@@ -120,14 +133,18 @@ public class ReportService {
         return baos.toByteArray();
     }
 
+    @Transactional
     public byte[] generateWeeklyFuelPriceReport(Long companyId) throws Exception {
         // Verify company exists
-        companyService.getCompanyById(companyId);
+        var company = companyService.getCompanyById(companyId);
+        if (company.isEmpty()) {
+            throw new RuntimeException("Company with id " + companyId + " does nor exist");
+        }
         
         // Get current year
         String currentYear = String.valueOf(LocalDate.now().getYear());
         
-        // Fetch data
+        // Fetch data from view
         List<WeeklyFuelPriceDTO> prices = companyRepository.getGasStationYearStatistic(companyId, currentYear);
         
         if (prices.isEmpty()) {
@@ -201,6 +218,27 @@ public class ReportService {
         });
 
         document.close();
-        return baos.toByteArray();
+        byte[] pdfContent = baos.toByteArray();
+
+        // Store the PDF in the database
+        ba.unsa.etf.nbp.VehicleTrackPlatform.model.Document pdfDocument = new ba.unsa.etf.nbp.VehicleTrackPlatform.model.Document(
+            0L,
+            String.format("weekly-fuel-prices-%s-%s.pdf", companyName, currentYear),
+            "application/pdf",
+            pdfContent,
+            Instant.now()
+        );
+        Long documentId = documentRepository.create(pdfDocument);
+
+        // Create report record
+        GasStationFuelPriceReport report = new GasStationFuelPriceReport(
+            0L,
+            companyId.intValue(),
+            String.format("Weekly Fuel Price Report - %s - %s", companyName, currentYear),
+            documentId.intValue()
+        );
+        gasStationFuelPriceReportRepository.create(report);
+
+        return pdfContent;
     }
 } 

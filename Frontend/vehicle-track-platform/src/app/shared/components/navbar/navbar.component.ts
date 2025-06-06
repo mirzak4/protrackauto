@@ -6,6 +6,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { ReportService } from '../../../core/services/report.service';
 import { UserInfo } from '../../../core/models/user-info.model';
 import { Observable } from 'rxjs';
+import { CompanyService } from 'app/core/services/company.service';
 
 @Component({
   selector: 'app-navbar',
@@ -22,7 +23,7 @@ export class NavbarComponent {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private reportService: ReportService
+    private companyService: CompanyService
   ) {
     this.userInfo$ = this.authService.getUserInfo$();
   }
@@ -39,7 +40,7 @@ export class NavbarComponent {
   }
 
   downloadReport(): void {
-    this.reportService.downloadWeeklyFuelPriceReport(156);
+    this.companyService.generateWeeklyFuelPriceReport(156);
   }
 
   logout(): void {
