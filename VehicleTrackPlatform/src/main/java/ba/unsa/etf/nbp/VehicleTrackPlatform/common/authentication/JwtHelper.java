@@ -34,7 +34,7 @@ public class JwtHelper {
                 .subject(email)
                 .claim("roles", authorities)
                 .issuedAt(Date.from(now))
-                .expiration(Date.from(now.plus(1, ChronoUnit.MINUTES)))
+                .expiration(Date.from(now.plus(MINUTES, ChronoUnit.MINUTES)))
                 .signWith(this.secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
