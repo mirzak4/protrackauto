@@ -1,0 +1,57 @@
+<section class="vehicle-form-section">
+  <div class="form-container">
+    <header class="form-header">
+      <h2 class="form-title">{{ isEditMode ? 'Edit Vehicle' : 'Add Vehicle' }}</h2>
+      <div class="form-divider"></div>
+    </header>
+
+    <form (ngSubmit)="saveVehicle()" class="vehicle-form">
+      <div class="form-section">
+        <h3 class="section-title">Basic Information</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="licensePlate" class="input-label">License Plate</label>
+            <input [(ngModel)]="vehicle.licensePlate" name="licensePlate" id="licensePlate" 
+                   class="form-input" required placeholder="Enter license plate"
+                   (input)="onInputChange()" />
+          </div>
+          <div class="input-group">
+            <label for="vehicleBrandType" class="input-label">Brand</label>
+            <input [(ngModel)]="vehicle.vehicleBrandType" name="vehicleBrandType" id="vehicleBrandType" 
+                   class="form-input" required placeholder="Enter brand"
+                   (input)="onInputChange()" />
+          </div>
+          <div class="input-group">
+            <label for="vehicleCategory" class="input-label">Category</label>
+            <select [(ngModel)]="vehicle.vehicleCategory" name="vehicleCategory" id="vehicleCategory" 
+                    class="form-input" required (change)="onInputChange()">
+              <option *ngFor="let category of vehicleCategories" [value]="category">
+                {{ category }}
+              </option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="vehicleBodyType" class="input-label">Body Type</label>
+            <select [(ngModel)]="vehicle.vehicleBodyType" name="vehicleBodyType" id="vehicleBodyType" 
+                    class="form-input" required (change)="onInputChange()">
+              <option *ngFor="let type of vehicleBodyTypes" [value]="type">
+                {{ type }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add more sections for other vehicle properties as needed -->
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()">
+          {{ isEditMode ? 'Save Changes' : 'Add Vehicle' }}
+        </button>
+        <button type="button" class="btn btn-outline" (click)="router.navigate(['/vehicles'])">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

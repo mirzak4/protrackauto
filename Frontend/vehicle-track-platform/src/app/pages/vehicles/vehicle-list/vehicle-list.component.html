@@ -1,0 +1,53 @@
+<section class="vehicles-section">
+  <div class="container">
+    <div class="header">
+      <h2>Vehicles</h2>
+      <button class="add-btn" (click)="addVehicle()">
+        <i class="fas fa-plus"></i> Add Vehicle
+      </button>
+    </div>
+
+    <table class="vehicles-table">
+      <thead>
+        <tr>
+          <th>License Plate</th>
+          <th>Brand</th>
+          <th>Category</th>
+          <th>Type</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vehicle of vehicles">
+          <td>{{ vehicle.licensePlate }}</td>
+          <td>{{ vehicle.vehicleBrandType }}</td>
+          <td>{{ vehicle.vehicleCategory }}</td>
+          <td>{{ vehicle.vehicleBodyType }}</td>
+          <td>
+            <button class="action-btn" (click)="viewVehicle(vehicle.id)">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button class="action-btn" (click)="editVehicle(vehicle.id)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-btn" (click)="deleteVehicle(vehicle)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Confirm Delete Modal -->
+  <div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">
+    <div class="modal">
+      <h2>Confirm Deletion</h2>
+      <p>Are you sure you want to delete vehicle <strong>{{ vehicleToDelete?.licensePlate }}</strong>?</p>
+      <div class="modal-buttons">
+        <button class="btn-primary" (click)="confirmDelete()">Delete</button>
+        <button class="btn-secondary" (click)="cancelDelete()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</section>

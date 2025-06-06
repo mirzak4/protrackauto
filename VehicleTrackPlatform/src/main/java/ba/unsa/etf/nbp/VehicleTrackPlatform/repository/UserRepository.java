@@ -52,21 +52,38 @@ public class UserRepository {
         return jdbcTemplate.query("SELECT u.ID, u.FIRST_NAME, u.LAST_NAME, u.EMAIL, u.PASSWORD, u.ROLE_ID, r.NAME, ai.ACTIVE FROM NBP.NBP_USER u JOIN NBP.NBP_ROLE r ON u.ROLE_ID = r.ID JOIN ACCOUNT_INFO ai ON ai.USER_ID = u.ID WHERE EMAIL=?", new UserRepository.UserRowMapper(), email).stream().findFirst();
     }
 
+
     public void updateUser(User user) {
-        jdbcTemplate.update(
-                "UPDATE NBP.NBP_USER SET FIRST_NAME = ?, LAST_NAME = ?, " +
-                        "EMAIL = ?, PASSWORD = ?, USERNAME = ?, PHONE_NUMBER = ?, BIRTH_DATE = ? " +
-                        "WHERE ID = ?",
-                user.getFirstName(),
-                user.getLastName(),
-                user.getEmail(),
-                this.passwordEncoder.encode(user.getPassword()),
-                user.getUsername(),
-                user.getPhoneNumber(),
-                Timestamp.from(user.getBirthDate()),
-                user.getId()
-        );
+        if (user.getPassword() == null || user.getPassword().isBlank()) {
+            // Update bez passworda
+            jdbcTemplate.update(
+                    "UPDATE NBP.NBP_USER SET FIRST_NAME = ?, LAST_NAME = ?, EMAIL = ?, USERNAME = ?, PHONE_NUMBER = ?, BIRTH_DATE = ? " +
+                            "WHERE ID = ?",
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getEmail(),
+                    user.getUsername(),
+                    user.getPhoneNumber(),
+                    Timestamp.from(user.getBirthDate()),
+                    user.getId()
+            );
+        } else {
+            // Update sa passwordom
+            jdbcTemplate.update(
+                    "UPDATE NBP.NBP_USER SET FIRST_NAME = ?, LAST_NAME = ?, EMAIL = ?, PASSWORD = ?, USERNAME = ?, PHONE_NUMBER = ?, BIRTH_DATE = ? " +
+                            "WHERE ID = ?",
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getEmail(),
+                    this.passwordEncoder.encode(user.getPassword()),
+                    user.getUsername(),
+                    user.getPhoneNumber(),
+                    Timestamp.from(user.getBirthDate()),
+                    user.getId()
+            );
+        }
     }
+
 
     public Long insertUser(User user) {
         KeyHolder createdUserKeyHolder = new GeneratedKeyHolder();

@@ -57,15 +57,16 @@ public class DriverRepository {
         @Override
         @NonNull
         public Driver mapRow(ResultSet rs, int rowNum) throws SQLException {
+            var birthDateSql = rs.getTimestamp("BIRTH_DATE");
             var driverUser = new User(
                     rs.getLong("USER_ID"),
                     rs.getString("FIRST_NAME"),
                     rs.getString("LAST_NAME"),
                     rs.getString("EMAIL"),
                     null,
-                    null,
+                    rs.getString("USERNAME"),
                     rs.getString("PHONE_NUMBER"),
-                    null,
+                    birthDateSql != null ? birthDateSql.toInstant() : null,
                     null
             );
             driverUser.setActive(rs.getString("ACTIVE").equals("1"));
@@ -142,6 +143,6 @@ public class DriverRepository {
     }
 
     public void deleteByUserId(Long userId) {
-        jdbcTemplate.update("DELETE FROM NBP.NBP_USER WHERE ID = ?", userId);
+        jdbcTemplate.update("DELETE FROM DRIVER WHERE ID = ?", userId);
     }
 }

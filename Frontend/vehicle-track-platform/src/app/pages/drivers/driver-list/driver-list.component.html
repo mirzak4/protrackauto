@@ -1,0 +1,51 @@
+<section class="vehicles-section">
+  <div class="container">
+    <div class="header">
+      <h2>Drivers</h2>
+      <button class="add-btn" (click)="addDriver()">
+        <i class="fas fa-plus"></i> Add Driver
+      </button>
+    </div>
+
+    <table class="vehicles-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>License #</th>
+          <th>License Expiry</th>
+          <th>Employment Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let driver of drivers">
+          <td>{{ getFullName(driver.user) }}</td>
+          <td>{{ driver.licenseNumber }}</td>
+          <td>{{ driver.licenseExpiry | date }}</td>
+          <td>{{ driver.employmentDate | date }}</td>
+          <td>
+            <button class="action-btn" (click)="editDriver(driver.id!)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-btn" (click)="deleteDriver(driver)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Confirm Delete Modal -->
+  <div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">
+    <div class="modal">
+      <h2>Confirm Deletion</h2>
+      <p>Are you sure you want to delete <strong>{{ getFullName(driverToDelete?.user) }}</strong>?</p>
+      <div class="modal-buttons">
+        <button class="btn-primary" (click)="confirmDelete()">Delete</button>
+        <button class="btn-secondary" (click)="cancelDelete()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</section>
