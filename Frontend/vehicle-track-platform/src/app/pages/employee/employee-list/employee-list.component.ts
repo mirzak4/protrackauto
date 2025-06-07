@@ -5,6 +5,7 @@ import { EmployeeService } from 'app/core/services/employee.service';
 import { Employee } from 'app/core/models/employee.model';
 import { CommonModule } from '@angular/common';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { RoleService } from 'app/core/services/role.service';
 
 @Component({
   selector: 'app-employee-list',
@@ -17,15 +18,30 @@ export class EmployeeListComponent implements OnInit {
   employees: Employee[] = [];
   isDeleteConfirmOpen = false;
   employeeToDelete: Employee | null = null;
+  roleMap: { [key: number]: string } = {};
+
 
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private roleService: RoleService
   ) {}
 
   ngOnInit() {
     this.loadEmployees();
+    this.loadRoles();
+  }
+
+  loadRoles() {
+    this.roleService.getAllRoles().subscribe({
+      next: (roles) => {
+        roles.forEach(role => this.roleMap[role.id] = role.name);
+      },
+      error: () => {
+        console.error('Error loading roles');
+      }
+    });
   }
 
   loadEmployees() {
@@ -87,12 +103,13 @@ export class EmployeeListComponent implements OnInit {
     return user ? `${user.firstName} ${user.lastName}` : '';
   }
 
-  getRoleName(roleId: number): string {
-    switch (roleId) {
-      case 1: return 'Admin';
-      case 2: return 'Employee';
-      case 3: return 'Manager';
-      default: return 'Unknown';
-    }
+  formatRoleName(roleName: string): string {
+    if (!roleName) return '';
+    const words = roleName.split('_');
+    const formattedWords = words.map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    );
+    return formattedWords.join(' ');
   }
+
 }

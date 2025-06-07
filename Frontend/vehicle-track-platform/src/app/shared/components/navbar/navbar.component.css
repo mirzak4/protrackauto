@@ -218,3 +218,27 @@
   font-size: 1.75rem;
   color: #4dabf7;
 }
+
+.login-btn {
+  color: #d1d9e8;
+  background-color: transparent;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0 1.5rem;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.login-btn:hover {
+  color: white;
+  background-color: #252d45;
+}
+
+.login-btn i {
+  font-size: 1.1rem;
+  color: #4dabf7;
+}

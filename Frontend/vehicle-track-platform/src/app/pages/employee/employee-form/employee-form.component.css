@@ -130,3 +130,17 @@ select.form-input:focus {
   background-color: #007bff;
   color: white;
 }
+
+@media (max-width: 640px) {
+  .employee-form .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .employee-form .form-actions {
+    flex-direction: column;
+  }
+
+  .employee-form .btn {
+    width: 100%;
+  }
+}

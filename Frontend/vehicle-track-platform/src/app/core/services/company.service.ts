@@ -23,8 +23,8 @@ export class CompanyService {
     return this.http.get<CompanyDTO[]>(this.apiUrl, { params });
   }
 
-  getAll(type?: string): Observable<CompanyDTO[]> {
-    const params = type ? new HttpParams().set('type', type) : undefined;
+  getAll(companyType?: string): Observable<CompanyDTO[]> {
+    const params = companyType ? new HttpParams().set('companyType', companyType) : undefined;
     return this.http.get<CompanyDTO[]>(this.apiUrl, { params });
   }
 

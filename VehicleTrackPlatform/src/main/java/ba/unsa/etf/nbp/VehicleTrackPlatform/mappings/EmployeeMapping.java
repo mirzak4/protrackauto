@@ -1,7 +1,9 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.mappings;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.EmployeeDTO;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.UserDTO;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.Employee;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.User;
 
 public class EmployeeMapping {
 
@@ -25,17 +27,29 @@ public class EmployeeMapping {
         return dto;
     }
 
+
     public static Employee convertToEntity(EmployeeDTO dto) {
-        Employee employee = dto.getUser() != null && dto.getCompany() != null ? new Employee(
-                dto.getId(),
-                CompanyMapping.convertToEntity(dto.getCompany()),
-                UserMapping.convertToEntity(dto.getUser())
-        ) : new Employee(
-                dto.getId(),
-                dto.getCompanyId(),
-                dto.getUserId()
-        );
+        User user = null;
+        UserDTO userDTO = dto.getUser();
+        if (userDTO != null) {
+            user = new User();
+            user.setId(userDTO.getId());
+            user.setFirstName(userDTO.getFirstName());
+            user.setLastName(userDTO.getLastName());
+            user.setEmail(userDTO.getEmail());
+            user.setUsername(userDTO.getUsername());
+            user.setPhoneNumber(userDTO.getPhoneNumber());
+            user.setBirthDate(userDTO.getBirthDate());
+            user.setRoleId(userDTO.getRoleId());
+        }
+
+        Employee employee = new Employee();
+        employee.setId(dto.getId());
+        employee.setCompanyId(dto.getCompanyId());
+        employee.setUser(user);
+        employee.setUserId(user != null ? user.getId() : dto.getUserId());
 
         return employee;
     }
+
 }

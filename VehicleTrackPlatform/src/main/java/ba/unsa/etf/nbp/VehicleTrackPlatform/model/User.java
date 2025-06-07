@@ -25,6 +25,9 @@ public class User implements UserDetails {
     // NotMapped
     private final String tmpPassword = "NBP04.tmp_pw";
 
+    public User() {
+    }
+
     public User(Long id, String firstName, String lastName, String email, String password, Role role, boolean active) {
         this.id = id;
         this.firstName = firstName;

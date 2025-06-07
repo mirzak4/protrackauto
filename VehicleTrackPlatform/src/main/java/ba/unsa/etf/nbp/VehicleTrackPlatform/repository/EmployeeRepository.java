@@ -41,6 +41,7 @@ public class EmployeeRepository {
                     u.USERNAME,
                     u.PHONE_NUMBER,
                     u.BIRTH_DATE,
+                    u.ROLE_ID,
                     ai.ACTIVE,
                     ai.LAST_VERIFICATION_CODE,
                     c.COMPANY_TYPE,
@@ -72,12 +73,15 @@ public class EmployeeRepository {
                     null,
                     null,
                     rs.getString("PHONE_NUMBER"),
-                    null,
-                    null
+                    rs.getTimestamp("BIRTH_DATE") != null ? rs.getTimestamp("BIRTH_DATE").toInstant() : null,
+                    rs.getObject("ROLE_ID") != null ? rs.getLong("ROLE_ID") : null
             );
             //employeeUser.setActive(rs.getString("ACTIVE").equals("1"));
-            String activeStr = rs.getString("ACTIVE");
-            employeeUser.setActive("1".equals(activeStr));
+            //String activeStr = rs.getString("ACTIVE");
+            //employeeUser.setActive("1".equals(activeStr));
+            //employeeUser.setLastVerificationCode(rs.getString("LAST_VERIFICATION_CODE"));
+
+            employeeUser.setActive(rs.getString("ACTIVE").equals("1"));
             employeeUser.setLastVerificationCode(rs.getString("LAST_VERIFICATION_CODE"));
 
             Company company = new Company();
@@ -135,22 +139,36 @@ public class EmployeeRepository {
 
     @Transactional
     public Employee update(Employee employee) {
-        this.userRepository.updateUser(employee.getUser());
+        if (employee.getId() == null) {
+            throw new IllegalArgumentException("Employee id is null");
+        }
+        if (!findById(employee.getId()).isPresent()) {
+            throw new RuntimeException("Employee with id " + employee.getId() + " does not exist");
+        }
 
-        jdbcTemplate.update(
+        if (employee.getUser() == null || employee.getUser().getId() == null) {
+            throw new IllegalArgumentException("User or user id is null");
+        }
+        userRepository.updateUser(employee.getUser());
+
+        int rowsAffected = jdbcTemplate.update(
                 "UPDATE EMPLOYEE SET COMPANY_ID = ?, USER_ID = ? WHERE ID = ?",
                 employee.getCompanyId(),
                 employee.getUserId(),
                 employee.getId()
         );
 
-        //return employee;
+        if (rowsAffected == 0) {
+            throw new RuntimeException("Employee not found or no update applied");
+        }
+
         return findById(employee.getId()).orElseThrow(() ->
                 new RuntimeException("Employee not found after update"));
     }
 
+
     public void deleteByUserId(Long userId) {
-        jdbcTemplate.update("DELETE FROM NBP.NBP_USER WHERE ID = ?", userId);
+        jdbcTemplate.update("DELETE FROM EMPLOYEE WHERE ID = ?", userId);
     }
 
 }

@@ -38,34 +38,41 @@
       </div>
       
       <div class="navbar-end">
-        @if (userInfo$ | async) {
-          <button class="navbar-item report-btn" (click)="downloadReport()">
-            <i class="fas fa-file-pdf"></i> Download Report
-          </button>
-          <div class="user-profile-dropdown" 
-            (click)="toggleProfileMenu()"
-            (blur)="onProfileBlur($event)"
-            tabindex="0">
-            <div class="user-profile">
-              <i class="fas fa-user-circle"></i>
-              <div class="user-info">
-                <span class="user-name">{{ (userInfo$ | async)?.firstName || 'Guest' }}</span>
-                <span class="user-role">{{ (userInfo$ | async)?.email || 'Not logged in' }}</span>
-              </div>
-              <i class="fas fa-chevron-down profile-arrow"></i>
+      <ng-container *ngIf="userInfo$ | async as userInfo; else showLogin">
+        <button class="navbar-item report-btn" (click)="downloadReport()">
+          <i class="fas fa-file-pdf"></i> Download Report
+        </button>
+        <div class="user-profile-dropdown" 
+          (click)="toggleProfileMenu()"
+          (blur)="onProfileBlur($event)"
+          tabindex="0">
+          <div class="user-profile">
+            <i class="fas fa-user-circle"></i>
+            <div class="user-info">
+              <span class="user-name">{{ userInfo.firstName || 'Guest' }}</span>
+              <span class="user-role">{{ userInfo.email || 'Not logged in' }}</span>
             </div>
-            <div class="profile-dropdown-menu" [class.show]="profileMenuOpen">
-              <a class="profile-menu-item" routerLink="/settings">
-                <i class="fas fa-cog"></i> Settings
-              </a>
-              <div class="menu-divider"></div>
-              <a class="profile-menu-item logout-item" (click)="logout()">
-                <i class="fas fa-sign-out-alt"></i> Logout
-              </a>
-            </div>
+            <i class="fas fa-chevron-down profile-arrow"></i>
           </div>
-        }
-      </div>
+          <div class="profile-dropdown-menu" [class.show]="profileMenuOpen">
+            <a class="profile-menu-item" routerLink="/settings">
+              <i class="fas fa-cog"></i> Settings
+            </a>
+            <div class="menu-divider"></div>
+            <a class="profile-menu-item logout-item" (click)="logout()">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #showLogin>
+        <a class="navbar-item login-btn" routerLink="/login" style="text-decoration:none;">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+      </ng-template>
+    </div>
+
     </div>
   </div>
 </nav>
