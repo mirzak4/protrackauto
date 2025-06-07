@@ -2,31 +2,39 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CompanyDTO } from '../models/company.model';
+import { environment } from 'environments/environment';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class CompanyService {
-  private apiUrl = '/api/company';
+
+  private apiUrl = `${environment.apiUrl}/api/company`;
 
   constructor(private http: HttpClient) {}
 
-  getAll(type?: string): Observable<CompanyDTO[]> {
-    const params = type ? new HttpParams().set('type', type) : undefined;
+  getAllCompanies(): Observable<CompanyDTO[]> {
+    return this.http.get<CompanyDTO[]>(this.apiUrl);
+  }
+
+  getCompaniesByType(companyType: number): Observable<CompanyDTO[]> {
+    const params = new HttpParams().set('companyType', companyType.toString());
     return this.http.get<CompanyDTO[]>(this.apiUrl, { params });
   }
 
-  getById(id: number): Observable<CompanyDTO> {
+  getCompanyById(id: number): Observable<CompanyDTO> {
     return this.http.get<CompanyDTO>(`${this.apiUrl}/${id}`);
   }
 
-  create(dto: CompanyDTO): Observable<number> {
-    return this.http.post<number>(this.apiUrl, dto);
+  createCompany(company: CompanyDTO): Observable<number> {
+    return this.http.post<number>(this.apiUrl, company);
   }
 
-  update(p0: number, dto: CompanyDTO): Observable<CompanyDTO> {
-    return this.http.put<CompanyDTO>(`${this.apiUrl}/${dto.id}`, dto);
+  updateCompany(id: number, company: CompanyDTO): Observable<CompanyDTO> {
+    return this.http.put<CompanyDTO>(`${this.apiUrl}/${id}`, company);
   }
 
-  delete(id: number): Observable<void> {
+  deleteCompany(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

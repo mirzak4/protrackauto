@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { VehiclesComponent } from './pages/vehicles/vehicles.component';
 import { DriverListComponent } from './pages/drivers//driver-list/driver-list.component';
 import { DriverFormComponent } from './pages/drivers/driver-form/driver-form.component';
 import { ServicesComponent } from './pages/services/services.component';
@@ -21,6 +20,8 @@ import { LogoutComponent } from './pages/logout/logout.component';
 import { VehicleFormComponent } from './pages/vehicles/vehicle-form/vehicle-form.component';
 import { VehicleListComponent } from './pages/vehicles/vehicle-list/vehicle-list.component';
 import { VehicleDetailsComponent } from './pages/vehicles/vehicle-details/vehicle-details.component';
+import { EmployeeFormComponent } from './pages/employee/employee-form/employee-form.component';
+import { EmployeeListComponent } from './pages/employee/employee-list/employee-list.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,6 +29,10 @@ export const routes: Routes = [
   { path: 'drivers', component: DriverListComponent },
   { path: 'drivers/new', component: DriverFormComponent },
   { path: 'drivers/edit/:id', component: DriverFormComponent },
+
+  { path: 'employees', component: EmployeeListComponent },
+  { path: 'employees/new', component: EmployeeFormComponent },
+  { path: 'employees/edit/:id', component: EmployeeFormComponent },
 
   { path: 'vehicles', component: VehicleListComponent },
   { path: 'vehicles/new', component: VehicleFormComponent },

@@ -4,5 +4,5 @@ export interface CompanyDTO {
   address: string;
   phone: string;
   email?: string;
-  companyType: 'INSURANCE' | 'SERVICE' | 'FUEL';
+  companyType: number;
 }

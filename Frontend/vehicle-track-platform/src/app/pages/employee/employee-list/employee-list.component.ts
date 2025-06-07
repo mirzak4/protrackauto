@@ -1,0 +1,98 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EmployeeService } from 'app/core/services/employee.service';
+import { Employee } from 'app/core/models/employee.model';
+import { CommonModule } from '@angular/common';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+@Component({
+  selector: 'app-employee-list',
+  standalone: true,
+  templateUrl: './employee-list.component.html',
+  imports: [CommonModule, MatSnackBarModule],
+  styleUrls: ['./employee-list.component.css']
+})
+export class EmployeeListComponent implements OnInit {
+  employees: Employee[] = [];
+  isDeleteConfirmOpen = false;
+  employeeToDelete: Employee | null = null;
+
+  constructor(
+    private employeeService: EmployeeService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
+
+  ngOnInit() {
+    this.loadEmployees();
+  }
+
+  loadEmployees() {
+    this.employeeService.getAllEmployees().subscribe({
+      next: (employees) => {
+        this.employees = employees;
+      },
+      error: (error) => {
+        console.error('Error loading employees:', error);
+      }
+    });
+  }
+
+  addEmployee() {
+    this.router.navigate(['/employees/new']);
+  }
+
+  editEmployee(employeeId: number) {
+    this.router.navigate(['/employees/edit', employeeId]);
+  }
+
+  deleteEmployee(employee: Employee) {
+    this.employeeToDelete = employee;
+    this.isDeleteConfirmOpen = true;
+  }
+
+  confirmDelete() {
+    if (!this.employeeToDelete?.id) return;
+
+    this.employeeService.deleteEmployee(this.employeeToDelete.id).subscribe({
+      next: () => {
+        this.loadEmployees();
+        this.isDeleteConfirmOpen = false;
+        this.snackBar.open('Employee deleted successfully.', 'Dismiss', {
+          duration: 3500,
+          panelClass: ['snackbar-success']
+        });
+        this.employeeToDelete = null;
+      },
+      error: (error) => {
+        console.error('Error deleting employee:', error);
+        this.isDeleteConfirmOpen = false;
+        this.employeeToDelete = null;
+
+        this.snackBar.open('Error deleting employee. Please try again.', 'Close', {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+      }
+    });
+  }
+
+  cancelDelete() {
+    this.isDeleteConfirmOpen = false;
+    this.employeeToDelete = null;
+  }
+
+  getFullName(user: any): string {
+    return user ? `${user.firstName} ${user.lastName}` : '';
+  }
+
+  getRoleName(roleId: number): string {
+    switch (roleId) {
+      case 1: return 'Admin';
+      case 2: return 'Employee';
+      case 3: return 'Manager';
+      default: return 'Unknown';
+    }
+  }
+}

@@ -12,9 +12,19 @@
         <a class="navbar-item" routerLink="/vehicles" routerLinkActive="is-active">
           Vehicles
         </a>
-        <a class="navbar-item" routerLink="/drivers" routerLinkActive="is-active">
+        <div class="navbar-dropdown">
+          <a class="navbar-item">
+            Users <i class="fas fa-chevron-down"></i>
+          </a>
+          <div class="dropdown-content">
+            <a class="dropdown-item" routerLink="/drivers">Drivers</a>
+            <a class="dropdown-item" routerLink="/employees">Employees</a>
+            <!-- <a class="dropdown-item" routerLink="/drivers">Driver Performance</a> -->
+          </div>
+        </div>
+        <!-- <a class="navbar-item" routerLink="/drivers" routerLinkActive="is-active">
           Drivers
-        </a>
+        </a> -->
         <div class="navbar-dropdown">
           <a class="navbar-item">
             Analytics <i class="fas fa-chevron-down"></i>

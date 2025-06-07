@@ -30,6 +30,7 @@ public class EmployeeController {
             @ApiResponse(responseCode = "200", description = "List of employees")
     })
     @GetMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public List<EmployeeDTO> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
