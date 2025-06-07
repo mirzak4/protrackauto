@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CompanyDTO } from '../models/company.model';
+import { GasStationFuelPriceReport } from '../models/gas-station-fuel-price-report.model';
 import { environment } from 'environments/environment';
 
 @Injectable({
@@ -9,7 +10,7 @@ import { environment } from 'environments/environment';
 })
 export class CompanyService {
 
-  private apiUrl = `${environment.apiUrl}/api/company`;
+  private apiUrl = `${environment.apiUrl}/api/companies`;
 
   constructor(private http: HttpClient) {}
 
@@ -22,19 +23,40 @@ export class CompanyService {
     return this.http.get<CompanyDTO[]>(this.apiUrl, { params });
   }
 
-  getCompanyById(id: number): Observable<CompanyDTO> {
+  getAll(type?: string): Observable<CompanyDTO[]> {
+    const params = type ? new HttpParams().set('type', type) : undefined;
+    return this.http.get<CompanyDTO[]>(this.apiUrl, { params });
+  }
+
+  getById(id: number): Observable<CompanyDTO> {
     return this.http.get<CompanyDTO>(`${this.apiUrl}/${id}`);
   }
 
-  createCompany(company: CompanyDTO): Observable<number> {
-    return this.http.post<number>(this.apiUrl, company);
+  createCompany(dto: CompanyDTO): Observable<number> {
+    return this.http.post<number>(this.apiUrl, dto);
   }
 
-  updateCompany(id: number, company: CompanyDTO): Observable<CompanyDTO> {
-    return this.http.put<CompanyDTO>(`${this.apiUrl}/${id}`, company);
+  updateCompany(p0: number, dto: CompanyDTO): Observable<CompanyDTO> {
+    return this.http.put<CompanyDTO>(`${this.apiUrl}/${dto.id}`, dto);
   }
 
   deleteCompany(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getCompanyReports(companyId: number): Observable<GasStationFuelPriceReport[]> {
+    return this.http.get<GasStationFuelPriceReport[]>(`${this.apiUrl}/${companyId}/reports`);
+  }
+
+  generateWeeklyFuelPriceReport(companyId: number): void {
+    this.http.post(`${this.apiUrl}/${companyId}/reports/weekly-fuel-prices`, null, { responseType: 'blob' })
+      .subscribe(blob => {
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'weekly-fuel-prices.pdf';
+        link.click();
+        window.URL.revokeObjectURL(url);
+      });
   }
 }

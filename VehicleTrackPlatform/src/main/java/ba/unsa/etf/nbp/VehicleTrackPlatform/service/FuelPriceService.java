@@ -55,6 +55,12 @@ public class FuelPriceService {
                 .collect(Collectors.toList());
     }
 
+    public List<FuelPriceDTO> getCompanyFuelPrices(Long companyId) {
+        return fuelPriceRepository.findByCompanyId(companyId).stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
     public Optional<FuelPriceDTO> getFuelPriceById(Long id) {
         return fuelPriceRepository.findById(id)
                 .map(this::convertToDTO);

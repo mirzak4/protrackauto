@@ -53,6 +53,14 @@ public class FuelPriceRepository {
                 .stream().findFirst();
     }
 
+    public List<FuelPrice> findByCompanyId(Long companyId) {
+        return jdbcTemplate.query(
+            "SELECT * FROM FUEL_PRICE WHERE GAS_STATION_ID = ? ORDER BY ISSUE_DATE DESC",
+            new FuelPriceRowMapper(),
+            companyId
+        );
+    }
+
     public Long create(FuelPrice fuelPrice) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 

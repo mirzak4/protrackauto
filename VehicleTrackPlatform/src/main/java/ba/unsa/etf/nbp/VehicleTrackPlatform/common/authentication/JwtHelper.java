@@ -21,9 +21,7 @@ import java.util.Date;
 
 @Component
 public class JwtHelper {
-    private SecretKey secretKey;
-
-
+    private final SecretKey secretKey;
     private static final int MINUTES = 60;
 
     public JwtHelper(@Value("${jwt.secret}")String secret) {

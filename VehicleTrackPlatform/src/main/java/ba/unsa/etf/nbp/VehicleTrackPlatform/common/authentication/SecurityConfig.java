@@ -55,6 +55,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/user/login/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/user/password-reset/**").permitAll()
                         .requestMatchers("/api/swagger-ui/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/backup/**").permitAll()
                         .anyRequest().authenticated())
                 .authenticationManager(authenticationManager)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

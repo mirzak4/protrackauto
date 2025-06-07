@@ -33,6 +33,16 @@ public class FuelPriceController {
         return fuelPriceService.getAllFuelPrices();
     }
 
+    @Operation(summary = "Get all fuel prices for a company", description = "Returns all fuel prices for the specified company")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of company's fuel prices"),
+            @ApiResponse(responseCode = "404", description = "Company not found", content = @Content)
+    })
+    @GetMapping("/company/{companyId}")
+    public List<FuelPriceDTO> getCompanyFuelPrices(@PathVariable Long companyId) {
+        return fuelPriceService.getCompanyFuelPrices(companyId);
+    }
+
     @Operation(summary = "Get fuel price by id", description = "Returns the fuel price if it exists")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Fuel price found"),

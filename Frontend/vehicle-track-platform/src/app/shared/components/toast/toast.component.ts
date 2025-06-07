@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
-  selector: 'app-toast',
+  selector: 'toast',
   standalone: true,
   imports: [CommonModule],
   template: `
