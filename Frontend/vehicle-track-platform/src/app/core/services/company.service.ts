@@ -9,6 +9,9 @@ import { environment } from 'environments/environment';
   providedIn: 'root'
 })
 export class CompanyService {
+  getReportDocument(documentId: number) {
+    throw new Error('Method not implemented.');
+  }
 
   private apiUrl = `${environment.apiUrl}/api/companies`;
 

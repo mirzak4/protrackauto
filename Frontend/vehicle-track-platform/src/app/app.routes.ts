@@ -20,6 +20,7 @@ import { VehicleFormComponent } from './pages/vehicles/vehicle-form/vehicle-form
 import { VehicleListComponent } from './pages/vehicles/vehicle-list/vehicle-list.component';
 import { EmployeeFormComponent } from './pages/employee/employee-form/employee-form.component';
 import { EmployeeListComponent } from './pages/employee/employee-list/employee-list.component';
+import { GasStationReportsComponent } from './pages/gas-station-reports/gas-station-reports.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -35,6 +36,7 @@ export const routes: Routes = [
   { path: 'companies', component: CompanyListComponent },
   { path: 'companies/new', component: CompanyFormComponent },
   { path: 'companies/edit/:id', component: CompanyFormComponent },
+  { path: 'companies/:id/reports', component: GasStationReportsComponent },
 
   { path: 'vehicles', component: VehicleListComponent },
   { path: 'vehicles/new', component: VehicleFormComponent },

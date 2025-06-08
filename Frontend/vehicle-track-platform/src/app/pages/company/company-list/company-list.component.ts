@@ -87,4 +87,9 @@ export class CompanyListComponent implements OnInit {
     this.isDeleteConfirmOpen = false;
     this.companyToDelete = null;
   }
+
+  viewReports(companyId: number): void {
+    this.router.navigate(['/companies', companyId, 'reports']);
+  }
+
 }
