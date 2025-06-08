@@ -1,6 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.service;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.dto.ServiceRequestDTO;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.mappings.ServiceRequestMapping;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.ServiceRequest;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.ServiceRequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,63 +20,28 @@ public class ServiceRequestService {
         this.serviceRequestRepository = serviceRequestRepository;
     }
 
-    private ServiceRequestDTO convertToDTO(ServiceRequest request) {
-        var dto = new ServiceRequestDTO(
-                request.getId(),
-                request.getServiceType(),
-                request.getFiscalReceiptNumber(),
-                request.getCost(),
-                request.getStatus(),
-                request.getRequestDate(),
-                request.getRequestedBy(),
-                request.getVehicleId(),
-                request.getServicerId()
-        );
-
-        dto.setCreatedAt(request.getCreatedAt());
-        dto.setCreatedBy(request.getCreatedBy());
-        dto.setModifiedAt(request.getModifiedAt());
-        dto.setModifiedBy(request.getModifiedBy());
-
-        return dto;
-    }
-
-    private ServiceRequest convertToEntity(ServiceRequestDTO dto) {
-        return new ServiceRequest(
-                dto.getId(),
-                dto.getServiceType(),
-                dto.getFiscalReceiptNumber(),
-                dto.getCost(),
-                dto.getStatus(),
-                dto.getRequestDate(),
-                dto.getRequestedBy(),
-                dto.getVehicleId(),
-                dto.getServicerId()
-        );
-    }
-
     public List<ServiceRequestDTO> getAllServiceRequests() {
         var requests = serviceRequestRepository.findAll();
 
         return requests.stream()
-                .map(this::convertToDTO)
+                .map(ServiceRequestMapping::convertToDTO)
                 .collect(Collectors.toList());
     }
 
     public Optional<ServiceRequestDTO> getServiceRequestById(Long id) {
         return serviceRequestRepository.findById(id)
-                .map(this::convertToDTO);
+                .map(ServiceRequestMapping::convertToDTO);
     }
 
     public Long createServiceRequest(ServiceRequestDTO dto) {
-        ServiceRequest request = convertToEntity(dto);
+        ServiceRequest request = ServiceRequestMapping.convertToEntity(dto);
         return serviceRequestRepository.create(request);
     }
 
     public ServiceRequestDTO updateServiceRequest(ServiceRequestDTO dto) {
-        ServiceRequest request = convertToEntity(dto);
+        ServiceRequest request = ServiceRequestMapping.convertToEntity(dto);
         ServiceRequest savedRequest = serviceRequestRepository.update(request);
-        return convertToDTO(savedRequest);
+        return ServiceRequestMapping.convertToDTO(savedRequest);
     }
 
     public void deleteServiceRequest(Long id) {

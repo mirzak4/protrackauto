@@ -1,6 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.repository;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.ServiceRequest;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.CompanyType;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.ServiceRequestStatus;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.ServiceType;
 import io.micrometer.common.lang.NonNull;
@@ -34,10 +35,10 @@ public class ServiceRequestRepository {
         public ServiceRequest mapRow(ResultSet rs, int rowNum) throws SQLException {
             var request = new ServiceRequest(
                     rs.getLong("ID"),
-                    ServiceType.valueOf(rs.getString("SERVICE_TYPE")),
+                    ServiceType.fromCode(rs.getInt("SERVICE_TYPE")),
                     rs.getInt("FISCAL_RECEIPT_NUMBER"),
                     rs.getDouble("COST"),
-                    ServiceRequestStatus.valueOf(rs.getString("STATUS")),
+                    ServiceRequestStatus.fromCode(rs.getInt("STATUS")),
                     rs.getDate("REQUEST_DATE").toLocalDate(),
                     rs.getString("REQUESTED_BY"),
                     rs.getLong("VEHICLE_ID"),
@@ -70,10 +71,10 @@ public class ServiceRequestRepository {
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement ps = connection.prepareStatement(sql, new String[] {"ID"});
-            ps.setString(1, request.getServiceType().name());
+            ps.setInt(1, request.getServiceType().getCode());
             ps.setInt(2, request.getFiscalReceiptNumber());
             ps.setDouble(3, request.getCost());
-            ps.setString(4, request.getStatus().name());
+            ps.setInt(4, request.getStatus().getCode());
             ps.setDate(5, Date.valueOf(request.getRequestDate()));
             ps.setString(6, request.getRequestedBy());
             ps.setLong(7, request.getVehicleId());
@@ -88,10 +89,10 @@ public class ServiceRequestRepository {
         jdbcTemplate.update(
                 "UPDATE SERVICE_REQUEST SET SERVICE_TYPE = ?, FISCAL_RECEIPT_NUMBER = ?, COST = ?, STATUS = ?, " +
                         "REQUEST_DATE = ?, REQUESTED_BY = ?, VEHICLE_ID = ?, SERVICER_ID = ? WHERE ID = ?",
-                request.getServiceType().name(),
+                request.getServiceType().getCode(),
                 request.getFiscalReceiptNumber(),
                 request.getCost(),
-                request.getStatus().name(),
+                request.getStatus().getCode(),
                 Date.valueOf(request.getRequestDate()),
                 request.getRequestedBy(),
                 request.getVehicleId(),
