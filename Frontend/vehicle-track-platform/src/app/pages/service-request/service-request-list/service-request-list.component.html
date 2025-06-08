@@ -1,0 +1,57 @@
+<section class="service-requests-section">
+  <div class="container">
+    <div class="header">
+      <h2>Service Requests</h2>
+      <button class="add-btn" (click)="addServiceRequest()">
+        <i class="fas fa-plus"></i> Add Service Request
+      </button>
+    </div>
+
+    <table class="service-requests-table">
+      <thead>
+        <tr>
+          <th>Service Type</th>
+          <th>Fiscal Receipt #</th>
+          <th>Cost</th>
+          <th>Status</th>
+          <th>Request Date</th>
+          <th>Requested By</th>
+          <th>Vehicle ID</th>
+          <th>Servicer (Company)</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let req of serviceRequests">
+          <td>{{ req.serviceType }}</td>
+          <td>{{ req.fiscalReceiptNumber }}</td>
+          <td>{{ req.cost | currency }}</td>
+          <td>{{ req.status }}</td>
+          <td>{{ req.requestDate | date:'mediumDate' }}</td>
+          <td>{{ req.requestedBy }}</td>
+          <td>{{ req.vehicleId }}</td>
+          <td>{{ companyMap[req.servicerId] || 'Unknown' }}</td>
+          <td>
+            <button class="action-btn" (click)="editServiceRequest(req.id!)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-btn" (click)="deleteServiceRequest(req)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">
+    <div class="modal">
+      <h2>Confirm Deletion</h2>
+      <p>Are you sure you want to delete the service request with fiscal receipt #<strong>{{ serviceRequestToDelete?.fiscalReceiptNumber }}</strong>?</p>
+      <div class="modal-buttons">
+        <button class="btn-primary" (click)="confirmDelete()">Delete</button>
+        <button class="btn-secondary" (click)="cancelDelete()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</section>
