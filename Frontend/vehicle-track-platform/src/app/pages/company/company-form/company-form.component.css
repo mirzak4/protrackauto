@@ -1,0 +1,199 @@
+.company-form-section {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fafafa;
+  border-radius: 6px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.company-form-section .form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.company-form-section .form-header {
+  margin-bottom: 20px;
+}
+
+.company-form-section .form-title {
+  font-weight: 600;
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.company-form-section .form-divider {
+  height: 2px;
+  width: 80px;
+  background-color: #007bff;
+  margin-top: 6px;
+  margin-bottom: 20px;
+  border-radius: 2px;
+}
+
+.company-form-section form.company-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.company-form-section .form-section {
+  background-color: #fff;
+  padding: 18px 20px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.company-form-section .section-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 14px;
+  color: #0056b3;
+}
+
+.company-form-section .form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.company-form-section .input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.company-form-section .input-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.company-form-section .form-input {
+  padding: 8px 10px;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #222;
+  outline-offset: 2px;
+  transition: border-color 0.2s ease;
+}
+
+.company-form-section .form-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px #007bffaa;
+  background-color: white;
+}
+
+.company-form-section .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.company-form-section .btn {
+  padding: 10px 22px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.company-form-section .btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.company-form-section .btn-primary:disabled {
+  background-color: #9ec5fe;
+  cursor: not-allowed;
+}
+
+.company-form-section .btn-primary:not(:disabled):hover {
+  background-color: #0056b3;
+}
+
+.company-form-section .btn-outline {
+  background-color: transparent;
+  border: 2px solid #007bff;
+  color: #007bff;
+}
+
+.company-form-section .btn-outline:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.company-type-card {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+  transition: all 0.3s ease;
+}
+
+.company-type-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #d0d0d0;
+}
+
+.company-type-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.company-type-icon {
+  background: #f0f7ff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  color: #007bff;
+}
+
+.company-type-icon i {
+  font-size: 16px;
+}
+
+.company-type-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #555;
+  margin: 0;
+}
+
+.company-type-value {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #222;
+  padding: 8px 12px;
+  background: #f9f9f9;
+  border-radius: 4px;
+  border-left: 3px solid #007bff;
+}
+
+@media (max-width: 640px) {
+  .company-form-section .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .company-form-section .form-actions {
+    flex-direction: column;
+  }
+
+  .company-form-section .btn {
+    width: 100%;
+  }
+}
