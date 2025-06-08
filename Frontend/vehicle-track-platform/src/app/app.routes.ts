@@ -8,7 +8,6 @@ import { InsuranceComponent } from './pages/insurance/insurance.component';
 import { FinesComponent } from './pages/fines/fines.component';
 import { InspectionsComponent } from './pages/inspections/inspections.component';
 import { TravelRequestsComponent } from './pages/travel-requests/travel-requests.component';
-import { ServiceRequestsComponent } from './pages/service-requests/service-requests.component';
 import { AccountComponent } from './pages/account/account.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
@@ -20,6 +19,8 @@ import { VehicleFormComponent } from './pages/vehicles/vehicle-form/vehicle-form
 import { VehicleListComponent } from './pages/vehicles/vehicle-list/vehicle-list.component';
 import { EmployeeFormComponent } from './pages/employee/employee-form/employee-form.component';
 import { EmployeeListComponent } from './pages/employee/employee-list/employee-list.component';
+import { ServiceRequestFormComponent } from './pages/service-request/service-request-form/service-request-form.component';
+import { ServiceRequestListComponent } from './pages/service-request/service-request-list/service-request-list.component';
 import { GasStationReportsComponent } from './pages/gas-station-reports/gas-station-reports.component';
 
 export const routes: Routes = [
@@ -42,13 +43,16 @@ export const routes: Routes = [
   { path: 'vehicles/new', component: VehicleFormComponent },
   { path: 'vehicles/edit/:id', component: VehicleFormComponent },
 
+  { path: 'service-requests', component: ServiceRequestListComponent },
+  { path: 'service-requests/new', component: ServiceRequestFormComponent },
+  { path: 'service-requests/edit/:id', component: ServiceRequestFormComponent },
+
   { path: 'services', component: ServicesComponent },
   { path: 'fuel', component: FuelComponent },
   { path: 'insurance', component: InsuranceComponent },
   { path: 'fines', component: FinesComponent },
   { path: 'inspections', component: InspectionsComponent },
   { path: 'travel-requests', component: TravelRequestsComponent },
-  { path: 'service-requests', component: ServiceRequestsComponent },
   { path: 'account', component: AccountComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
