@@ -18,7 +18,6 @@ import { CompanyFormComponent } from './pages/company/company-form/company-form.
 import { LogoutComponent } from './pages/logout/logout.component';
 import { VehicleFormComponent } from './pages/vehicles/vehicle-form/vehicle-form.component';
 import { VehicleListComponent } from './pages/vehicles/vehicle-list/vehicle-list.component';
-import { VehicleDetailsComponent } from './pages/vehicles/vehicle-details/vehicle-details.component';
 import { EmployeeFormComponent } from './pages/employee/employee-form/employee-form.component';
 import { EmployeeListComponent } from './pages/employee/employee-list/employee-list.component';
 
@@ -40,7 +39,6 @@ export const routes: Routes = [
   { path: 'vehicles', component: VehicleListComponent },
   { path: 'vehicles/new', component: VehicleFormComponent },
   { path: 'vehicles/edit/:id', component: VehicleFormComponent },
-  { path: 'vehicles/details', component: VehicleDetailsComponent },
 
   { path: 'services', component: ServicesComponent },
   { path: 'fuel', component: FuelComponent },
