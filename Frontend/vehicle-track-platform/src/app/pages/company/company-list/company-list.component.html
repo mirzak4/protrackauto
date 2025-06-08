@@ -1,13 +1,58 @@
-<div class="container">
-  <h2>Companies</h2>
-  <button class="primary-btn" routerLink="/company/create">Create Company</button>
-  <div class="card" *ngFor="let company of companies">
-    <h3>{{ company.name }}</h3>
-    <p><strong>Type:</strong> {{ company.companyType }}</p>
-    <p><strong>Email:</strong> {{ company.email }}</p>
-    <div class="button-group">
-      <button class="secondary-btn" [routerLink]="['/company/detail', company.id]">More Details</button>
-      <button class="danger-btn" (click)="deleteCompany(company.id)">Delete</button>
+<section class="companies-section">
+  <div class="container">
+    <div class="header">
+    <h2>Companies</h2>
+    <div class="header-actions">
+      <div class="filter">
+        <label>Company Type:</label>
+        <select [(ngModel)]="selectedCompanyType" (change)="onCompanyTypeChange()">
+          <option [value]="1">Insurance Company</option>
+          <option [value]="2">Service Provider</option>
+          <option [value]="3">Gas Station</option>
+        </select>
+      </div>
+      <button class="add-btn" (click)="addCompany()">
+        <i class="fas fa-plus"></i> Add Company
+      </button>
     </div>
   </div>
-</div>
+
+
+    <table class="companies-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let company of companies">
+          <td>{{ company.name }}</td>
+          <td>{{ company.address }}</td>
+          <td>{{ company.email }}</td>
+          <td>
+            <button class="action-btn" (click)="editCompany(company.id)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-btn" (click)="deleteCompany(company)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">
+    <div class="modal">
+      <h2>Confirm Deletion</h2>
+      <p>Are you sure you want to delete <strong>{{ companyToDelete?.name }}</strong>?</p>
+      <div class="modal-buttons">
+        <button class="btn-primary" (click)="confirmDelete()">Delete</button>
+        <button class="btn-secondary" (click)="cancelDelete()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</section>

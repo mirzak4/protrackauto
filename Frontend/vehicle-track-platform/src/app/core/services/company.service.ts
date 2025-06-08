@@ -14,15 +14,6 @@ export class CompanyService {
 
   constructor(private http: HttpClient) {}
 
-  getAllCompanies(): Observable<CompanyDTO[]> {
-    return this.http.get<CompanyDTO[]>(this.apiUrl);
-  }
-
-  getCompaniesByType(companyType: number): Observable<CompanyDTO[]> {
-    const params = new HttpParams().set('companyType', companyType.toString());
-    return this.http.get<CompanyDTO[]>(this.apiUrl, { params });
-  }
-
   getAll(companyType?: string): Observable<CompanyDTO[]> {
     const params = companyType ? new HttpParams().set('companyType', companyType) : undefined;
     return this.http.get<CompanyDTO[]>(this.apiUrl, { params });
@@ -32,12 +23,12 @@ export class CompanyService {
     return this.http.get<CompanyDTO>(`${this.apiUrl}/${id}`);
   }
 
-  createCompany(dto: CompanyDTO): Observable<number> {
-    return this.http.post<number>(this.apiUrl, dto);
+  createCompany(dto: CompanyDTO): Observable<CompanyDTO> {
+    return this.http.post<CompanyDTO>(this.apiUrl, dto);
   }
 
-  updateCompany(p0: number, dto: CompanyDTO): Observable<CompanyDTO> {
-    return this.http.put<CompanyDTO>(`${this.apiUrl}/${dto.id}`, dto);
+  updateCompany(id: number, dto: CompanyDTO): Observable<CompanyDTO> {
+    return this.http.put<CompanyDTO>(`${this.apiUrl}/${id}`, dto);
   }
 
   deleteCompany(id: number): Observable<void> {
