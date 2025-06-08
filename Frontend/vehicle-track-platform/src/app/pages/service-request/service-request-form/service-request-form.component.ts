@@ -34,12 +34,8 @@ export class ServiceRequestFormComponent implements OnInit {
 
     vehicles: any[] = [];
     servicers: any[] = [];
-    serviceTypes = Object.keys(ServiceType)
-        .filter(key => isNaN(Number(key))) as (keyof typeof ServiceType)[];
-
-    statuses = Object.keys(ServiceRequestStatus)
-        .filter(key => isNaN(Number(key))) as (keyof typeof ServiceRequestStatus)[];
-
+    serviceTypes = [1, 2];
+    statuses = [1, 2, 3, 4, 5, 6];
 
     constructor(
         private route: ActivatedRoute,
@@ -134,4 +130,25 @@ export class ServiceRequestFormComponent implements OnInit {
             return '';
         }
     }
+
+    getStatusLabel(value: number): string {
+        switch (value) {
+            case 1: return 'Requested';
+            case 2: return 'Scheduled';
+            case 3: return 'In Progress';
+            case 4: return 'Awaiting Parts';
+            case 5: return 'Completed';
+            case 6: return 'Canceled';
+            default: return 'Unknown';
+        }
+    }
+
+    getServiceTypeLabel(value: number): string {
+        switch (value) {
+            case 1: return 'Regular Service Check';
+            case 2: return 'Technical Inspection for Registration';
+            default: return 'Unknown';
+        }
+    }
+
 }

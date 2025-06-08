@@ -1,143 +1,92 @@
 <section class="service-request-form-section">
-  <div class="form-container">
-    <header class="form-header">
-      <h2 class="form-title">{{ isEditMode ? 'Edit Service Request' : 'Add Service Request' }}</h2>
-      <div class="form-divider"></div>
-    </header>
+    <div class="form-container">
+        <header class="form-header">
+            <h2 class="form-title">{{ isEditMode ? 'Edit Service Request' : 'Add Service Request' }}</h2>
+            <div class="form-divider"></div>
+        </header>
 
-    <form (ngSubmit)="saveServiceRequest()" #serviceRequestForm="ngForm" class="service-request-form">
-      <div class="form-section">
-        <h3 class="section-title">Request Details</h3>
-        <div class="form-grid">
-          <div class="input-group">
-            <label for="serviceType" class="input-label">Service Type</label>
-            <select
-              id="serviceType"
-              name="serviceType"
-              [(ngModel)]="serviceRequest.serviceType"
-              required
-              class="form-input"
-              (ngModelChange)="onInputChange()"
-            >
-              <option [ngValue]="null" disabled>-- Select Type --</option>
-              <option *ngFor="let type of serviceTypes" [ngValue]="type">{{ type }}</option>
-            </select>
-          </div>
+        <form (ngSubmit)="saveServiceRequest()" #serviceRequestForm="ngForm" class="service-request-form">
+            <div class="form-section">
+                <h3 class="section-title">Request Details</h3>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="serviceType" class="input-label">Service Type</label>
+                        <select id="serviceType" name="serviceType" [(ngModel)]="serviceRequest.serviceType" required
+                            class="form-input" (ngModelChange)="onInputChange()">
+                            <option [ngValue]="null" disabled>-- Select Type --</option>
+                            <option *ngFor="let type of serviceTypes" [ngValue]="type">{{ getServiceTypeLabel(type) }}
+                            </option>
+                        </select>
+                    </div>
 
-          <div class="input-group">
-            <label for="status" class="input-label">Status</label>
-            <select
-              id="status"
-              name="status"
-              [(ngModel)]="serviceRequest.status"
-              required
-              class="form-input"
-              (ngModelChange)="onInputChange()"
-            >
-              <option [ngValue]="null" disabled>-- Select Status --</option>
-              <option *ngFor="let s of statuses" [ngValue]="s">{{ s }}</option>
-            </select>
-          </div>
+                    <div class="input-group">
+                        <label for="status" class="input-label">Status</label>
+                        <select id="status" name="status" [(ngModel)]="serviceRequest.status" required
+                            class="form-input" (ngModelChange)="onInputChange()">
+                            <option [ngValue]="null" disabled>-- Select Status --</option>
+                            <option *ngFor="let s of statuses" [ngValue]="s">{{ getStatusLabel(s) }}</option>
+                        </select>
+                    </div>
 
-          <div class="input-group">
-            <label for="requestDate" class="input-label">Request Date</label>
-            <input
-              id="requestDate"
-              name="requestDate"
-              [(ngModel)]="serviceRequest.requestDate"
-              type="date"
-              class="form-input"
-              required
-              (input)="onInputChange()"
-            />
-          </div>
+                    <div class="input-group">
+                        <label for="requestDate" class="input-label">Request Date</label>
+                        <input id="requestDate" name="requestDate" [(ngModel)]="serviceRequest.requestDate" type="date"
+                            class="form-input" required (input)="onInputChange()" />
+                    </div>
 
-          <div class="input-group">
-            <label for="fiscalReceiptNumber" class="input-label">Receipt Number</label>
-            <input
-              id="fiscalReceiptNumber"
-              name="fiscalReceiptNumber"
-              [(ngModel)]="serviceRequest.fiscalReceiptNumber"
-              type="number"
-              required
-              placeholder="Enter receipt number"
-              class="form-input"
-              (input)="onInputChange()"
-            />
-          </div>
+                    <div class="input-group">
+                        <label for="fiscalReceiptNumber" class="input-label">Receipt Number</label>
+                        <input id="fiscalReceiptNumber" name="fiscalReceiptNumber"
+                            [(ngModel)]="serviceRequest.fiscalReceiptNumber" type="number" required
+                            placeholder="Enter receipt number" class="form-input" (input)="onInputChange()" />
+                    </div>
 
-          <div class="input-group">
-            <label for="cost" class="input-label">Cost</label>
-            <input
-              id="cost"
-              name="cost"
-              [(ngModel)]="serviceRequest.cost"
-              type="number"
-              required
-              placeholder="Enter cost"
-              class="form-input"
-              (input)="onInputChange()"
-            />
-          </div>
+                    <div class="input-group">
+                        <label for="cost" class="input-label">Cost</label>
+                        <input id="cost" name="cost" [(ngModel)]="serviceRequest.cost" type="number" required
+                            placeholder="Enter cost" class="form-input" (input)="onInputChange()" />
+                    </div>
 
-          <div class="input-group">
-            <label for="requestedBy" class="input-label">Requested By</label>
-            <input
-              id="requestedBy"
-              name="requestedBy"
-              [(ngModel)]="serviceRequest.requestedBy"
-              required
-              placeholder="Requester name"
-              class="form-input"
-              (input)="onInputChange()"
-            />
-          </div>
-        </div>
-      </div>
+                    <div class="input-group">
+                        <label for="requestedBy" class="input-label">Requested By</label>
+                        <input id="requestedBy" name="requestedBy" [(ngModel)]="serviceRequest.requestedBy" required
+                            placeholder="Requester name" class="form-input" (input)="onInputChange()" />
+                    </div>
+                </div>
+            </div>
 
-      <div class="form-section">
-        <h3 class="section-title">Associations</h3>
-        <div class="form-grid">
-          <div class="input-group">
-            <label for="vehicleId" class="input-label">Vehicle</label>
-            <select
-              id="vehicleId"
-              name="vehicleId"
-              [(ngModel)]="serviceRequest.vehicleId"
-              required
-              class="form-input"
-              (ngModelChange)="onInputChange()"
-            >
-              <option [ngValue]="null" disabled>-- Select Vehicle --</option>
-              <option *ngFor="let v of vehicles" [ngValue]="v.id">{{ v.licensePlate }}</option>
-            </select>
-          </div>
+            <div class="form-section">
+                <h3 class="section-title">Associations</h3>
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="vehicleId" class="input-label">Vehicle</label>
+                        <select id="vehicleId" name="vehicleId" [(ngModel)]="serviceRequest.vehicleId" required
+                            class="form-input" (ngModelChange)="onInputChange()">
+                            <option [ngValue]="null" disabled>-- Select Vehicle --</option>
+                            <option *ngFor="let v of vehicles" [ngValue]="v.id">{{ v.licensePlate }}</option>
+                        </select>
+                    </div>
 
-          <div class="input-group">
-            <label for="servicerId" class="input-label">Servicer</label>
-            <select
-              id="servicerId"
-              name="servicerId"
-              [(ngModel)]="serviceRequest.servicerId"
-              required
-              class="form-input"
-              (ngModelChange)="onInputChange()"
-            >
-              <option [ngValue]="null" disabled>-- Select Servicer --</option>
-              <option *ngFor="let s of servicers" [ngValue]="s.id">{{ s.name }}</option>
-            </select>
-          </div>
-        </div>
-      </div>
+                    <div class="input-group">
+                        <label for="servicerId" class="input-label">Servicer</label>
+                        <select id="servicerId" name="servicerId" [(ngModel)]="serviceRequest.servicerId" required
+                            class="form-input" (ngModelChange)="onInputChange()">
+                            <option [ngValue]="null" disabled>-- Select Servicer --</option>
+                            <option *ngFor="let s of servicers" [ngValue]="s.id">{{ s.name }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
 
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary" [disabled]="!isFormValid() || (isEditMode && !hasChanges)">
-          {{ isEditMode ? 'Update Request' : 'Create Request' }}
-        </button>
-        <button type="button" class="btn btn-outline" (click)="router.navigate(['/service-requests'])">
-          Cancel
-        </button>
-      </div>
-    </form>
-  </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary"
+                    [disabled]="!isFormValid() || (isEditMode && !hasChanges)">
+                    {{ isEditMode ? 'Update Request' : 'Create Request' }}
+                </button>
+                <button type="button" class="btn btn-outline" (click)="router.navigate(['/service-requests'])">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </div>
 </section>

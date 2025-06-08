@@ -137,4 +137,26 @@ export class ServiceRequestListComponent implements OnInit {
         this.isDeleteConfirmOpen = false;
         this.serviceRequestToDelete = null;
     }
+
+    getServiceTypeName(type: number): string {
+        switch (type) {
+            case 1: return 'Regular Service Check';
+            case 2: return 'Technical Inspection for Registration';
+            default: return 'Unknown';
+        }
+    }
+
+
+    getStatusName(status: number): string {
+        switch (status) {
+            case 1: return 'Requested';
+            case 2: return 'Scheduled';
+            case 3: return 'In Progress';
+            case 4: return 'Awaiting Parts';
+            case 5: return 'Completed';
+            case 6: return 'Canceled';
+            default: return 'Unknown';
+        }
+    }
+
 }
