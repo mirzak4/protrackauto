@@ -35,7 +35,7 @@ export class ServiceRequestListComponent implements OnInit {
     }
 
     loadCompanies() {
-        this.companyService.getAllCompanies().subscribe({
+        this.companyService.getAll().subscribe({
             next: (companies) => {
                 this.companies = companies;
                 companies.forEach(c => this.companyMap[c.id] = c.name);
