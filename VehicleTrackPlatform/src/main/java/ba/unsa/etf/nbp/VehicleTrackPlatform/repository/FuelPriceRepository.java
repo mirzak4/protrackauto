@@ -65,10 +65,8 @@ public class FuelPriceRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO FUEL_PRICE (PRICE, ISSUE_DATE, FUEL_ID, GAS_STATION_ID) VALUES (?, ?, ?, ?)",
-                    Statement.RETURN_GENERATED_KEYS
-            );
+            String sql = "INSERT INTO FUEL_PRICE (PRICE, ISSUE_DATE, FUEL_ID, GAS_STATION_ID) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = connection.prepareStatement(sql, new String[] {"ID"});
             ps.setDouble(1, fuelPrice.getPrice());
             ps.setDate(2, Date.valueOf(fuelPrice.getIssueDate()));
             ps.setLong(3, fuelPrice.getFuelId());

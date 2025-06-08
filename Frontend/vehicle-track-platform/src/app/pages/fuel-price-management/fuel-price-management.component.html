@@ -1,0 +1,106 @@
+<div class="container">
+  <div class="header">
+    <h2>Fuel Price Reports - {{ companyName }}</h2>
+    <div class="actions">
+      <button (click)="generateNewReport()" [disabled]="isLoading">
+        <span>{{ isLoading ? 'Generating Report...' : 'Generate New Report' }}</span>
+      </button>
+      <button class="outline" (click)="goBack()">
+        <span>Back to Companies</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="form-section">
+    <h3>Add New Fuel Price</h3>
+    <form [formGroup]="fuelPriceForm" (ngSubmit)="submitFuelPrice()" class="form-grid">
+      <div class="form-row">
+        <label for="fuel">
+          <span>Fuel Type</span>
+        </label>
+        <select id="fuel" formControlName="fuelId" required>
+          <option value="" disabled selected>Select fuel type</option>
+          <option *ngFor="let fuel of fuels" [value]="fuel.id">{{ fuel.name }}</option>
+        </select>
+      </div>
+
+      <div class="form-row">
+        <label for="price">
+          <span>Price (per unit)</span>
+        </label>
+        <input
+          type="number"
+          id="price"
+          formControlName="price"
+          step="0.01"
+          min="0.01"
+          placeholder="0.00"
+          required
+        />
+      </div>
+
+      <div class="form-row">
+        <label for="issueDate">
+          <span>Issue Date</span>
+        </label>
+        <input type="date" id="issueDate" formControlName="issueDate" required />
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" [disabled]="fuelPriceForm.invalid || isLoading">
+          <span>{{ isLoading ? 'Adding...' : 'Add Fuel Price' }}</span>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="reports-section">
+    <div class="reports-header">
+      <h3>Available Reports</h3>
+    </div>
+
+    <div class="reports-grid">
+      <ng-container *ngIf="isLoading && reports.length === 0; else reportsContent">
+        <div class="loading">Loading reports...</div>
+      </ng-container>
+
+      <ng-template #reportsContent>
+        <div *ngIf="reports.length > 0; else emptyState" class="reports-container">
+          <table class="reports-table">
+            <thead>
+              <tr>
+                <th>Report Name</th>
+                <th>Document ID</th>
+                <th class="action-cell">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let report of reports; trackBy: trackByDocumentId">
+                <td>{{ report.name }}</td>
+                <td>#{{ report.documentId }}</td>
+                <td class="action-cell">
+                  <button class="icon-btn" (click)="downloadReport(report.documentId)" [disabled]="isDownloading" matTooltip="Download PDF">
+                    <span class="download-icon" [class.downloading]="isDownloading"></span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-template>
+
+      <ng-template #emptyState>
+        <div class="empty-state">
+          <div class="empty-icon"></div>
+          <h3>No Reports Available</h3>
+          <p>
+            There are no fuel price reports for this gas station yet. Generate the first report to get started.
+          </p>
+          <button (click)="generateNewReport()" [disabled]="isGeneratingReport">
+            <span>{{ isGeneratingReport ? 'Generating...' : 'Generate First Report' }}</span>
+          </button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

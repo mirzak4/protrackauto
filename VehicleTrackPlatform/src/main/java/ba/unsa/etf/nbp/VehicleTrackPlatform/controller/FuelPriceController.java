@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -29,6 +30,7 @@ public class FuelPriceController {
             @ApiResponse(responseCode = "200", description = "List of fuel prices")
     })
     @GetMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public List<FuelPriceDTO> getAllFuelPrices() {
         return fuelPriceService.getAllFuelPrices();
     }
@@ -39,6 +41,7 @@ public class FuelPriceController {
             @ApiResponse(responseCode = "404", description = "Company not found", content = @Content)
     })
     @GetMapping("/company/{companyId}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public List<FuelPriceDTO> getCompanyFuelPrices(@PathVariable Long companyId) {
         return fuelPriceService.getCompanyFuelPrices(companyId);
     }
@@ -50,6 +53,7 @@ public class FuelPriceController {
             @ApiResponse(responseCode = "404", description = "Fuel price not found", content = @Content)
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<FuelPriceDTO> getFuelPriceById(@PathVariable Long id) {
         return fuelPriceService.getFuelPriceById(id)
                 .map(ResponseEntity::ok)
@@ -62,6 +66,7 @@ public class FuelPriceController {
             @ApiResponse(responseCode = "400", description = "Invalid fuel price payload supplied", content = @Content)
     })
     @PostMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Long> createFuelPrice(@RequestBody FuelPriceDTO fuelPriceDTO) {
         Long fuelPriceId = fuelPriceService.createFuelPrice(fuelPriceDTO);
         return ResponseEntity.created(URI.create("/api/fuel-price/" + fuelPriceId))
@@ -75,6 +80,7 @@ public class FuelPriceController {
             @ApiResponse(responseCode = "404", description = "Fuel price not found", content = @Content)
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<FuelPriceDTO> updateFuelPrice(@PathVariable Long id, @RequestBody FuelPriceDTO fuelPriceDTO) {
         fuelPriceDTO.setId(id);
         return ResponseEntity.ok(fuelPriceService.updateFuelPrice(fuelPriceDTO));
@@ -87,6 +93,7 @@ public class FuelPriceController {
             @ApiResponse(responseCode = "404", description = "Fuel price not found", content = @Content)
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Void> deleteFuelPrice(@PathVariable Long id) {
         fuelPriceService.deleteFuelPrice(id);
         return ResponseEntity.noContent().build();
