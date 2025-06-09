@@ -5,6 +5,7 @@ import { tap } from 'rxjs/operators';
 import { LoginResponse } from '../models/login-response.model';
 import { UserInfo } from '../models/user-info.model';
 import { environment } from '../../../environments/environment';
+import { RoleEnum } from '../enums/role.enum';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -58,7 +59,9 @@ export class AuthService {
           const userInfo: UserInfo = {
             email: response.email,
             firstName: response.firstName,
-            lastName: response.lastName
+            lastName: response.lastName,
+            companyId: response.companyId,
+            role: response.role as RoleEnum
           };
           localStorage.setItem(this.userKey, JSON.stringify(userInfo));
           this.userInfoSubject.next(userInfo);

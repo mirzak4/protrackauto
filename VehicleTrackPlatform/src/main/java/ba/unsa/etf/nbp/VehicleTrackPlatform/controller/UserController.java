@@ -1,8 +1,10 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.controller;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.common.authentication.JwtHelper;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.common.authentication.Roles;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.features.resetpassword.ResetPasswordRequest;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.User;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.repository.EmployeeRepository;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.service.UserDetailService;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.features.login.LoginRequest;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.features.login.LoginResponse;
@@ -22,12 +24,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/user")
 public class UserController {
     private final UserDetailService userDetailService;
+    private final EmployeeRepository employeeRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtHelper jwtHelper;
 
     @Autowired
-    public UserController(UserDetailService userDetailService, AuthenticationManager authenticationManager, JwtHelper jwtHelper) {
+    public UserController(UserDetailService userDetailService, EmployeeRepository employeeRepository, AuthenticationManager authenticationManager, JwtHelper jwtHelper) {
         this.userDetailService = userDetailService;
+        this.employeeRepository = employeeRepository;
         this.authenticationManager = authenticationManager;
         this.jwtHelper = jwtHelper;
     }
@@ -43,8 +47,24 @@ public class UserController {
         var user = (User)authentication.getPrincipal();
 
         String token = this.jwtHelper.generateToken(user.getUsername(), user.getAuthorities());
+        var role = user.getAuthorities().stream().findFirst();
+        var roleString = role.isPresent() ? role.get().toString() : "";
 
-        return ResponseEntity.ok(new LoginResponse(request.getEmail(), user.getFirstName(), user.getLastName(), token));
+        long companyId = 0;
+        if (!roleString.isEmpty()) {
+            if (roleString.equals(Roles.CLAIMS_ADJUSTER) ||
+                    roleString.equals(Roles.FIELD_TECHNICIAN) ||
+                    roleString.equals(Roles.STATION_MANAGER)) {
+                
+                // Get employee by user ID to get their company ID
+                var employeeOpt = employeeRepository.findByUserId(user.getId());
+                if (employeeOpt.isPresent()) {
+                    companyId = employeeOpt.get().getCompanyId();
+                }
+            }
+        }
+
+        return ResponseEntity.ok(new LoginResponse(request.getEmail(), user.getFirstName(), user.getLastName(), companyId, roleString, token));
     }
 
     @Operation(summary = "Sends password reset link to the provided user email address", description = "Sends password reset link and returns no content")
