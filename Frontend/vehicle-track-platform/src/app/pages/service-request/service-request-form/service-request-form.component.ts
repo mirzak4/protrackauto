@@ -5,7 +5,7 @@ import { ServiceRequest } from 'app/core/models/service-request.model';
 import { VehicleService } from 'app/core/services/vehicle.service';
 import { CompanyService } from 'app/core/services/company.service';
 import { ServiceRequestService } from 'app/core/services/service-request.service';
-import { ServiceType, ServiceRequestStatus } from 'app/core/models/service-request.enums';
+import { ServiceType, ServiceRequestStatus } from 'app/core/models/enums/service-request.enums';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
