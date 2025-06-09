@@ -12,19 +12,21 @@
     <table class="vehicles-table">
       <thead>
         <tr>
-          <th>Registration Number</th>
+          <th>License Plate</th>
           <th>Brand</th>
           <th>Category</th>
-    
+          <th>Production Year</th>
+          <th>Color</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let vehicle of vehicles">
-          <td>{{ vehicle.registrationNumber }}</td>
-          <td>{{ VehicleCategory[vehicle.vehicleCategory!] }}</td>
-          <td>{{ VehicleBodyType[vehicle.vehicleBodyType!] }}</td>
-       
+        <tr *ngFor="let vehicle of pagedVehicles">
+          <td>{{ vehicle.licensePlate }}</td>
+          <td>{{ formatEnumLabel(VehicleCategory[vehicle.vehicleCategory!]) }}</td>
+          <td>{{ formatEnumLabel(VehicleBodyType[vehicle.vehicleBodyType!]) }}</td>
+          <td>{{ vehicle.productionYear }}</td>
+          <td>{{ vehicle.color }}</td>
           <td>
             <button class="action-btn" (click)="editVehicle(vehicle.id!)">
               <i class="fas fa-edit"></i>
@@ -36,6 +38,27 @@
         </tr>
       </tbody>
     </table>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper" *ngIf="totalPages > 1">
+      <div class="pagination">
+        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="nav-button prev-next">
+          <i class="fas fa-angle-left"></i>
+        </button>
+
+        <button *ngFor="let page of [].constructor(totalPages); let i = index"
+                [class.active]="i + 1 === currentPage"
+                (click)="changePage(i + 1)"
+                class="page-button">
+          {{ i + 1 }}
+        </button>
+
+        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="nav-button prev-next">
+          <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
+    </div>
+    
   </div>
 
   <div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">

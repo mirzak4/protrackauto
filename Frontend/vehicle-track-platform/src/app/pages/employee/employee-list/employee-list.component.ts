@@ -19,6 +19,9 @@ export class EmployeeListComponent implements OnInit {
   isDeleteConfirmOpen = false;
   employeeToDelete: Employee | null = null;
   roleMap: { [key: number]: string } = {};
+  
+  currentPage = 1;
+  itemsPerPage = 10;
 
 
   constructor(
@@ -54,6 +57,22 @@ export class EmployeeListComponent implements OnInit {
       }
     });
   }
+
+  get pagedEmployees(): Employee[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.employees.slice(start, start + this.itemsPerPage);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.employees.length / this.itemsPerPage);
+  }
+
+  changePage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+  
 
   addEmployee() {
     this.router.navigate(['/employees/new']);

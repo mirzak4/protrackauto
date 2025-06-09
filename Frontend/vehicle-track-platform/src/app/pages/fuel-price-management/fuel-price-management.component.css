@@ -303,41 +303,101 @@ button.outline:hover {
   background-size: contain;
 }
 
-.reports-container {
-  max-height: 400px; 
-  overflow-y: auto; 
+.reports-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   border: 1px solid #eaeaea;
+  margin-bottom: 2.5rem;
+}
+
+.reports-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.reports-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.reports-grid {
+  width: 100%;
+  overflow-x: auto;
   border-radius: 8px;
 }
 
-.reports-container::-webkit-scrollbar {
-  width: 8px;
+.reports-container {
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
 }
-
-.reports-container::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
-}
-
-.reports-container::-webkit-scrollbar-thumb {
-  background: #3498db;
-  border-radius: 4px;
-}
-
-.reports-container::-webkit-scrollbar-thumb:hover {
-  background: #2980b9;
-}
-
-
-.reports-table th {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
-
 .reports-table {
-  margin-bottom: 0;
+  width: 100%;
+  min-width: 600px;
+  border-collapse: collapse; /* izjednačavanje ivica */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  background: white;
 }
+
+.reports-table th, 
+.reports-table td {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  font-size: 0.95rem;
+  color: #34495e;
+}
+
+.reports-table thead {
+  background: linear-gradient(90deg, #4A90E2, #357ABD);
+  color: white;
+  font-weight: 700;
+}
+
+.reports-table tbody tr {
+  border-bottom: 1px solid #eaeaea;
+  transition: background-color 0.25s ease;
+}
+
+.reports-table tbody tr:hover {
+  background-color: #f0f8ff;
+}
+
+.reports-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.reports-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.reports-table .action-cell {
+  white-space: nowrap;
+  text-align: center;
+}
+
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.icon-btn:hover {
+  background-color: #d0e6ff;
+  box-shadow: 0 0 6px rgba(53, 122, 189, 0.4);
+}
+
 
 @media (max-width: 768px) {
   .header {

@@ -33,18 +33,6 @@
         </div>
       </ng-template>
 
-      <!-- Vehicle Body Type -->
-      <div class="input-group">
-        <label for="vehicleBodyType" class="input-label">Vehicle Body Type</label>
-        <select [(ngModel)]="vehicle.vehicleBodyType" name="vehicleBodyType" id="vehicleBodyType"
-                class="form-input" (change)="onInputChange()">
-          <option [ngValue]="null" disabled selected>Select body type</option>
-          <option *ngFor="let bodyType of vehicleBodyTypes" [ngValue]="bodyType.value">
-            {{ bodyType.label }}
-          </option>
-        </select>
-      </div>
-
       <!-- Basic Information Section -->
       <div class="form-section">
         <h3 class="section-title">Basic Information</h3>
@@ -52,68 +40,43 @@
           <div class="input-group">
             <label for="licensePlate" class="input-label">License Plate*</label>
             <input [(ngModel)]="vehicle.licensePlate" name="licensePlate" id="licensePlate"
-                   class="form-input" required placeholder="Enter license plate" (input)="onInputChange()" />
-          </div>
-
-          <div class="input-group">
-            <label for="color" class="input-label">Color</label>
-            <input [(ngModel)]="vehicle.color" name="color" id="color"
-                   class="form-input" placeholder="Enter color" (input)="onInputChange()" />
+                   class="form-input" required placeholder="e.g. BG123AA" (input)="onInputChange()" />
           </div>
 
           <div class="input-group">
             <label for="vehicleBrandType" class="input-label">Brand*</label>
             <input [(ngModel)]="vehicle.vehicleBrandType" name="vehicleBrandType" id="vehicleBrandType"
-                   class="form-input" required placeholder="Enter vehicle brand" (input)="onInputChange()" />
+                   class="form-input" required placeholder="e.g. Toyota" (input)="onInputChange()" />
           </div>
 
           <div class="input-group">
             <label for="productionYear" class="input-label">Production Year*</label>
             <input [(ngModel)]="vehicle.productionYear" name="productionYear" id="productionYear"
                    class="form-input" type="number" min="1900" max="2099" step="1" 
-                   required placeholder="Enter production year" (input)="onInputChange()" />
-          </div>
-        </div>
-      </div>
-
-      <!-- Registration Information Section -->
-      <div class="form-section">
-        <h3 class="section-title">Registration Information</h3>
-        <div class="form-grid">
-          <div class="input-group">
-            <label for="registrationNumber" class="input-label">Registration Number</label>
-            <input [(ngModel)]="vehicle.registrationNumber" name="registrationNumber" id="registrationNumber"
-                   class="form-input" placeholder="Enter registration number" (input)="onInputChange()" />
+                   required placeholder="e.g. 2020" (input)="onInputChange()" />
           </div>
 
           <div class="input-group">
-            <label for="firstRegistrationDate" class="input-label">First Registration Date</label>
-            <input [(ngModel)]="vehicle.firstRegistrationDate" name="firstRegistrationDate" id="firstRegistrationDate"
-                   class="form-input" type="date" (input)="onInputChange()" />
+            <label for="color" class="input-label">Color</label>
+            <input [(ngModel)]="vehicle.color" name="color" id="color"
+                   class="form-input" placeholder="e.g. Red" (input)="onInputChange()" />
           </div>
 
           <div class="input-group">
-            <label for="firstRegistrationPlace" class="input-label">First Registration Place</label>
-            <input [(ngModel)]="vehicle.firstRegistrationPlace" name="firstRegistrationPlace" id="firstRegistrationPlace"
-                   class="form-input" placeholder="Enter registration place" (input)="onInputChange()" />
+            <label for="vehicleBodyType" class="input-label">Body Type</label>
+            <select [(ngModel)]="vehicle.vehicleBodyType" name="vehicleBodyType" id="vehicleBodyType"
+                    class="form-input" (change)="onInputChange()">
+              <option [ngValue]="null" disabled selected>Select body type</option>
+              <option *ngFor="let bodyType of vehicleBodyTypes" [ngValue]="bodyType.value">
+                {{ bodyType.label }}
+              </option>
+            </select>
           </div>
 
           <div class="input-group">
-            <label for="firstLicensePlate" class="input-label">First License Plate</label>
-            <input [(ngModel)]="vehicle.firstLicensePlate" name="firstLicensePlate" id="firstLicensePlate"
-                   class="form-input" placeholder="Enter first license plate" (input)="onInputChange()" />
-          </div>
-
-          <div class="input-group">
-            <label for="registrationIssueDate" class="input-label">Registration Issue Date</label>
-            <input [(ngModel)]="vehicle.registrationIssueDate" name="registrationIssueDate" id="registrationIssueDate"
-                   class="form-input" type="date" (input)="onInputChange()" />
-          </div>
-
-          <div class="input-group">
-            <label for="registrationIssuePlace" class="input-label">Registration Issue Place</label>
-            <input [(ngModel)]="vehicle.registrationIssuePlace" name="registrationIssuePlace" id="registrationIssuePlace"
-                   class="form-input" placeholder="Enter issue place" (input)="onInputChange()" />
+            <label for="seatCount" class="input-label">Seat Count</label>
+            <input [(ngModel)]="vehicle.seatCount" name="seatCount" id="seatCount"
+                   class="form-input" type="number" min="1" placeholder="e.g. 5" (input)="onInputChange()" />
           </div>
         </div>
       </div>
@@ -123,54 +86,108 @@
         <h3 class="section-title">Technical Specifications</h3>
         <div class="form-grid">
           <div class="input-group">
-            <label for="chassisNumber" class="input-label">Chassis Number</label>
-            <input [(ngModel)]="vehicle.chassisNumber" name="chassisNumber" id="chassisNumber"
-                   class="form-input" placeholder="Enter chassis number" (input)="onInputChange()" />
-          </div>
-
-          <div class="input-group">
             <label for="fuelId" class="input-label">Fuel Type*</label>
             <select [(ngModel)]="vehicle.fuelId" name="fuelId" id="fuelId"
                     class="form-input" required (change)="onInputChange()">
               <option [ngValue]="null" disabled selected>Select fuel type</option>
-              <option *ngFor="let fuel of fuelTypes" [ngValue]="fuel.id">{{ fuel.name }}</option>
+              <option *ngFor="let fuel of fuels" [ngValue]="fuel.id">{{ fuel.name }}</option>
             </select>
           </div>
 
           <div class="input-group">
-            <label for="maxWeight" class="input-label">Max Weight (kg)</label>
-            <input [(ngModel)]="vehicle.maxWeight" name="maxWeight" id="maxWeight"
-                   class="form-input" type="number" min="0" placeholder="Enter max weight" (input)="onInputChange()" />
-          </div>
-
-          <div class="input-group">
-            <label for="payload" class="input-label">Payload (kg)</label>
-            <input [(ngModel)]="vehicle.payload" name="payload" id="payload"
-                   class="form-input" type="number" min="0" placeholder="Enter payload" (input)="onInputChange()" />
-          </div>
-
-          <div class="input-group">
-            <label for="vehicleWeight" class="input-label">Vehicle Weight (kg)</label>
-            <input [(ngModel)]="vehicle.vehicleWeight" name="vehicleWeight" id="vehicleWeight"
-                   class="form-input" type="number" min="0" placeholder="Enter vehicle weight" (input)="onInputChange()" />
-          </div>
-
-          <div class="input-group">
-            <label for="engineDisplacement" class="input-label">Engine Displacement (cc)</label>
+            <label for="engineDisplacement" class="input-label">Engine (cc)</label>
             <input [(ngModel)]="vehicle.engineDisplacement" name="engineDisplacement" id="engineDisplacement"
-                   class="form-input" type="number" min="0" placeholder="Enter engine displacement" (input)="onInputChange()" />
+                   class="form-input" type="number" min="0" placeholder="e.g. 2000" (input)="onInputChange()" />
           </div>
 
           <div class="input-group">
             <label for="maxPower" class="input-label">Max Power (kW)</label>
             <input [(ngModel)]="vehicle.maxPower" name="maxPower" id="maxPower"
-                   class="form-input" type="number" min="0" placeholder="Enter max power" (input)="onInputChange()" />
+                   class="form-input" type="number" min="0" placeholder="e.g. 150" (input)="onInputChange()" />
           </div>
 
           <div class="input-group">
-            <label for="seatCount" class="input-label">Seat Count</label>
-            <input [(ngModel)]="vehicle.seatCount" name="seatCount" id="seatCount"
-                   class="form-input" type="number" min="1" placeholder="Enter seat count" (input)="onInputChange()" />
+            <label for="powerWeightRatio" class="input-label">Power-Weight Ratio</label>
+            <input [(ngModel)]="vehicle.powerWeightRatio" name="powerWeightRatio" id="powerWeightRatio"
+                  class="form-input" type="number" min="0" step="0.01" placeholder="e.g. 0.15" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="vehicleWeight" class="input-label">Weight (kg)</label>
+            <input [(ngModel)]="vehicle.vehicleWeight" name="vehicleWeight" id="vehicleWeight"
+                   class="form-input" type="number" min="0" placeholder="e.g. 1500" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="maxWeight" class="input-label">Max Weight (kg)</label>
+            <input [(ngModel)]="vehicle.maxWeight" name="maxWeight" id="maxWeight"
+                   class="form-input" type="number" min="0" placeholder="e.g. 2000" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="payload" class="input-label">Payload (kg)</label>
+            <input [(ngModel)]="vehicle.payload" name="payload" id="payload"
+                   class="form-input" type="number" min="0" placeholder="e.g. 500" (input)="onInputChange()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Identification Numbers Section -->
+      <div class="form-section">
+        <h3 class="section-title">Identification Numbers</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="chassisNumber" class="input-label">Chassis Number</label>
+            <input [(ngModel)]="vehicle.chassisNumber" name="chassisNumber" id="chassisNumber"
+                   class="form-input" placeholder="e.g. JTDKB20U677678983" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="engineNumber" class="input-label">Engine Number</label>
+            <input [(ngModel)]="vehicle.engineNumber" name="engineNumber" id="engineNumber"
+                   class="form-input" placeholder="e.g. 1NZFXE58AZ123456" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="registrationNumber" class="input-label">Registration Number</label>
+            <input [(ngModel)]="vehicle.registrationNumber" name="registrationNumber" id="registrationNumber"
+                   class="form-input" placeholder="e.g. 123456789" (input)="onInputChange()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Registration Information Section -->
+      <div class="form-section">
+        <h3 class="section-title">Registration Information</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="firstRegistrationDate" class="input-label">First Registration</label>
+            <input [(ngModel)]="vehicle.firstRegistrationDate" name="firstRegistrationDate" id="firstRegistrationDate"
+                   class="form-input" type="date" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="firstRegistrationPlace" class="input-label">First Reg. Place</label>
+            <input [(ngModel)]="vehicle.firstRegistrationPlace" name="firstRegistrationPlace" id="firstRegistrationPlace"
+                   class="form-input" placeholder="e.g. Belgrade" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="firstLicensePlate" class="input-label">First License Plate</label>
+            <input [(ngModel)]="vehicle.firstLicensePlate" name="firstLicensePlate" id="firstLicensePlate"
+                   class="form-input" placeholder="e.g. BG987BB" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="registrationIssueDate" class="input-label">Registration Issue</label>
+            <input [(ngModel)]="vehicle.registrationIssueDate" name="registrationIssueDate" id="registrationIssueDate"
+                   class="form-input" type="date" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="registrationIssuePlace" class="input-label">Reg. Issue Place</label>
+            <input [(ngModel)]="vehicle.registrationIssuePlace" name="registrationIssuePlace" id="registrationIssuePlace"
+                   class="form-input" placeholder="e.g. Novi Sad" (input)="onInputChange()" />
           </div>
         </div>
       </div>
@@ -182,25 +199,19 @@
           <div class="input-group">
             <label for="commercialDescription" class="input-label">Commercial Description</label>
             <textarea [(ngModel)]="vehicle.commercialDescription" name="commercialDescription" id="commercialDescription"
-                      class="form-input" placeholder="Enter commercial description" (input)="onInputChange()"></textarea>
+                      class="form-input" placeholder="Vehicle description..." (input)="onInputChange()"></textarea>
           </div>
 
           <div class="input-group">
             <label for="ecoCharacteristics" class="input-label">Eco Characteristics</label>
             <input [(ngModel)]="vehicle.ecoCharacteristics" name="ecoCharacteristics" id="ecoCharacteristics"
-                   class="form-input" placeholder="Enter eco characteristics" (input)="onInputChange()" />
+                   class="form-input" placeholder="e.g. Euro 6" (input)="onInputChange()" />
           </div>
 
           <div class="input-group">
             <label for="catalyst" class="input-label">Catalyst</label>
             <input [(ngModel)]="vehicle.catalyst" name="catalyst" id="catalyst"
-                   class="form-input" placeholder="Enter catalyst info" (input)="onInputChange()" />
-          </div>
-
-          <div class="input-group">
-            <label for="engineNumber" class="input-label">Engine Number</label>
-            <input [(ngModel)]="vehicle.engineNumber" name="engineNumber" id="engineNumber"
-                   class="form-input" placeholder="Enter engine number" (input)="onInputChange()" />
+                   class="form-input" placeholder="e.g. Yes/No" (input)="onInputChange()" />
           </div>
         </div>
       </div>

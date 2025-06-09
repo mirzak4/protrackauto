@@ -184,6 +184,54 @@
   border-left: 3px solid #007bff;
 }
 
+.company-details-card {
+  background-color: #fff;
+  border-radius: 6px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.company-details-content {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 280px;
+  flex: 1 1 280px;
+}
+
+.detail-icon {
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  box-shadow: 0 2px 5px rgba(0, 123, 255, 0.3);
+}
+
+.detail-label {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #0056b3;
+}
+
+.detail-value {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+}
+
 @media (max-width: 640px) {
   .company-form-section .form-grid {
     grid-template-columns: 1fr;

@@ -45,9 +45,9 @@
 
       <div class="navbar-end">
         <ng-container *ngIf="userInfo$ | async as userInfo; else showLogin">
-          <button class="navbar-item report-btn" (click)="downloadReport()">
+          <!--<button class="navbar-item report-btn" (click)="downloadReport()">
             <i class="fas fa-file-pdf"></i> Download Report
-          </button>
+          </button>-->
           <div class="user-profile-dropdown" (click)="toggleProfileMenu()" (blur)="onProfileBlur($event)" tabindex="0">
             <div class="user-profile">
               <i class="fas fa-user-circle"></i>

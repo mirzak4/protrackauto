@@ -135,6 +135,7 @@ export class EmployeeFormComponent implements OnInit {
           this.employee.user.birthDate = this.formatDateForInput(emp.user.birthDate);
         }
         this.filterCompaniesByRole(emp.user.roleId);
+        this.hasChanges = false; 
       },
       error: (error) => {
         console.error('Error loading employee:', error);
@@ -201,4 +202,24 @@ export class EmployeeFormComponent implements OnInit {
       return '';
     }
   }
+
+  getRoleName(roleId: number): string {
+    const role = this.filteredRoles.find(r => r.id === roleId);
+    return role ? role.name : 'Unknown Role';
+  }
+
+  getCompanyName(companyId: number): string {
+    const company = this.allCompanies.find(c => c.id === companyId);
+    return company ? company.name : 'Unknown Company';
+  }
+
+  formatRole(role: string): string {
+    if (!role) return '';
+    return role
+      .toLowerCase()                
+      .split('_')                   
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))  
+      .join(' ');           
+  }
+
 }

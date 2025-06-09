@@ -18,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let driver of drivers">
+        <tr *ngFor="let driver of pagedDrivers">
           <td>{{ getFullName(driver.user) }}</td>
           <td>{{ driver.user.email }}</td>
           <td>{{ driver.licenseNumber }}</td>
@@ -35,6 +35,27 @@
 
       </tbody>
     </table>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper" *ngIf="totalPages > 1">
+      <div class="pagination">
+        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="nav-button prev-next">
+          <i class="fas fa-angle-left"></i>
+        </button>
+
+        <button *ngFor="let page of [].constructor(totalPages); let i = index"
+                [class.active]="i + 1 === currentPage"
+                (click)="changePage(i + 1)"
+                class="page-button">
+          {{ i + 1 }}
+        </button>
+
+        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="nav-button prev-next">
+          <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
+    </div>
+
   </div>
 
   <div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">

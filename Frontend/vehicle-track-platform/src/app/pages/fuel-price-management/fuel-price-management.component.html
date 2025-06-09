@@ -56,6 +56,45 @@
 
   <div class="reports-section">
     <div class="reports-header">
+      <h3>Fuel Prices</h3>
+    </div>
+
+    <div class="reports-grid">
+      <ng-container *ngIf="isLoadingFuelPrices && fuelPrices.length === 0; else fuelPricesContent">
+        <div class="loading">Loading fuel prices...</div>
+      </ng-container>
+
+      <ng-template #fuelPricesContent>
+        <div *ngIf="fuelPrices.length > 0; else emptyFuelPrices" class="reports-container" style="max-height: 300px; overflow-y: auto;">
+          <table class="reports-table">
+            <thead>
+              <tr>
+                <th>Fuel Type</th>
+                <th>Price</th>
+                <th>Issue Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let fp of fuelPrices; trackBy: trackByFuelPriceId">
+                <td>{{ getFuelName(fp.fuelId) }}</td>
+                <td>{{ fp.price | number:'1.2-2' }}</td>
+                <td>{{ fp.issueDate | date:'dd MMM yyyy' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-template>
+
+      <ng-template #emptyFuelPrices>
+        <div class="empty-state">
+          <p>No fuel prices added yet for this company.</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="reports-section">
+    <div class="reports-header">
       <h3>Available Reports</h3>
     </div>
 

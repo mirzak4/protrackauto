@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { VehicleDTO } from '../models/vehicle.model';
+import { Vehicle } from '../models/vehicle.model';
 import { environment } from 'environments/environment';
 
 @Injectable({
@@ -11,20 +11,20 @@ export class VehicleService {
 
   constructor(private http: HttpClient) { }
 
-  getAllVehicles(): Observable<VehicleDTO[]> {
-    return this.http.get<VehicleDTO[]>(`${environment.apiUrl}/api/vehicle`);
+  getAllVehicles(): Observable<Vehicle[]> {
+    return this.http.get<Vehicle[]>(`${environment.apiUrl}/api/vehicle`);
+  }
+  
+  getVehicleById(id: number): Observable<Vehicle> {
+    return this.http.get<Vehicle>(`${environment.apiUrl}/api/vehicle/${id}`);
   }
 
-  getVehicleById(id: number): Observable<VehicleDTO> {
-    return this.http.get<VehicleDTO>(`${environment.apiUrl}/api/vehicle/${id}`);
+  createVehicle(vehicleData: Omit<Vehicle, 'id'>): Observable<Vehicle> {
+    return this.http.post<Vehicle>(`${environment.apiUrl}/api/vehicle`, vehicleData);
   }
 
-  createVehicle(vehicleData: Omit<VehicleDTO, 'id'>): Observable<VehicleDTO> {
-    return this.http.post<VehicleDTO>(`${environment.apiUrl}/api/vehicle`, vehicleData);
-  }
-
-  updateVehicle(id: number, vehicleData: VehicleDTO): Observable<VehicleDTO> {
-    return this.http.put<VehicleDTO>(`${environment.apiUrl}/api/vehicle/${id}`, vehicleData);
+  updateVehicle(id: number, vehicleData: Vehicle): Observable<Vehicle> {
+    return this.http.put<Vehicle>(`${environment.apiUrl}/api/vehicle/${id}`, vehicleData);
   }
 
   deleteVehicle(id: number): Observable<void> {

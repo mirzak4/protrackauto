@@ -4,7 +4,9 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { VehicleService } from 'app/core/services/vehicle.service';
-import { VehicleDTO, VehicleCategory, VehicleBodyType } from 'app/core/models/vehicle.model';
+import { Vehicle, VehicleCategory, VehicleBodyType } from 'app/core/models/vehicle.model';
+import { Fuel } from 'app/core/models/fuel.model';
+import { FuelService } from 'app/core/services/fuel.service';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -17,59 +19,71 @@ export class VehicleFormComponent implements OnInit {
   isEditMode = false;
   hasChanges = false;
   isLoading = false;
+  fuels: Fuel[] = [];
 
-  vehicle: VehicleDTO = {
+  vehicle: Vehicle = {
     id: 0,
     licensePlate: '',
     vehicleBrandType: '',
     productionYear: new Date().getFullYear(),
     vehicleCategory: null,
     vehicleBodyType: null,
-    fuelId: 0
+    fuelId: 0,
+    firstRegistrationDate: '',
+    firstRegistrationPlace: '',
+    firstLicensePlate: '',
+    registrationIssueDate: '',
+    registrationIssuePlace: '',
+    color: '',
+    registrationNumber: '',
+    commercialDescription: '',
+    chassisNumber: '',
+    maxWeight: 0,
+    payload: 0,
+    vehicleWeight: 0,
+    powerWeightRatio: 0,
+    seatCount: 0,
+    engineDisplacement: 0,
+    maxPower: 0,
+    ecoCharacteristics: '',
+    catalyst: '',
+    engineNumber: ''
   };
 
   vehicleCategories = [
-    { value: VehicleCategory.TravelCar, label: 'Travel Car' },
-    { value: VehicleCategory.Truck, label: 'Truck' },
-    { value: VehicleCategory.Motorcycle, label: 'Motorcycle' },
-    { value: VehicleCategory.Bus, label: 'Bus' },
-    { value: VehicleCategory.Van, label: 'Van' },
+    { value: VehicleCategory.TRAVEL_CAR, label: 'Travel Car' },
+    { value: VehicleCategory.TRUCK, label: 'Truck' },
+    { value: VehicleCategory.MOTORCYCLE, label: 'Motorcycle' },
+    { value: VehicleCategory.BUS, label: 'Bus' },
+    { value: VehicleCategory.VAN, label: 'Van' },
     { value: VehicleCategory.SUV, label: 'SUV' },
-    { value: VehicleCategory.Pickup, label: 'Pickup' },
-    { value: VehicleCategory.Tractor, label: 'Tractor' },
-    { value: VehicleCategory.Scooter, label: 'Scooter' },
-    { value: VehicleCategory.Bicycle, label: 'Bicycle' }
+    { value: VehicleCategory.PICKUP, label: 'Pickup' },
+    { value: VehicleCategory.TRACTOR, label: 'Tractor' },
+    { value: VehicleCategory.SCOOTER, label: 'Scooter' },
+    { value: VehicleCategory.BICYCLE, label: 'Bicycle' }
   ];
 
   vehicleBodyTypes = [
-    { value: VehicleBodyType.Sedan, label: 'Sedan' },
-    { value: VehicleBodyType.Hatchback, label: 'Hatchback' },
+    { value: VehicleBodyType.SEDAN, label: 'Sedan' },
+    { value: VehicleBodyType.HATCHBACK, label: 'Hatchback' },
     { value: VehicleBodyType.SUV, label: 'SUV' },
-    { value: VehicleBodyType.Coupe, label: 'Coupe' },
-    { value: VehicleBodyType.Convertible, label: 'Convertible' },
-    { value: VehicleBodyType.Wagon, label: 'Wagon' },
-    { value: VehicleBodyType.Pickup, label: 'Pickup' },
-    { value: VehicleBodyType.Van, label: 'Van' },
-    { value: VehicleBodyType.Minivan, label: 'Minivan' },
-    { value: VehicleBodyType.Roadster, label: 'Roadster' },
-    { value: VehicleBodyType.Jeep, label: 'Jeep' },
-    { value: VehicleBodyType.Limousine, label: 'Limousine' },
-    { value: VehicleBodyType.Truck, label: 'Truck' },
-    { value: VehicleBodyType.Bus, label: 'Bus' },
-    { value: VehicleBodyType.Motorcycle, label: 'Motorcycle' }
-  ];
-
-  fuelTypes = [
-    { id: 1, name: 'Petrol' },
-    { id: 2, name: 'Diesel' },
-    { id: 3, name: 'Electric' },
-    { id: 4, name: 'Hybrid' },
-    { id: 5, name: 'LPG' },
-    { id: 6, name: 'CNG' }
+    { value: VehicleBodyType.COUPE, label: 'Coupe' },
+    { value: VehicleBodyType.CONVERTIBLE, label: 'Convertible' },
+    { value: VehicleBodyType.WAGON, label: 'Wagon' },
+    { value: VehicleBodyType.PICKUP, label: 'Pickup' },
+    { value: VehicleBodyType.VAN, label: 'Van' },
+    { value: VehicleBodyType.MINIVAN, label: 'Minivan' },
+    { value: VehicleBodyType.ROADSTER, label: 'Roadster' },
+    { value: VehicleBodyType.JEEP, label: 'Jeep' },
+    { value: VehicleBodyType.LIMOUSINE, label: 'Limousine' },
+    { value: VehicleBodyType.TRUCK, label: 'Truck' },
+    { value: VehicleBodyType.BUS, label: 'Bus' },
+    { value: VehicleBodyType.MOTORCYCLE , label: 'Motorcycle' }
   ];
 
   constructor(
     private vehicleService: VehicleService,
+    private fuelService: FuelService,
     private route: ActivatedRoute,
     public router: Router,
     private snackBar: MatSnackBar
@@ -81,6 +95,20 @@ export class VehicleFormComponent implements OnInit {
       this.isEditMode = true;
       this.loadVehicle(+id);
     }
+
+    this.loadFuels();  
+  }
+
+  loadFuels() {
+    this.fuelService.getAllFuels().subscribe({
+      next: (data) => {
+        this.fuels = data;  
+      },
+      error: (err) => {
+        console.error('Error loading fuels:', err);
+        this.snackBar.open('Error loading fuel data', 'Close', { duration: 3000 });
+      }
+    });
   }
 
   onInputChange() {

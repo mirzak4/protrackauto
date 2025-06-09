@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { VehicleService } from 'app/core/services/vehicle.service';
-import { VehicleBodyType, VehicleCategory, VehicleDTO } from 'app/core/models/vehicle.model';
+import { VehicleBodyType, VehicleCategory, Vehicle } from 'app/core/models/vehicle.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -14,12 +14,15 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   imports: [CommonModule, MatSnackBarModule]
 })
 export class VehicleListComponent implements OnInit {
-  vehicles: VehicleDTO[] = [];
+  vehicles: Vehicle[] = [];
   isDeleteConfirmOpen = false;
-  vehicleToDelete: VehicleDTO | null = null;
+  vehicleToDelete: Vehicle | null = null;
 
   VehicleCategory = VehicleCategory;  
   VehicleBodyType = VehicleBodyType;
+
+  currentPage = 1;
+  itemsPerPage = 10;
 
   constructor(
     private vehicleService: VehicleService,
@@ -38,6 +41,21 @@ export class VehicleListComponent implements OnInit {
     });
   }
 
+  get pagedVehicles(): Vehicle[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.vehicles.slice(start, start + this.itemsPerPage);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.vehicles.length / this.itemsPerPage);
+  }
+
+  changePage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
   addVehicle() {
     this.router.navigate(['/vehicles/new']);
   }
@@ -46,7 +64,7 @@ export class VehicleListComponent implements OnInit {
     this.router.navigate(['/vehicles/edit', id]);
   }
 
-  deleteVehicle(vehicle: VehicleDTO) {
+  deleteVehicle(vehicle: Vehicle) {
     this.vehicleToDelete = vehicle;
     this.isDeleteConfirmOpen = true;
   }
@@ -79,5 +97,13 @@ export class VehicleListComponent implements OnInit {
   cancelDelete() {
     this.isDeleteConfirmOpen = false;
     this.vehicleToDelete = null;
+  }
+
+  formatEnumLabel(value: string | null | undefined): string {
+    if (!value) return '-';
+    return value
+      .toLowerCase()
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, c => c.toUpperCase());
   }
 }

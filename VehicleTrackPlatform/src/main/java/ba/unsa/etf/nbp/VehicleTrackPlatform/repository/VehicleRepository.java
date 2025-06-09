@@ -71,6 +71,10 @@ public class VehicleRepository {
         return jdbcTemplate.query("SELECT * FROM VEHICLE", new VehicleRowMapper());
     }
 
+    public long count() {
+        return jdbcTemplate.queryForObject("SELECT COUNT(*) FROM VEHICLE", Long.class);
+    }
+
     public Optional<Vehicle> findById(Long id) {
         return jdbcTemplate.query("SELECT * FROM VEHICLE WHERE ID = ?",
                 new VehicleRowMapper(), id).stream().findFirst();

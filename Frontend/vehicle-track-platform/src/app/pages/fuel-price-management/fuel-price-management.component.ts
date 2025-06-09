@@ -24,6 +24,8 @@ export class FuelPriceManagement implements OnInit {
   isLoading = false;
   isDownloading = false;
   isGeneratingReport = false;
+  fuelPrices: FuelPrice[] = [];
+  isLoadingFuelPrices = false;
 
   fuelPriceForm!: FormGroup;
   fuels: Fuel[] = [];
@@ -45,6 +47,7 @@ export class FuelPriceManagement implements OnInit {
     this.loadReports();
     this.loadFuels();
     this.initForm();
+    this.loadFuelPrices();
   }
 
   initForm(): void {
@@ -52,6 +55,21 @@ export class FuelPriceManagement implements OnInit {
       fuelId: [null, Validators.required],
       price: [null, [Validators.required, Validators.min(0.01)]],
       issueDate: [null, Validators.required]
+    });
+  }
+
+  
+  loadFuelPrices(): void {
+    this.isLoadingFuelPrices = true;
+    this.fuelPriceService.getCompanyFuelPrices(this.companyId).subscribe({
+      next: (data) => {
+        this.fuelPrices = data;
+        this.isLoadingFuelPrices = false;
+      },
+      error: () => {
+        this.isLoadingFuelPrices = false;
+        this.showError('Error loading fuel prices');
+      }
     });
   }
 
@@ -95,7 +113,8 @@ export class FuelPriceManagement implements OnInit {
       next: () => {
         this.snackBar.open('Fuel price added', 'Close', { duration: 3000 });
         this.fuelPriceForm.reset();
-        this.loadReports(); // Refresh the reports list
+        this.loadReports();       
+        this.loadFuelPrices();
       },
       error: () => this.showError('Error adding fuel price')
     });
@@ -142,5 +161,14 @@ export class FuelPriceManagement implements OnInit {
 
   trackByDocumentId(index: number, report: any): number {
     return report.documentId;
+  }
+
+  trackByFuelPriceId(index: number, fuelPrice: FuelPrice): number {
+    return fuelPrice.id; 
+  }
+
+  getFuelName(fuelId: number): string {
+    const fuel = this.fuels.find(f => f.id === fuelId);
+    return fuel ? fuel.name : 'Unknown';
   }
 }

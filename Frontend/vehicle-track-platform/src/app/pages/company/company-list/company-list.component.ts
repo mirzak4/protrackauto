@@ -20,6 +20,9 @@ export class CompanyListComponent implements OnInit {
   companyToDelete: CompanyDTO | null = null;
   selectedCompanyType: number = 1;
 
+  currentPage = 1;
+  itemsPerPage = 9;
+
   constructor(
     private companyService: CompanyService,
     private router: Router,
@@ -41,7 +44,23 @@ export class CompanyListComponent implements OnInit {
     });
   }
 
+  get pagedCompanies(): CompanyDTO[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.companies.slice(start, start + this.itemsPerPage);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.companies.length / this.itemsPerPage);
+  }
+
+  changePage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
+  }
+
   onCompanyTypeChange() {
+    this.currentPage = 1;
     this.loadCompanies();
   }
 
