@@ -119,6 +119,11 @@ public class EmployeeRepository {
                 new EmployeeRowMapper(), id).stream().findFirst();
     }
 
+    public Optional<Employee> findByUserId(Long userId) {
+        return jdbcTemplate.query(employeeQuerySql + "WHERE e.USER_ID = ?",
+                new EmployeeRowMapper(), userId).stream().findFirst();
+    }
+
     @Transactional
     public Long create(Employee employee) {
         var userId = this.userRepository.insertUser(employee.getUser());

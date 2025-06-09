@@ -11,12 +11,8 @@
             <thead>
                 <tr>
                     <th>Service Type</th>
-                    <th>Fiscal Receipt #</th>
-                    <th>Cost</th>
                     <th>Status</th>
                     <th>Request Date</th>
-                    <th>Requested By</th>
-                    <th>Vehicle ID</th>
                     <th>Servicer (Company)</th>
                     <th>Actions</th>
                 </tr>
@@ -24,12 +20,8 @@
             <tbody>
                 <tr *ngFor="let req of serviceRequests">
                     <td>{{ getServiceTypeName(req.serviceType) }}</td>
-                    <td>{{ req.fiscalReceiptNumber }}</td>
-                    <td>{{ req.cost | currency }}</td>
                     <td>{{ getStatusName(req.status) }}</td>
                     <td>{{ req.requestDate | date:'mediumDate' }}</td>
-                    <td>{{ req.requestedBy }}</td>
-                    <td>{{ req.vehicleId }}</td>
                     <td>{{ companyMap[req.servicerId] || 'Unknown' }}</td>
                     <td>
                         <button class="action-btn" (click)="editServiceRequest(req.id!)">
