@@ -23,6 +23,7 @@ import { FuelPriceManagement } from './pages/fuel-price-management/fuel-price-ma
 import { TrafficFineFormComponent } from './pages/traffic-fines/traffic-fine-form/traffic-fine-form.component';
 import { TrafficFineListComponent } from './pages/traffic-fines/traffic-fine-list/traffic-fine-list.component';
 import { FuelPriceListComponent } from './pages/fuel-price/fuel-price-list/fuel-price-list.component';
+import { FuelPriceFormComponent } from './pages/fuel-price/fuel-price-form/fuel-price-form.component';
 
 
 export const routes: Routes = [
@@ -54,6 +55,8 @@ export const routes: Routes = [
   { path: 'traffic-fines/edit/:id', component: TrafficFineFormComponent },
 
   { path: 'fuel-prices', component: FuelPriceListComponent },
+  { path: 'fuel-prices/new', component: FuelPriceFormComponent },
+  { path: 'fuel-prices/edit/:id', component: FuelPriceFormComponent },
 
   { path: 'services', component: ServicesComponent },
   { path: 'insurance', component: InsuranceComponent },

@@ -24,8 +24,8 @@ export class FuelPriceService {
     return this.http.get<FuelPrice>(`${this.apiUrl}/${id}`);
   }
 
-  createFuelPrice(fuelPrice: FuelPrice): Observable<number> {
-    return this.http.post<number>(this.apiUrl, fuelPrice);
+  createFuelPrice(fuelPrice: FuelPrice): Observable<FuelPrice> {
+    return this.http.post<FuelPrice>(this.apiUrl, fuelPrice);
   }
 
   updateFuelPrice(id: number, fuelPrice: FuelPrice): Observable<FuelPrice> {

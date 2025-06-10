@@ -1,0 +1,146 @@
+.fuel-price-form-section {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #fafafa;
+  border-radius: 6px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-header {
+  margin-bottom: 20px;
+}
+
+.form-title {
+  font-weight: 600;
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.form-divider {
+  height: 2px;
+  width: 80px;
+  background-color: #007bff;
+  margin-top: 6px;
+  margin-bottom: 20px;
+  border-radius: 2px;
+}
+
+.fuel-price-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-section {
+  background-color: #fff;
+  padding: 18px 20px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.section-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 14px;
+  color: #0056b3;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: #444;
+}
+
+.form-input,
+select.form-input {
+  padding: 8px 10px;
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #222;
+  outline-offset: 2px;
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus,
+select.form-input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px #007bffaa;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 10px 22px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:disabled {
+  background-color: #9ec5fe;
+  cursor: not-allowed;
+}
+
+.btn-primary:not(:disabled):hover {
+  background-color: #0056b3;
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid #007bff;
+  color: #007bff;
+}
+
+.btn-outline:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+@media (max-width: 640px) {
+  .fuel-price-form .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fuel-price-form .form-actions {
+    flex-direction: column;
+  }
+
+  .fuel-price-form .btn {
+    width: 100%;
+  }
+}
