@@ -48,50 +48,50 @@ export class ServiceRequestListComponent implements OnInit {
 
     loadServiceRequests() {
         // MOCK DATA ONLY – remove this when backend is ready
-        this.serviceRequests = [
-            {
-                id: 1,
-                serviceType: 1, // MAINTENANCE
-                fiscalReceiptNumber: 1001,
-                cost: 150.00,
-                status: 1, // REQUESTED
-                requestDate: '2025-06-01',
-                requestedBy: 'Alice Johnson',
-                vehicleId: 12,
-                servicerId: 101
-            },
-            {
-                id: 2,
-                serviceType: 2, // REPAIR
-                fiscalReceiptNumber: 1002,
-                cost: 320.00,
-                status: 3, // IN_PROGRESS
-                requestDate: '2025-06-05',
-                requestedBy: 'Bob Smith',
-                vehicleId: 15,
-                servicerId: 102
-            },
-            {
-                id: 3,
-                serviceType: 2, // INSPECTION
-                fiscalReceiptNumber: 1003,
-                cost: 90.00,
-                status: 4, // COMPLETED
-                requestDate: '2025-06-07',
-                requestedBy: 'Carol Nguyen',
-                vehicleId: 8,
-                servicerId: 103
-            }
-        ];
-
-        // this.serviceRequestService.getAllServiceRequests().subscribe({
-        //     next: (requests) => {
-        //         this.serviceRequests = requests;
+        // this.serviceRequests = [
+        //     {
+        //         id: 1,
+        //         serviceType: 1, // MAINTENANCE
+        //         fiscalReceiptNumber: 1001,
+        //         cost: 150.00,
+        //         status: 1, // REQUESTED
+        //         requestDate: '2025-06-01',
+        //         requestedBy: 'Alice Johnson',
+        //         vehicleId: 12,
+        //         servicerId: 101
         //     },
-        //     error: (error) => {
-        //         console.error('Error loading service requests:', error);
+        //     {
+        //         id: 2,
+        //         serviceType: 2, // REPAIR
+        //         fiscalReceiptNumber: 1002,
+        //         cost: 320.00,
+        //         status: 3, // IN_PROGRESS
+        //         requestDate: '2025-06-05',
+        //         requestedBy: 'Bob Smith',
+        //         vehicleId: 15,
+        //         servicerId: 102
+        //     },
+        //     {
+        //         id: 3,
+        //         serviceType: 2, // INSPECTION
+        //         fiscalReceiptNumber: 1003,
+        //         cost: 90.00,
+        //         status: 4, // COMPLETED
+        //         requestDate: '2025-06-07',
+        //         requestedBy: 'Carol Nguyen',
+        //         vehicleId: 8,
+        //         servicerId: 103
         //     }
-        // });
+        // ];
+
+        this.serviceRequestService.getAllServiceRequests().subscribe({
+            next: (requests) => {
+                this.serviceRequests = requests;
+            },
+            error: (error) => {
+                console.error('Error loading service requests:', error);
+            }
+        });
 
     }
 

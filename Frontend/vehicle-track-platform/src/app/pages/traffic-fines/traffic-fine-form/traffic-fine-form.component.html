@@ -1,0 +1,97 @@
+<section class="traffic-fine-form-section">
+  <div class="form-container">
+    <header class="form-header">
+      <h2 class="form-title">{{ isEditMode ? 'Edit Traffic Fine' : 'Add Traffic Fine' }}</h2>
+      <div class="form-divider"></div>
+    </header>
+
+    <form (ngSubmit)="saveFine()" #fineForm="ngForm" class="traffic-fine-form">
+      <div class="form-section">
+        <h3 class="section-title">Fine Details</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="violationType" class="input-label">Violation Type</label>
+            <select id="violationType" name="violationType" [(ngModel)]="trafficFine.violationType" required
+              class="form-input" (ngModelChange)="onInputChange()">
+              <option [ngValue]="null" disabled>-- Select Violation --</option>
+              <option *ngFor="let type of violationTypes" [ngValue]="type.id">{{ getViolationTypeLabel(type.id) }}</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="paymentStatus" class="input-label">Payment Status</label>
+            <select id="paymentStatus" name="paymentStatus" [(ngModel)]="trafficFine.paymentStatus" required
+              class="form-input" (ngModelChange)="onInputChange()">
+              <option [ngValue]="null" disabled>-- Select Status --</option>
+              <option *ngFor="let s of paymentStatuses" [ngValue]="s.id">{{ getPaymentStatusLabel(s.id) }}</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="issueDate" class="input-label">Issue Date</label>
+            <input id="issueDate" name="issueDate" [(ngModel)]="trafficFine.issueDate" type="date" class="form-input"
+              required (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="paymentDueDate" class="input-label">Payment Due Date</label>
+            <input id="paymentDueDate" name="paymentDueDate" [(ngModel)]="trafficFine.paymentDueDate" type="date"
+              class="form-input" required (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="amount" class="input-label">Amount</label>
+            <input id="amount" name="amount" [(ngModel)]="trafficFine.amount" type="number" required
+              placeholder="Enter fine amount" class="form-input" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="location" class="input-label">Location</label>
+            <input id="location" name="location" [(ngModel)]="trafficFine.location" required placeholder="Enter location"
+              class="form-input" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group full-width">
+            <label for="violationDescription" class="input-label">Description</label>
+            <textarea id="violationDescription" name="violationDescription" [(ngModel)]="trafficFine.violationDescription"
+              required placeholder="Describe the violation" class="form-input" rows="3"
+              (input)="onInputChange()"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <h3 class="section-title">Associations</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="vehicleId" class="input-label">Vehicle</label>
+            <select id="vehicleId" name="vehicleId" [(ngModel)]="trafficFine.vehicleId" required class="form-input"
+              (ngModelChange)="onInputChange()">
+              <option [ngValue]="null" disabled>-- Select Vehicle --</option>
+              <option *ngFor="let v of vehicles" [ngValue]="v.id">{{ v.licensePlate }}</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="driverId" class="input-label">Driver</label>
+            <select id="driverId" name="driverId" [(ngModel)]="trafficFine.driverId" required class="form-input"
+              (ngModelChange)="onInputChange()">
+              <option [ngValue]="null" disabled>-- Select Driver --</option>
+              <option *ngFor="let d of drivers" [ngValue]="d.id">{{ d.name }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary"
+          [disabled]="!isFormValid() || (isEditMode && !hasChanges)">
+          {{ isEditMode ? 'Update Fine' : 'Create Fine' }}
+        </button>
+        <button type="button" class="btn btn-outline" (click)="router.navigate(['/traffic-fines'])">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
