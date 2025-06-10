@@ -35,7 +35,10 @@
         </div>
       </div>
 
-      <div class="navbar-end">
+      
+    </div>
+
+    <div class="navbar-end">
         <ng-container *ngIf="userInfo$ | async as userInfo; else showLogin">
           <button class="navbar-item report-btn" (click)="downloadReport()">
             <i class="fas fa-file-pdf"></i> Download Report
@@ -67,6 +70,5 @@
           </a>
         </ng-template>
       </div>
-    </div>
   </div>
 </nav>
