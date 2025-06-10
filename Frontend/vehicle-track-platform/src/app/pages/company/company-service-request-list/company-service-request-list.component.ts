@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ServiceRequestStatus, ServiceType } from 'app/core/models/service-request.enums';
+import { ServiceRequestStatus, ServiceType } from 'app/core/models/enums/service-request.enums';
 import { ServiceRequest } from 'app/core/models/service-request.model';
 import { CompanyService } from 'app/core/services/company.service';
 import { ServiceRequestService } from 'app/core/services/service-request.service';
