@@ -3,7 +3,6 @@ import { HomeComponent } from './pages/home/home.component';
 import { DriverListComponent } from './pages/drivers//driver-list/driver-list.component';
 import { DriverFormComponent } from './pages/drivers/driver-form/driver-form.component';
 import { ServicesComponent } from './pages/services/services.component';
-import { FuelComponent } from './pages/fuel/fuel.component';
 import { InsuranceComponent } from './pages/insurance/insurance.component';
 import { InspectionsComponent } from './pages/inspections/inspections.component';
 import { TravelRequestsComponent } from './pages/travel-requests/travel-requests.component';
@@ -23,6 +22,8 @@ import { ServiceRequestListComponent } from './pages/service-request/service-req
 import { FuelPriceManagement } from './pages/fuel-price-management/fuel-price-management.component';
 import { TrafficFineFormComponent } from './pages/traffic-fines/traffic-fine-form/traffic-fine-form.component';
 import { TrafficFineListComponent } from './pages/traffic-fines/traffic-fine-list/traffic-fine-list.component';
+import { FuelPriceListComponent } from './pages/fuel-price/fuel-price-list/fuel-price-list.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -52,8 +53,9 @@ export const routes: Routes = [
   { path: 'traffic-fines/new', component: TrafficFineFormComponent },
   { path: 'traffic-fines/edit/:id', component: TrafficFineFormComponent },
 
+  { path: 'fuel-prices', component: FuelPriceListComponent },
+
   { path: 'services', component: ServicesComponent },
-  { path: 'fuel', component: FuelComponent },
   { path: 'insurance', component: InsuranceComponent },
   { path: 'inspections', component: InspectionsComponent },
   { path: 'travel-requests', component: TravelRequestsComponent },

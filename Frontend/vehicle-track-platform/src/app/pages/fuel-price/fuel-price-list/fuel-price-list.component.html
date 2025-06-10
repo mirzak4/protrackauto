@@ -1,0 +1,28 @@
+<section class="fuel-price-section">
+  <div class="container">
+    <div class="header">
+      <h2>Fuel Prices</h2>
+    </div>
+
+    <div *ngFor="let fuel of fuels" class="fuel-group">
+      <h3>{{ fuel.name }}</h3>
+
+      <table class="fuel-price-table">
+        <thead>
+          <tr>
+            <th>Gas Station</th>
+            <th>Price (EUR)</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let price of getFuelPricesByFuel(fuel.id)">
+            <td>{{ getCompanyName(price.gasStationId) }}</td>
+            <td>{{ price.price | number: '1.2-2' }}</td>
+            <td>{{ price.issueDate | date: 'shortDate' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
