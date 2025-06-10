@@ -1,4 +1,4 @@
-.service-request-form-section {
+.traffic-fine-form-section {
   max-width: 700px;
   margin: 30px auto;
   padding: 20px;
@@ -33,12 +33,17 @@
   border-radius: 2px;
 }
 
+.traffic-fine-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
 .form-section {
   background-color: #fff;
   padding: 18px 20px;
   border-radius: 5px;
   border: 1px solid #ddd;
-  margin-bottom: 24px;
 }
 
 .section-title {
@@ -127,15 +132,15 @@ select.form-input:focus {
 }
 
 @media (max-width: 640px) {
-  .form-grid {
+  .traffic-fine-form .form-grid {
     grid-template-columns: 1fr;
   }
 
-  .form-actions {
+  .traffic-fine-form .form-actions {
     flex-direction: column;
   }
 
-  .btn {
+  .traffic-fine-form .btn {
     width: 100%;
   }
 }

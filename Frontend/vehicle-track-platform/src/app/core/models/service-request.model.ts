@@ -1,4 +1,4 @@
-import { ServiceRequestStatus, ServiceType } from "./service-request.enums";
+import { ServiceRequestStatus, ServiceType } from "./enums/service-request.enums";
 
 export interface ServiceRequest {
   id?: number;

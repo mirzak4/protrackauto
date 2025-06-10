@@ -1,0 +1,53 @@
+<section class="traffic-fines-section">
+  <div class="container">
+    <div class="header">
+      <h2>Traffic Fines</h2>
+      <button class="add-btn" (click)="addFine()">
+        <i class="fas fa-plus"></i> Add Traffic Fine
+      </button>
+    </div>
+
+    <table class="traffic-fines-table">
+      <thead>
+        <tr>
+          <th>Issue Date</th>
+          <th>Due Date</th>
+          <th>Violation</th>
+          <th>Amount</th>
+          <th>Payment Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let fine of fines">
+          <td>{{ fine.issueDate | date:'mediumDate' }}</td>
+          <td>{{ fine.paymentDueDate | date:'mediumDate' }}</td>
+          <td>{{ fine.violationDescription }}</td>
+          <td>{{ fine.amount | currency }}</td>
+          <td>
+            {{ getPaymentStatusLabel(fine.paymentStatus) }}
+          </td>
+          <td>
+            <button class="action-btn" (click)="editFine(fine.id!)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-btn" (click)="deleteFine(fine)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">
+    <div class="modal">
+      <h2>Confirm Deletion</h2>
+      <p>Are you sure you want to delete the traffic fine issued on <strong>{{ fineToDelete?.issueDate | date:'mediumDate' }}</strong> for <strong>{{ fineToDelete?.violationDescription }}</strong>?</p>
+      <div class="modal-buttons">
+        <button class="btn-primary" (click)="confirmDelete()">Delete</button>
+        <button class="btn-secondary" (click)="cancelDelete()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</section>

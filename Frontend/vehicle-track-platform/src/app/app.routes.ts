@@ -3,9 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { DriverListComponent } from './pages/drivers//driver-list/driver-list.component';
 import { DriverFormComponent } from './pages/drivers/driver-form/driver-form.component';
 import { ServicesComponent } from './pages/services/services.component';
-import { FuelComponent } from './pages/fuel/fuel.component';
 import { InsuranceComponent } from './pages/insurance/insurance.component';
-import { FinesComponent } from './pages/fines/fines.component';
 import { InspectionsComponent } from './pages/inspections/inspections.component';
 import { TravelRequestsComponent } from './pages/travel-requests/travel-requests.component';
 import { AccountComponent } from './pages/account/account.component';
@@ -23,6 +21,11 @@ import { ServiceRequestFormComponent } from './pages/service-request/service-req
 import { ServiceRequestListComponent } from './pages/service-request/service-request-list/service-request-list.component';
 import { FuelPriceManagement } from './pages/fuel-price-management/fuel-price-management.component';
 import { CompanyServiceRequestListComponent } from './pages/company/company-service-request-list/company-service-request-list.component';
+import { TrafficFineFormComponent } from './pages/traffic-fines/traffic-fine-form/traffic-fine-form.component';
+import { TrafficFineListComponent } from './pages/traffic-fines/traffic-fine-list/traffic-fine-list.component';
+import { FuelPriceListComponent } from './pages/fuel-price/fuel-price-list/fuel-price-list.component';
+import { FuelPriceFormComponent } from './pages/fuel-price/fuel-price-form/fuel-price-form.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -50,10 +53,16 @@ export const routes: Routes = [
   { path: 'service-requests/new', component: ServiceRequestFormComponent },
   { path: 'service-requests/edit/:id', component: ServiceRequestFormComponent },
 
+  { path: 'traffic-fines', component: TrafficFineListComponent },
+  { path: 'traffic-fines/new', component: TrafficFineFormComponent },
+  { path: 'traffic-fines/edit/:id', component: TrafficFineFormComponent },
+
+  { path: 'fuel-prices', component: FuelPriceListComponent },
+  { path: 'fuel-prices/new', component: FuelPriceFormComponent },
+  { path: 'fuel-prices/edit/:id', component: FuelPriceFormComponent },
+
   { path: 'services', component: ServicesComponent },
-  { path: 'fuel', component: FuelComponent },
   { path: 'insurance', component: InsuranceComponent },
-  { path: 'fines', component: FinesComponent },
   { path: 'inspections', component: InspectionsComponent },
   { path: 'travel-requests', component: TravelRequestsComponent },
   { path: 'account', component: AccountComponent },
