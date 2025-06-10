@@ -5,26 +5,26 @@
     </a>
 
     <div class="navbar-menu">
-      <div class="navbar-start">
+      <div class="navbar-start" *ngIf="user">
         <a class="navbar-item" routerLink="/home" routerLinkActive="is-active">
           Dashboard
         </a>
-        <a class="navbar-item" routerLink="/vehicles" routerLinkActive="is-active">
+        <a *ngIf="canSeeVehicles()" class="navbar-item" routerLink="/vehicles" routerLinkActive="is-active">
           Vehicles
         </a>
-        <a class="navbar-item" routerLink="/companies" routerLinkActive="is-active">
+        <a *ngIf="canSeeCompanies()" class="navbar-item" routerLink="/companies" routerLinkActive="is-active">
           Companies
         </a>
-        <a class="navbar-item" routerLink="/service-requests" routerLinkActive="is-active">
+        <a *ngIf="canSeeServiceRequests()" class="navbar-item" routerLink="/service-requests" routerLinkActive="is-active">
           Service Requests
         </a>
-        <a class="navbar-item" routerLink="/traffic-fines" routerLinkActive="is-active">
+        <a *ngIf="canSeeTrafficFines()" class="navbar-item" routerLink="/traffic-fines" routerLinkActive="is-active">
           Traffic Fines
         </a>
-        <a class="navbar-item" routerLink="/fuel-prices" routerLinkActive="is-active">
+        <a *ngIf="canSeeFuelPrices()" class="navbar-item" routerLink="/fuel-prices" routerLinkActive="is-active">
           Fuel Prices
         </a>
-        <div class="navbar-dropdown">
+        <div *ngIf="canSeeUsersDropdown()" class="navbar-dropdown">
           <a class="navbar-item">
             Users <i class="fas fa-chevron-down"></i>
           </a>
@@ -33,15 +33,6 @@
             <a class="dropdown-item" routerLink="/employees">Employees</a>
           </div>
         </div>
-        <!-- <div class="navbar-dropdown">
-          <a class="navbar-item">
-            Analytics <i class="fas fa-chevron-down"></i>
-          </a>
-          <div class="dropdown-content">
-            <a class="dropdown-item" routerLink="/fuel">Fuel Analytics</a>
-            <a class="dropdown-item" routerLink="/maintenance">Maintenance</a>
-          </div>
-        </div> -->
       </div>
 
       <div class="navbar-end">
@@ -76,7 +67,6 @@
           </a>
         </ng-template>
       </div>
-
     </div>
   </div>
 </nav>
