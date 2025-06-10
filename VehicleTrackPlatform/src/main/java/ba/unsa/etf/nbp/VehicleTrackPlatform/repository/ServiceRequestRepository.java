@@ -103,6 +103,15 @@ public class ServiceRequestRepository {
         return request;
     }
 
+    public List<ServiceRequest> findByServicerId(Long servicerId) {
+        return jdbcTemplate.query(
+                "SELECT * FROM SERVICE_REQUEST WHERE SERVICER_ID = ?",
+                new ServiceRequestRowMapper(),
+                servicerId
+        );
+    }
+
+
     public void deleteById(Long id) {
         jdbcTemplate.update("DELETE FROM SERVICE_REQUEST WHERE ID = ?", id);
     }

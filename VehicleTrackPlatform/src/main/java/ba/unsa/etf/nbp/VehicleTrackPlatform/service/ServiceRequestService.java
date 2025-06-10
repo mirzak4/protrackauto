@@ -44,6 +44,14 @@ public class ServiceRequestService {
         return ServiceRequestMapping.convertToDTO(savedRequest);
     }
 
+    public List<ServiceRequestDTO> getServiceRequestsByServicerId(Long servicerId) {
+        var requests = serviceRequestRepository.findByServicerId(servicerId);
+        return requests.stream()
+                .map(ServiceRequestMapping::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+
     public void deleteServiceRequest(Long id) {
         serviceRequestRepository.deleteById(id);
     }

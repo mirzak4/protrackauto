@@ -28,6 +28,10 @@ export class ServiceRequestService {
     return this.http.put<ServiceRequest>(`${this.apiUrl}/${id}`, data);
   }
 
+  getServiceRequestsByServicerId(servicerId: number): Observable<ServiceRequest[]> {
+    return this.http.get<ServiceRequest[]>(`${this.apiUrl}/servicer/${servicerId}`);
+  }
+
   deleteServiceRequest(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

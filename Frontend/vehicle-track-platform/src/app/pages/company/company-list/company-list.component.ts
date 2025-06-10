@@ -111,4 +111,8 @@ export class CompanyListComponent implements OnInit {
     this.router.navigate(['/companies', companyId, 'reports']);
   }
 
+  viewServiceRequests(companyId: number): void {
+    this.router.navigate(['/companies', companyId, 'service-requests']);
+  }
+
 }

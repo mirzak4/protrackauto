@@ -74,6 +74,18 @@ public class ServiceRequestController {
         return ResponseEntity.ok(serviceRequestService.updateServiceRequest(serviceRequestDTO));
     }
 
+    @Operation(summary = "Get service requests by servicer ID", description = "Returns list of service requests assigned to a specific servicer")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of service requests retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Servicer not found", content = @Content)
+    })
+    @GetMapping("/servicer/{servicerId}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
+    public List<ServiceRequestDTO> getServiceRequestsByServicerId(@PathVariable Long servicerId) {
+        return serviceRequestService.getServiceRequestsByServicerId(servicerId);
+    }
+
+
     @Operation(summary = "Delete service request by id", description = "Deletes service request with provided id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Service request deleted successfully"),

@@ -22,6 +22,7 @@ import { EmployeeListComponent } from './pages/employee/employee-list/employee-l
 import { ServiceRequestFormComponent } from './pages/service-request/service-request-form/service-request-form.component';
 import { ServiceRequestListComponent } from './pages/service-request/service-request-list/service-request-list.component';
 import { FuelPriceManagement } from './pages/fuel-price-management/fuel-price-management.component';
+import { CompanyServiceRequestListComponent } from './pages/company/company-service-request-list/company-service-request-list.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -38,6 +39,8 @@ export const routes: Routes = [
   { path: 'companies/new', component: CompanyFormComponent },
   { path: 'companies/edit/:id', component: CompanyFormComponent },
   { path: 'companies/:id/reports', component: FuelPriceManagement },
+  { path: 'companies/:id/service-requests', component: CompanyServiceRequestListComponent },
+
 
   { path: 'vehicles', component: VehicleListComponent },
   { path: 'vehicles/new', component: VehicleFormComponent },
