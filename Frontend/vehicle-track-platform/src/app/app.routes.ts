@@ -25,6 +25,8 @@ import { TrafficFineFormComponent } from './pages/traffic-fines/traffic-fine-for
 import { TrafficFineListComponent } from './pages/traffic-fines/traffic-fine-list/traffic-fine-list.component';
 import { FuelPriceListComponent } from './pages/fuel-price/fuel-price-list/fuel-price-list.component';
 import { FuelPriceFormComponent } from './pages/fuel-price/fuel-price-form/fuel-price-form.component';
+import { VehicleFinesComponent } from './pages/vehicles/vehicle-fines/vehicle-fines.component';
+import { DriverFinesComponent } from './pages/drivers/driver-fines/driver-fines.component';
 
 
 export const routes: Routes = [
@@ -33,6 +35,7 @@ export const routes: Routes = [
   { path: 'drivers', component: DriverListComponent },
   { path: 'drivers/new', component: DriverFormComponent },
   { path: 'drivers/edit/:id', component: DriverFormComponent },
+  { path: 'drivers/:id/fines', component: DriverFinesComponent },
 
   { path: 'employees', component: EmployeeListComponent },
   { path: 'employees/new', component: EmployeeFormComponent },
@@ -48,6 +51,8 @@ export const routes: Routes = [
   { path: 'vehicles', component: VehicleListComponent },
   { path: 'vehicles/new', component: VehicleFormComponent },
   { path: 'vehicles/edit/:id', component: VehicleFormComponent },
+  { path: 'vehicles/:id/fines', component: VehicleFinesComponent },
+
 
   { path: 'service-requests', component: ServiceRequestListComponent },
   { path: 'service-requests/new', component: ServiceRequestFormComponent },

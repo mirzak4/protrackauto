@@ -73,7 +73,6 @@ export class EmployeeListComponent implements OnInit {
     }
   }
   
-
   addEmployee() {
     this.router.navigate(['/employees/new']);
   }

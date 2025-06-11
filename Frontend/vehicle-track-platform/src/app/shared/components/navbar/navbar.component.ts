@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { UserInfo } from '../../../core/models/user-info.model';
 import { Observable } from 'rxjs';
 import { CompanyService } from 'app/core/services/company.service';
 import { CompanyDTO } from 'app/core/models/company.model';
-import { RoleEnum } from 'app/core/enums/role.enum';
+import { RoleEnum } from 'app/core/models/enums/role.enums';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +17,7 @@ import { RoleEnum } from 'app/core/enums/role.enum';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   menuOpen = false;
   profileMenuOpen = false;
   userInfo$: Observable<UserInfo | null>;
@@ -32,57 +32,34 @@ export class NavbarComponent {
     this.userInfo$.subscribe(user => this.user = user);
   }
 
-  isAdmin(): boolean {
-    return this.user?.role === RoleEnum.ADMIN;
+  companyId: number | null = null;
+
+
+  ngOnInit(): void {
+    this.authService.getUserInfo$().subscribe(user => {
+      this.companyId = user ? user.companyId : null;
+    });
   }
 
-  isDriver(): boolean {
-    return this.user?.role === RoleEnum.DRIVER;
+  private permissionsMap: Record<string, RoleEnum[]> = {
+    companies: [RoleEnum.ADMIN],
+    //vehicles: [RoleEnum.ADMIN, RoleEnum.DRIVER, RoleEnum.STATION_MANAGER, RoleEnum.FIELD_TECHNICIAN],
+    vehicles: [RoleEnum.ADMIN],
+    serviceRequests: [RoleEnum.ADMIN],
+    serviceRequestsCompany: [RoleEnum.FIELD_TECHNICIAN],
+    trafficFines: [RoleEnum.ADMIN, RoleEnum.DRIVER],
+    fuelPrices: [RoleEnum.ADMIN, RoleEnum.STATION_MANAGER],
+    usersDropdown: [RoleEnum.ADMIN],
+    drivers: [RoleEnum.ADMIN],
+    employees: [RoleEnum.ADMIN]
+  };
+
+  canAccess(feature: string): boolean {
+    if (!this.user) return false;
+    const allowedRoles = this.permissionsMap[feature];
+    return allowedRoles ? allowedRoles.includes(this.user.role) : false;
   }
 
-  isStationManager(): boolean {
-    return this.user?.role === RoleEnum.STATION_MANAGER;
-  }
-
-  isFieldTechnician(): boolean {
-    return this.user?.role === RoleEnum.FIELD_TECHNICIAN;
-  }
-
-  isClaimsAdjuster(): boolean {
-    return this.user?.role === RoleEnum.CLAIMS_ADJUSTER;
-  }
-
-  canSeeCompanies(): boolean {
-    return this.isAdmin();  // Only admin sees companies
-  }
-
-  canSeeVehicles(): boolean {
-    return this.isAdmin() || this.isDriver() || this.isStationManager() || this.isFieldTechnician();
-  }
-
-  canSeeServiceRequests(): boolean {
-    return this.isAdmin() || this.isFieldTechnician();
-  }
-
-  canSeeTrafficFines(): boolean {
-    return this.isAdmin() || this.isDriver();
-  }
-
-  canSeeFuelPrices(): boolean {
-    return this.isAdmin() || this.isStationManager();
-  }
-
-  canSeeUsersDropdown(): boolean {
-    return this.isAdmin();
-  }
-
-  canSeeDrivers(): boolean {
-    return this.isAdmin();
-  }
-
-  canSeeEmployees(): boolean {
-    return this.isAdmin();
-  }
 
   toggleProfileMenu(): void {
     this.profileMenuOpen = !this.profileMenuOpen;

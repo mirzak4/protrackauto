@@ -30,7 +30,7 @@ public class VehicleController {
             @ApiResponse(responseCode = "200", description = "List of vehicles")
     })
     @GetMapping
-    @PreAuthorize("hasAuthority(@roles.ADMIN)")
+    @PreAuthorize("hasAuthority(@roles.ADMIN) or hasAuthority(@roles.FIELD_TECHNICIAN)")
     public List<VehicleDTO> getAllVehicles() {
         return vehicleService.getAllVehicles();
     }
@@ -42,7 +42,7 @@ public class VehicleController {
             @ApiResponse(responseCode = "404", description = "Vehicle not found", content = @Content)
     })
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority(@roles.ADMIN)")
+    @PreAuthorize("hasAuthority(@roles.ADMIN) or hasAuthority(@roles.FIELD_TECHNICIAN)")
     public ResponseEntity<VehicleDTO> getVehicleById(@Valid @PathVariable Long id) {
         return vehicleService.getVehicleById(id)
                 .map(ResponseEntity::ok)

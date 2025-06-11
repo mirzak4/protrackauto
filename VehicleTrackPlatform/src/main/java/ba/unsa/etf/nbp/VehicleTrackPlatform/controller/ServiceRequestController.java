@@ -80,7 +80,7 @@ public class ServiceRequestController {
             @ApiResponse(responseCode = "404", description = "Servicer not found", content = @Content)
     })
     @GetMapping("/servicer/{servicerId}")
-    @PreAuthorize("hasAuthority(@roles.ADMIN)")
+    @PreAuthorize("hasAuthority(@roles.ADMIN) or hasAuthority(@roles.FIELD_TECHNICIAN)")
     public List<ServiceRequestDTO> getServiceRequestsByServicerId(@PathVariable Long servicerId) {
         return serviceRequestService.getServiceRequestsByServicerId(servicerId);
     }
@@ -93,7 +93,7 @@ public class ServiceRequestController {
             @ApiResponse(responseCode = "404", description = "Service request not found", content = @Content)
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority(@roles.ADMIN)")
+    @PreAuthorize("hasAuthority(@roles.ADMIN) or hasAuthority(@roles.FIELD_TECHNICIAN)")
     public ResponseEntity<Void> deleteServiceRequest(@PathVariable Long id) {
         serviceRequestService.deleteServiceRequest(id);
         return ResponseEntity.noContent().build();

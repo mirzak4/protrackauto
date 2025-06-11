@@ -1,6 +1,7 @@
 import { ServiceRequestStatus, ServiceType } from "./enums/service-request.enums";
 
 export interface ServiceRequest {
+  companyName?: string;
   id?: number;
   serviceType: ServiceType;
   fiscalReceiptNumber: number;

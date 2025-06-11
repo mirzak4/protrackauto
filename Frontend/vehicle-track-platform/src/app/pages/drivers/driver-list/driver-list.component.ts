@@ -103,4 +103,8 @@ export class DriverListComponent implements OnInit {
   getFullName(user: UserDTO | undefined): string {
     return user ? `${user.firstName} ${user.lastName}` : '';
   }
+
+  viewFines(driverId: number) {
+    this.router.navigate(['/drivers', driverId, 'fines']);
+  }
 }

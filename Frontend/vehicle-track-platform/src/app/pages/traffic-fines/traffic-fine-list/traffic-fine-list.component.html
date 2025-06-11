@@ -10,23 +10,23 @@
     <table class="traffic-fines-table">
       <thead>
         <tr>
+          <th>Location</th>
           <th>Issue Date</th>
-          <th>Due Date</th>
-          <th>Violation</th>
-          <th>Amount</th>
+          <th>Payment Due</th>
+          <th>Violation Type</th>
           <th>Payment Status</th>
+          <th>Amount</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let fine of fines">
+        <tr *ngFor="let fine of pagedFines">
+          <td>{{ fine.location }}</td>
           <td>{{ fine.issueDate | date:'mediumDate' }}</td>
           <td>{{ fine.paymentDueDate | date:'mediumDate' }}</td>
-          <td>{{ fine.violationDescription }}</td>
-          <td>{{ fine.amount | currency }}</td>
-          <td>
-            {{ getPaymentStatusLabel(fine.paymentStatus) }}
-          </td>
+          <td>{{ getViolationTypeLabel(fine.violationType) }}</td>
+          <td>{{ getPaymentStatusLabel(fine.paymentStatus) }}</td>
+          <td>${{ fine.amount.toFixed(2) }}</td>
           <td>
             <button class="action-btn" (click)="editFine(fine.id!)">
               <i class="fas fa-edit"></i>
@@ -38,6 +38,26 @@
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-wrapper" *ngIf="totalPages > 1">
+    <div class="pagination">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="nav-button prev-next">
+        <i class="fas fa-angle-left"></i>
+      </button>
+
+      <button *ngFor="let page of [].constructor(totalPages); let i = index"
+              [class.active]="i + 1 === currentPage"
+              (click)="changePage(i + 1)"
+              class="page-button">
+        {{ i + 1 }}
+      </button>
+
+      <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="nav-button prev-next">
+        <i class="fas fa-angle-right"></i>
+      </button>
+    </div>
   </div>
 
   <div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">

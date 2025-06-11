@@ -1,48 +1,45 @@
 <section class="vehicles-section">
   <div class="container">
     <div class="header">
-      <h2>Vehicles</h2>
-      <div class="header-actions">
-        <button class="add-btn" (click)="addVehicle()">
-          <i class="fas fa-plus"></i> Add Vehicle
-        </button>
-      </div>
+      <h2>Traffic Fines</h2>
+      <button class="btn-primary" (click)="addNewFine()">Add New Fine</button>
     </div>
 
     <table class="vehicles-table">
       <thead>
         <tr>
-          <th>License Plate</th>
-          <th>Brand</th>
-          <th>Category</th>
-          <th>Production Year</th>
-          <th>Color</th>
+          <th>Location</th>
+          <th>Issue Date</th>
+          <th>Payment Due</th>
+          <th>Violation Type</th>
+          <th>Payment Status</th>
+          <th>Amount</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let vehicle of pagedVehicles">
-          <td>{{ vehicle.licensePlate }}</td>
-          <td>{{ formatEnumLabel(VehicleCategory[vehicle.vehicleCategory!]) }}</td>
-          <td>{{ formatEnumLabel(VehicleBodyType[vehicle.vehicleBodyType!]) }}</td>
-          <td>{{ vehicle.productionYear }}</td>
-          <td>{{ vehicle.color }}</td>
+        <tr *ngFor="let fine of pagedFines">
+          <td>{{ fine.location }}</td>
+          <td>{{ fine.issueDate | date:'mediumDate' }}</td>
+          <td>{{ fine.paymentDueDate | date:'mediumDate' }}</td>
+          <td>{{ getViolationTypeLabel(fine.violationType) }}</td>
+          <td>{{ getPaymentStatusLabel(fine.paymentStatus) }}</td>
+          <td>${{ fine.amount.toFixed(2) }}</td>
           <td>
-            <button class="action-btn" (click)="editVehicle(vehicle.id!)">
+            <button class="action-btn" (click)="editFine(fine.id!)">
               <i class="fas fa-edit"></i>
             </button>
-            <button class="action-btn" (click)="deleteVehicle(vehicle)">
+            <button class="action-btn" (click)="deleteFine(fine)">
               <i class="fas fa-trash-alt"></i>
             </button>
-            <button class="action-btn" (click)="viewFines(vehicle.id!)" title="View Fines">
-              <i class="fas fa-exclamation-triangle"></i>
-            </button>
           </td>
+        </tr>
+        <tr *ngIf="pagedFines.length === 0">
+          <td colspan="8" class="no-data">No fines found.</td>
         </tr>
       </tbody>
     </table>
 
-    <!-- Pagination -->
     <div class="pagination-wrapper" *ngIf="totalPages > 1">
       <div class="pagination">
         <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="nav-button prev-next">
@@ -61,13 +58,12 @@
         </button>
       </div>
     </div>
-    
   </div>
 
   <div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">
     <div class="modal">
       <h2>Confirm Deletion</h2>
-      <p>Are you sure you want to delete vehicle <strong>{{ vehicleToDelete?.registrationNumber }}</strong>?</p>
+      <p>Are you sure you want to delete <strong>{{ getFormattedIssueDate() }}</strong>?</p>
       <div class="modal-buttons">
         <button class="btn-primary" (click)="confirmDelete()">Delete</button>
         <button class="btn-secondary" (click)="cancelDelete()">Cancel</button>

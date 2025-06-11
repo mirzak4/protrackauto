@@ -1,4 +1,4 @@
-.service-requests-section {
+.vehicles-section {
   padding: 2rem;
   font-family: 'Segoe UI', sans-serif;
 }
@@ -34,20 +34,20 @@
   margin-right: 6px;
 }
 
-.service-requests-table {
+.vehicles-table {
   width: 100%;
   border-collapse: collapse;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 }
 
-.service-requests-table th,
-.service-requests-table td {
+.vehicles-table th,
+.vehicles-table td {
   text-align: left;
   padding: 1rem;
   border-bottom: 1px solid #e2e8f0;
 }
 
-.service-requests-table th {
+.vehicles-table th {
   background-color: #f1f5f9;
   color: #334155;
   font-weight: 600;
@@ -115,8 +115,6 @@
   border-radius: 6px;
   cursor: pointer;
 }
-
-
 
 .pagination-wrapper {
   margin-top: 2rem;

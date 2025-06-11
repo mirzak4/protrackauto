@@ -87,4 +87,10 @@ export class AuthService {
       newPassword
     });
   }
+
+  getCompanyId(): number | null {
+    const user = this.userInfoSubject.getValue();
+    return user ? user.companyId : null;
+  }
+
 }

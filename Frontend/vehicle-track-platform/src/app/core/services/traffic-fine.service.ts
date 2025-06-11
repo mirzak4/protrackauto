@@ -31,4 +31,12 @@ export class TrafficFineService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  getByVehicleId(vehicleId: number): Observable<TrafficFine[]> {
+    return this.http.get<TrafficFine[]>(`${this.baseUrl}/vehicle/${vehicleId}`);
+  }
+
+  getByDriverId(driverId: number): Observable<TrafficFine[]> {
+    return this.http.get<TrafficFine[]>(`${this.baseUrl}/driver/${driverId}`);
+  }
 }

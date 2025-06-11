@@ -5,26 +5,38 @@
     </a>
 
     <div class="navbar-menu">
-      <div class="navbar-start" *ngIf="user">
         <a class="navbar-item" routerLink="/home" routerLinkActive="is-active">
           Dashboard
         </a>
-        <a *ngIf="canSeeVehicles()" class="navbar-item" routerLink="/vehicles" routerLinkActive="is-active">
+      <div class="navbar-start" *ngIf="user">
+
+        <a *ngIf="canAccess('vehicles')" class="navbar-item" routerLink="/vehicles" routerLinkActive="is-active">
           Vehicles
         </a>
-        <a *ngIf="canSeeCompanies()" class="navbar-item" routerLink="/companies" routerLinkActive="is-active">
+        <a *ngIf="canAccess('companies')" class="navbar-item" routerLink="/companies" routerLinkActive="is-active">
           Companies
         </a>
-        <a *ngIf="canSeeServiceRequests()" class="navbar-item" routerLink="/service-requests" routerLinkActive="is-active">
+        <a *ngIf="canAccess('serviceRequests')" class="navbar-item" routerLink="/service-requests" routerLinkActive="is-active">
           Service Requests
         </a>
-        <a *ngIf="canSeeTrafficFines()" class="navbar-item" routerLink="/traffic-fines" routerLinkActive="is-active">
+
+        <a
+          *ngIf="canAccess('serviceRequestsCompany') && companyId"
+          class="navbar-item"
+          [routerLink]="['/companies', companyId, 'service-requests']"
+          routerLinkActive="is-active"
+        >
+          Service Requests
+        </a>
+
+
+        <a *ngIf="canAccess('trafficFines')" class="navbar-item" routerLink="/traffic-fines" routerLinkActive="is-active">
           Traffic Fines
         </a>
-        <a *ngIf="canSeeFuelPrices()" class="navbar-item" routerLink="/fuel-prices" routerLinkActive="is-active">
+        <a *ngIf="canAccess('fuelPrices')" class="navbar-item" routerLink="/fuel-prices" routerLinkActive="is-active">
           Fuel Prices
         </a>
-        <div *ngIf="canSeeUsersDropdown()" class="navbar-dropdown">
+        <div *ngIf="canAccess('usersDropdown')" class="navbar-dropdown">
           <a class="navbar-item">
             Users <i class="fas fa-chevron-down"></i>
           </a>

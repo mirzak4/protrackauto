@@ -24,7 +24,7 @@
               [class.latest-price]="isLatestPrice(price)">
             <td>{{ getCompanyName(price.gasStationId) }}</td>
             <td>{{ formatPrice(price.price) }}</td>
-            <td>{{ formatDate(price.issueDate) }}</td>
+            <td>{{ price.issueDate | date:'mediumDate' }}</td>
             <td>
               <button class="action-btn" (click)="editFuelPrice(price.id)" title="Edit">
                 <i class="fas fa-edit"></i>

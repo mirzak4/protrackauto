@@ -23,6 +23,9 @@ export class TrafficFineListComponent implements OnInit {
   isDeleteConfirmOpen = false;
   fineToDelete: TrafficFine | null = null;
 
+  currentPage = 1;
+  itemsPerPage = 10;
+
   constructor(
     private fineService: TrafficFineService,
     private companyService: CompanyService,
@@ -45,6 +48,21 @@ export class TrafficFineListComponent implements OnInit {
         console.error('Error loading companies');
       }
     });
+  }
+
+  get pagedFines(): TrafficFine[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.fines.slice(start, start + this.itemsPerPage);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.fines.length / this.itemsPerPage);
+  }
+
+  changePage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
   }
 
   loadFines() {

@@ -8,7 +8,6 @@ import { TrafficFineService } from 'app/core/services/traffic-fine.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-// Instead of importing enums, define plain arrays to use in dropdowns:
 const VIOLATION_TYPES = [
   { id: 1, label: 'Speeding' },
   { id: 2, label: 'Running red light' },
@@ -39,7 +38,7 @@ export class TrafficFineFormComponent implements OnInit {
   isLoading = true;
 
   trafficFine: TrafficFine = {
-    violationType: 1,       // use numeric ids like your enums
+    violationType: 1,    
     paymentStatus: 1,
     issueDate: '',
     paymentDueDate: '',

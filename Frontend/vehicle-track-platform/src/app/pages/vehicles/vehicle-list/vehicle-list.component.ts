@@ -106,4 +106,9 @@ export class VehicleListComponent implements OnInit {
       .replace(/_/g, ' ')
       .replace(/\b\w/g, c => c.toUpperCase());
   }
+
+  viewFines(vehicleId: number) {
+    this.router.navigate(['/vehicles', vehicleId, 'fines']);
+  }
+
 }

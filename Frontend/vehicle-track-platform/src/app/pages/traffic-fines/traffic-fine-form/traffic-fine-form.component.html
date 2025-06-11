@@ -77,7 +77,9 @@
             <select id="driverId" name="driverId" [(ngModel)]="trafficFine.driverId" required class="form-input"
               (ngModelChange)="onInputChange()">
               <option [ngValue]="null" disabled>-- Select Driver --</option>
-              <option *ngFor="let d of drivers" [ngValue]="d.id">{{ d.name }}</option>
+              <option *ngFor="let d of drivers" [ngValue]="d.id">
+                {{ d.user.firstName }} {{ d.user.lastName }}
+              </option>
             </select>
           </div>
         </div>

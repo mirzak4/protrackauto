@@ -58,7 +58,7 @@ public class CompanyController {
             @ApiResponse(responseCode = "404", description = "Company not found", content = @Content)
     })
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority(@roles.ADMIN)")
+    @PreAuthorize("hasAuthority(@roles.ADMIN) or hasAuthority(@roles.FIELD_TECHNICIAN)")
     public ResponseEntity<CompanyDTO> getCompanyById(@PathVariable Long id) {
         return companyService.getCompanyById(id)
                 .map(ResponseEntity::ok)

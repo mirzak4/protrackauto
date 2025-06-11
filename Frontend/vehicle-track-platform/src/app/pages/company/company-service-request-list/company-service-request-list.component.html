@@ -22,7 +22,7 @@
           <td>{{ request.fiscalReceiptNumber }}</td>
           <td>{{ request.cost | number:'1.2-2' }} KM</td>
           <td>{{ getStatusName(request.status) }}</td>
-          <td>{{ request.requestDate }}</td>
+          <td>{{ request.requestDate | date:'mediumDate' }}</td>
           <td>{{ request.requestedBy }}</td>
           <td>{{ vehiclePlates[request.vehicleId] }}</td>
         </tr>

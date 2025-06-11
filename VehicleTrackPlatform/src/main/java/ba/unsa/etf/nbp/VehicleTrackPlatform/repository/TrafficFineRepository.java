@@ -1,6 +1,7 @@
 package ba.unsa.etf.nbp.VehicleTrackPlatform.repository;
 
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.TrafficFine;
+import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.CompanyType;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.PaymentStatus;
 import ba.unsa.etf.nbp.VehicleTrackPlatform.model.enums.ViolationType;
 import io.micrometer.common.lang.NonNull;
@@ -37,9 +38,9 @@ public class TrafficFineRepository {
                     rs.getDate("ISSUE_DATE").toLocalDate(),
                     rs.getDate("PAYMENT_DUE_DATE").toLocalDate(),
                     rs.getString("VIOLATION_DESCRIPTION"),
-                    ViolationType.valueOf(rs.getString("VIOLATION_TYPE")),
+                    ViolationType.fromCode(rs.getInt("VIOLATION_TYPE")),
                     rs.getString("LOCATION"),
-                    PaymentStatus.valueOf(rs.getString("PAYMENT_STATUS")),
+                    PaymentStatus.fromCode(rs.getInt("PAYMENT_STATUS")),
                     rs.getDouble("AMOUNT"),
                     rs.getLong("VEHICLE_ID"),
                     rs.getLong("DRIVER_ID")
@@ -74,9 +75,9 @@ public class TrafficFineRepository {
             ps.setDate(1, Date.valueOf(fine.getIssueDate()));
             ps.setDate(2, Date.valueOf(fine.getPaymentDueDate()));
             ps.setString(3, fine.getViolationDescription());
-            ps.setString(4, fine.getViolationType().name());
+            ps.setInt(4, fine.getViolationType().getCode());
             ps.setString(5, fine.getLocation());
-            ps.setString(6, fine.getPaymentStatus().name());
+            ps.setInt(6, fine.getPaymentStatus().getCode());
             ps.setDouble(7, fine.getAmount());
             ps.setLong(8, fine.getVehicleId());
             ps.setLong(9, fine.getDriverId());
@@ -93,9 +94,9 @@ public class TrafficFineRepository {
                 Date.valueOf(fine.getIssueDate()),
                 Date.valueOf(fine.getPaymentDueDate()),
                 fine.getViolationDescription(),
-                fine.getViolationType().name(),
+                fine.getViolationType().getCode(),
                 fine.getLocation(),
-                fine.getPaymentStatus().name(),
+                fine.getPaymentStatus().getCode(),
                 fine.getAmount(),
                 fine.getVehicleId(),
                 fine.getDriverId(),
@@ -104,6 +105,23 @@ public class TrafficFineRepository {
 
         return fine;
     }
+
+    public List<TrafficFine> findAllByVehicleId(Long vehicleId) {
+        return jdbcTemplate.query(
+                "SELECT * FROM TRAFFIC_FINE WHERE VEHICLE_ID = ?",
+                new TrafficFineRowMapper(),
+                vehicleId
+        );
+    }
+
+    public List<TrafficFine> findAllByDriverId(Long driverId) {
+        return jdbcTemplate.query(
+                "SELECT * FROM TRAFFIC_FINE WHERE DRIVER_ID = ?",
+                new TrafficFineRowMapper(),
+                driverId
+        );
+    }
+
 
     public void deleteById(Long id) {
         jdbcTemplate.update("DELETE FROM TRAFFIC_FINE WHERE ID = ?", id);
