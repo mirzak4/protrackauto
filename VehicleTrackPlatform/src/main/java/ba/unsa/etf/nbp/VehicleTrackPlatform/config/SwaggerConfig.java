@@ -9,9 +9,9 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 @OpenAPIDefinition(
         info = @Info(
-                title = "Claims Service",
+                title = "AutoTrack Pro API",
                 version = "1.0",
-                description = "Claims Information"
+                description = "AutoTrack Pro API Information"
         ),
         security = {
                 @SecurityRequirement(name = "bearerAuth")
