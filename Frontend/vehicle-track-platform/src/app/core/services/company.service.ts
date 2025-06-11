@@ -46,11 +46,9 @@ export class CompanyService {
     this.http.post(`${this.apiUrl}/${companyId}/reports/weekly-fuel-prices`, null, { responseType: 'blob' })
       .subscribe(blob => {
         const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'weekly-fuel-prices.pdf';
-        link.click();
-        window.URL.revokeObjectURL(url);
+        window.open(url, '_blank'); // Open in a new tab
+        // Optional: clean up the URL after some time
+        setTimeout(() => window.URL.revokeObjectURL(url), 1000);
       });
   }
 }

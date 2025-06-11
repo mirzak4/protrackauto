@@ -126,11 +126,10 @@ export class FuelPriceManagement implements OnInit {
     this.reportService.getReportDocument(documentId).subscribe({
       next: (blob) => {
         const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `fuel-report-${documentId}.pdf`;
-        a.click();
-        window.URL.revokeObjectURL(url);
+        window.open(url, '_blank'); // Open in a new tab
+        // Optional: clean up the URL after some time
+        setTimeout(() => window.URL.revokeObjectURL(url), 1000);
+
         this.isDownloading = false;
       },
       error: () => {
