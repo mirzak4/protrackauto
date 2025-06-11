@@ -11,18 +11,18 @@
       <thead>
         <tr>
           <th>Name</th>
+          <th>Email</th>
           <th>License #</th>
           <th>License Expiry</th>
-          <th>Employment Date</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let driver of drivers">
+        <tr *ngFor="let driver of pagedDrivers">
           <td>{{ getFullName(driver.user) }}</td>
+          <td>{{ driver.user.email }}</td>
           <td>{{ driver.licenseNumber }}</td>
           <td>{{ driver.licenseExpiry | date }}</td>
-          <td>{{ driver.employmentDate | date }}</td>
           <td>
             <button class="action-btn" (click)="editDriver(driver.id!)">
               <i class="fas fa-edit"></i>
@@ -30,14 +30,37 @@
             <button class="action-btn" (click)="deleteDriver(driver)">
               <i class="fas fa-trash-alt"></i>
             </button>
+            <button class="action-btn" (click)="viewFines(driver.id!)" title="View Fines">
+              <i class="fas fa-exclamation-triangle"></i>
+            </button>
           </td>
         </tr>
 
       </tbody>
     </table>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper" *ngIf="totalPages > 1">
+      <div class="pagination">
+        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="nav-button prev-next">
+          <i class="fas fa-angle-left"></i>
+        </button>
+
+        <button *ngFor="let page of [].constructor(totalPages); let i = index"
+                [class.active]="i + 1 === currentPage"
+                (click)="changePage(i + 1)"
+                class="page-button">
+          {{ i + 1 }}
+        </button>
+
+        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="nav-button prev-next">
+          <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Confirm Delete Modal -->
   <div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">
     <div class="modal">
       <h2>Confirm Deletion</h2>

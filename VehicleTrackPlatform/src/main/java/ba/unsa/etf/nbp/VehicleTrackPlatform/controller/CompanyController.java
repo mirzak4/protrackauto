@@ -58,6 +58,7 @@ public class CompanyController {
             @ApiResponse(responseCode = "404", description = "Company not found", content = @Content)
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN) or hasAuthority(@roles.FIELD_TECHNICIAN)")
     public ResponseEntity<CompanyDTO> getCompanyById(@PathVariable Long id) {
         return companyService.getCompanyById(id)
                 .map(ResponseEntity::ok)
@@ -70,6 +71,7 @@ public class CompanyController {
             @ApiResponse(responseCode = "400", description = "Invalid company payload supplied", content = @Content)
     })
     @PostMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Long> createCompany(@RequestBody CompanyDTO companyDTO) {
         Long companyId = companyService.createCompany(companyDTO);
         return ResponseEntity.created(URI.create("/api/company/" + companyId))
@@ -83,6 +85,7 @@ public class CompanyController {
             @ApiResponse(responseCode = "404", description = "Company not found", content = @Content)
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<CompanyDTO> updateCompany(@PathVariable Long id, @RequestBody CompanyDTO companyDTO) {
         companyDTO.setId(id);
         return ResponseEntity.ok(companyService.updateCompany(companyDTO));
@@ -95,6 +98,7 @@ public class CompanyController {
             @ApiResponse(responseCode = "404", description = "Company not found", content = @Content)
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Void> deleteCompany(@PathVariable Long id) {
         companyService.deleteCompany(id);
         return ResponseEntity.noContent().build();

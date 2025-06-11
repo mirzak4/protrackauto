@@ -119,7 +119,6 @@ export class DriverFormComponent implements OnInit {
       this.driver.user.firstName &&
       this.driver.user.lastName &&
       this.driver.user.email &&
-      this.driver.user.username && 
       this.driver.user.phoneNumber
     );
   }

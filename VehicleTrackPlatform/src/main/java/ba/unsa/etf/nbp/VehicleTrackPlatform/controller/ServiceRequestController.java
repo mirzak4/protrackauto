@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -28,6 +29,7 @@ public class ServiceRequestController {
             @ApiResponse(responseCode = "200", description = "List of service requests")
     })
     @GetMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public List<ServiceRequestDTO> getAllServiceRequests() {
         return serviceRequestService.getAllServiceRequests();
     }
@@ -39,6 +41,7 @@ public class ServiceRequestController {
             @ApiResponse(responseCode = "404", description = "Service request not found", content = @Content)
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<ServiceRequestDTO> getServiceRequestById(@PathVariable Long id) {
         return serviceRequestService.getServiceRequestById(id)
                 .map(ResponseEntity::ok)
@@ -51,6 +54,7 @@ public class ServiceRequestController {
             @ApiResponse(responseCode = "400", description = "Invalid service request payload supplied", content = @Content)
     })
     @PostMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Long> createServiceRequest(@RequestBody ServiceRequestDTO serviceRequestDTO) {
         Long id = serviceRequestService.createServiceRequest(serviceRequestDTO);
         return ResponseEntity.created(URI.create("/api/service-request/" + id))
@@ -64,10 +68,23 @@ public class ServiceRequestController {
             @ApiResponse(responseCode = "404", description = "Service request not found", content = @Content)
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<ServiceRequestDTO> updateServiceRequest(@PathVariable Long id, @RequestBody ServiceRequestDTO serviceRequestDTO) {
         serviceRequestDTO.setId(id);
         return ResponseEntity.ok(serviceRequestService.updateServiceRequest(serviceRequestDTO));
     }
+
+    @Operation(summary = "Get service requests by servicer ID", description = "Returns list of service requests assigned to a specific servicer")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of service requests retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Servicer not found", content = @Content)
+    })
+    @GetMapping("/servicer/{servicerId}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN) or hasAuthority(@roles.FIELD_TECHNICIAN)")
+    public List<ServiceRequestDTO> getServiceRequestsByServicerId(@PathVariable Long servicerId) {
+        return serviceRequestService.getServiceRequestsByServicerId(servicerId);
+    }
+
 
     @Operation(summary = "Delete service request by id", description = "Deletes service request with provided id")
     @ApiResponses(value = {
@@ -76,6 +93,7 @@ public class ServiceRequestController {
             @ApiResponse(responseCode = "404", description = "Service request not found", content = @Content)
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN) or hasAuthority(@roles.FIELD_TECHNICIAN)")
     public ResponseEntity<Void> deleteServiceRequest(@PathVariable Long id) {
         serviceRequestService.deleteServiceRequest(id);
         return ResponseEntity.noContent().build();

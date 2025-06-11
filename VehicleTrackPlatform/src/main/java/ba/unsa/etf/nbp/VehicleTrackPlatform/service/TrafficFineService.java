@@ -79,6 +79,21 @@ public class TrafficFineService {
         return convertToDTO(savedFine);
     }
 
+    public List<TrafficFineDTO> getAllTrafficFinesByVehicleId(Long vehicleId) {
+        var fines = trafficFineRepository.findAllByVehicleId(vehicleId);
+        return fines.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    public List<TrafficFineDTO> getAllTrafficFinesByDriverId(Long driverId) {
+        var fines = trafficFineRepository.findAllByDriverId(driverId);
+        return fines.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+
     public void deleteTrafficFine(Long id) {
         trafficFineRepository.deleteById(id);
     }

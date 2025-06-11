@@ -5,48 +5,221 @@
       <div class="form-divider"></div>
     </header>
 
-    <form (ngSubmit)="saveVehicle()" class="vehicle-form">
+    <form (ngSubmit)="saveVehicle()" class="vehicle-form" #vehicleForm="ngForm">
+
+      <!-- Vehicle Category Section -->
+      <div *ngIf="isEditMode; else createCategoryBlock" class="vehicle-category-card">
+        <div class="vehicle-category-header">
+          <span class="vehicle-category-icon">
+            <i class="fas fa-car"></i>
+          </span>
+          <h3 class="vehicle-category-title">Vehicle Category</h3>
+        </div>
+        <div class="vehicle-category-value">
+          {{ getVehicleCategoryName(vehicle.vehicleCategory!) }}
+        </div>
+      </div>
+
+      <ng-template #createCategoryBlock>
+        <div class="input-group">
+          <label for="vehicleCategory" class="input-label">Vehicle Category*</label>
+          <select [(ngModel)]="vehicle.vehicleCategory" name="vehicleCategory" id="vehicleCategory"
+                  class="form-input" required (change)="onInputChange()">
+            <option [ngValue]="null" disabled selected>Select vehicle category</option>
+            <option *ngFor="let category of vehicleCategories" [ngValue]="category.value">
+              {{ category.label }}
+            </option>
+          </select>
+        </div>
+      </ng-template>
+
+      <!-- Basic Information Section -->
       <div class="form-section">
         <h3 class="section-title">Basic Information</h3>
         <div class="form-grid">
           <div class="input-group">
-            <label for="licensePlate" class="input-label">License Plate</label>
-            <input [(ngModel)]="vehicle.licensePlate" name="licensePlate" id="licensePlate" 
-                   class="form-input" required placeholder="Enter license plate"
-                   (input)="onInputChange()" />
+            <label for="licensePlate" class="input-label">License Plate*</label>
+            <input [(ngModel)]="vehicle.licensePlate" name="licensePlate" id="licensePlate"
+                   class="form-input" required placeholder="e.g. BG123AA" (input)="onInputChange()" />
           </div>
+
           <div class="input-group">
-            <label for="vehicleBrandType" class="input-label">Brand</label>
-            <input [(ngModel)]="vehicle.vehicleBrandType" name="vehicleBrandType" id="vehicleBrandType" 
-                   class="form-input" required placeholder="Enter brand"
-                   (input)="onInputChange()" />
+            <label for="vehicleBrandType" class="input-label">Brand*</label>
+            <input [(ngModel)]="vehicle.vehicleBrandType" name="vehicleBrandType" id="vehicleBrandType"
+                   class="form-input" required placeholder="e.g. Toyota" (input)="onInputChange()" />
           </div>
+
           <div class="input-group">
-            <label for="vehicleCategory" class="input-label">Category</label>
-            <select [(ngModel)]="vehicle.vehicleCategory" name="vehicleCategory" id="vehicleCategory" 
-                    class="form-input" required (change)="onInputChange()">
-              <option *ngFor="let category of vehicleCategories" [value]="category">
-                {{ category }}
-              </option>
-            </select>
+            <label for="productionYear" class="input-label">Production Year*</label>
+            <input [(ngModel)]="vehicle.productionYear" name="productionYear" id="productionYear"
+                   class="form-input" type="number" min="1900" max="2099" step="1" 
+                   required placeholder="e.g. 2020" (input)="onInputChange()" />
           </div>
+
+          <div class="input-group">
+            <label for="color" class="input-label">Color</label>
+            <input [(ngModel)]="vehicle.color" name="color" id="color"
+                   class="form-input" placeholder="e.g. Red" (input)="onInputChange()" />
+          </div>
+
           <div class="input-group">
             <label for="vehicleBodyType" class="input-label">Body Type</label>
-            <select [(ngModel)]="vehicle.vehicleBodyType" name="vehicleBodyType" id="vehicleBodyType" 
-                    class="form-input" required (change)="onInputChange()">
-              <option *ngFor="let type of vehicleBodyTypes" [value]="type">
-                {{ type }}
+            <select [(ngModel)]="vehicle.vehicleBodyType" name="vehicleBodyType" id="vehicleBodyType"
+                    class="form-input" (change)="onInputChange()">
+              <option [ngValue]="null" disabled selected>Select body type</option>
+              <option *ngFor="let bodyType of vehicleBodyTypes" [ngValue]="bodyType.value">
+                {{ bodyType.label }}
               </option>
             </select>
+          </div>
+
+          <div class="input-group">
+            <label for="seatCount" class="input-label">Seat Count</label>
+            <input [(ngModel)]="vehicle.seatCount" name="seatCount" id="seatCount"
+                   class="form-input" type="number" min="1" placeholder="e.g. 5" (input)="onInputChange()" />
           </div>
         </div>
       </div>
 
-      <!-- Add more sections for other vehicle properties as needed -->
+      <!-- Technical Specifications Section -->
+      <div class="form-section">
+        <h3 class="section-title">Technical Specifications</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="fuelId" class="input-label">Fuel Type*</label>
+            <select [(ngModel)]="vehicle.fuelId" name="fuelId" id="fuelId"
+                    class="form-input" required (change)="onInputChange()">
+              <option [ngValue]="null" disabled selected>Select fuel type</option>
+              <option *ngFor="let fuel of fuels" [ngValue]="fuel.id">{{ fuel.name }}</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="engineDisplacement" class="input-label">Engine (cc)</label>
+            <input [(ngModel)]="vehicle.engineDisplacement" name="engineDisplacement" id="engineDisplacement"
+                   class="form-input" type="number" min="0" placeholder="e.g. 2000" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="maxPower" class="input-label">Max Power (kW)</label>
+            <input [(ngModel)]="vehicle.maxPower" name="maxPower" id="maxPower"
+                   class="form-input" type="number" min="0" placeholder="e.g. 150" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="powerWeightRatio" class="input-label">Power-Weight Ratio</label>
+            <input [(ngModel)]="vehicle.powerWeightRatio" name="powerWeightRatio" id="powerWeightRatio"
+                  class="form-input" type="number" min="0" step="0.01" placeholder="e.g. 0.15" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="vehicleWeight" class="input-label">Weight (kg)</label>
+            <input [(ngModel)]="vehicle.vehicleWeight" name="vehicleWeight" id="vehicleWeight"
+                   class="form-input" type="number" min="0" placeholder="e.g. 1500" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="maxWeight" class="input-label">Max Weight (kg)</label>
+            <input [(ngModel)]="vehicle.maxWeight" name="maxWeight" id="maxWeight"
+                   class="form-input" type="number" min="0" placeholder="e.g. 2000" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="payload" class="input-label">Payload (kg)</label>
+            <input [(ngModel)]="vehicle.payload" name="payload" id="payload"
+                   class="form-input" type="number" min="0" placeholder="e.g. 500" (input)="onInputChange()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Identification Numbers Section -->
+      <div class="form-section">
+        <h3 class="section-title">Identification Numbers</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="chassisNumber" class="input-label">Chassis Number</label>
+            <input [(ngModel)]="vehicle.chassisNumber" name="chassisNumber" id="chassisNumber"
+                   class="form-input" placeholder="e.g. JTDKB20U677678983" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="engineNumber" class="input-label">Engine Number</label>
+            <input [(ngModel)]="vehicle.engineNumber" name="engineNumber" id="engineNumber"
+                   class="form-input" placeholder="e.g. 1NZFXE58AZ123456" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="registrationNumber" class="input-label">Registration Number</label>
+            <input [(ngModel)]="vehicle.registrationNumber" name="registrationNumber" id="registrationNumber"
+                   class="form-input" placeholder="e.g. 123456789" (input)="onInputChange()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Registration Information Section -->
+      <div class="form-section">
+        <h3 class="section-title">Registration Information</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="firstRegistrationDate" class="input-label">First Registration</label>
+            <input [(ngModel)]="vehicle.firstRegistrationDate" name="firstRegistrationDate" id="firstRegistrationDate"
+                   class="form-input" type="date" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="firstRegistrationPlace" class="input-label">First Reg. Place</label>
+            <input [(ngModel)]="vehicle.firstRegistrationPlace" name="firstRegistrationPlace" id="firstRegistrationPlace"
+                   class="form-input" placeholder="e.g. Belgrade" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="firstLicensePlate" class="input-label">First License Plate</label>
+            <input [(ngModel)]="vehicle.firstLicensePlate" name="firstLicensePlate" id="firstLicensePlate"
+                   class="form-input" placeholder="e.g. BG987BB" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="registrationIssueDate" class="input-label">Registration Issue</label>
+            <input [(ngModel)]="vehicle.registrationIssueDate" name="registrationIssueDate" id="registrationIssueDate"
+                   class="form-input" type="date" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="registrationIssuePlace" class="input-label">Reg. Issue Place</label>
+            <input [(ngModel)]="vehicle.registrationIssuePlace" name="registrationIssuePlace" id="registrationIssuePlace"
+                   class="form-input" placeholder="e.g. Novi Sad" (input)="onInputChange()" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Information Section -->
+      <div class="form-section">
+        <h3 class="section-title">Additional Information</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="commercialDescription" class="input-label">Commercial Description</label>
+            <textarea [(ngModel)]="vehicle.commercialDescription" name="commercialDescription" id="commercialDescription"
+                      class="form-input" placeholder="Vehicle description..." (input)="onInputChange()"></textarea>
+          </div>
+
+          <div class="input-group">
+            <label for="ecoCharacteristics" class="input-label">Eco Characteristics</label>
+            <input [(ngModel)]="vehicle.ecoCharacteristics" name="ecoCharacteristics" id="ecoCharacteristics"
+                   class="form-input" placeholder="e.g. Euro 6" (input)="onInputChange()" />
+          </div>
+
+          <div class="input-group">
+            <label for="catalyst" class="input-label">Catalyst</label>
+            <input [(ngModel)]="vehicle.catalyst" name="catalyst" id="catalyst"
+                   class="form-input" placeholder="e.g. Yes/No" (input)="onInputChange()" />
+          </div>
+        </div>
+      </div>
 
       <div class="form-actions">
-        <button type="submit" class="btn btn-primary" [disabled]="!isFormValid()">
-          {{ isEditMode ? 'Save Changes' : 'Add Vehicle' }}
+        <button type="submit" class="btn btn-primary"
+                [disabled]="!isFormValid() || (isEditMode && !hasChanges)">
+          {{ isEditMode ? 'Update Vehicle' : 'Create Vehicle' }}
         </button>
         <button type="button" class="btn btn-outline" (click)="router.navigate(['/vehicles'])">
           Cancel

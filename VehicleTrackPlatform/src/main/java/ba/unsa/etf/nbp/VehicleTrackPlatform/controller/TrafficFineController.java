@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -29,6 +30,7 @@ public class TrafficFineController {
             @ApiResponse(responseCode = "200", description = "List of traffic fines")
     })
     @GetMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public List<TrafficFineDTO> getAllTrafficFines() {
         return trafficFineService.getAllTrafficFines();
     }
@@ -40,6 +42,7 @@ public class TrafficFineController {
             @ApiResponse(responseCode = "404", description = "Traffic fine not found", content = @Content)
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<TrafficFineDTO> getTrafficFineById(@PathVariable Long id) {
         return trafficFineService.getTrafficFineById(id)
                 .map(ResponseEntity::ok)
@@ -52,6 +55,7 @@ public class TrafficFineController {
             @ApiResponse(responseCode = "400", description = "Invalid traffic fine payload supplied", content = @Content)
     })
     @PostMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Long> createTrafficFine(@RequestBody TrafficFineDTO trafficFineDTO) {
         Long fineId = trafficFineService.createTrafficFine(trafficFineDTO);
         return ResponseEntity.created(URI.create("/api/traffic-fine/" + fineId))
@@ -65,9 +69,36 @@ public class TrafficFineController {
             @ApiResponse(responseCode = "404", description = "Traffic fine not found", content = @Content)
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<TrafficFineDTO> updateTrafficFine(@PathVariable Long id, @RequestBody TrafficFineDTO trafficFineDTO) {
         trafficFineDTO.setId(id);
         return ResponseEntity.ok(trafficFineService.updateTrafficFine(trafficFineDTO));
+    }
+
+    @Operation(summary = "Get all traffic fines for a vehicle by vehicle ID", description = "Returns a list of traffic fines for the specified vehicle ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Traffic fines found"),
+            @ApiResponse(responseCode = "400", description = "Invalid vehicle ID supplied", content = @Content),
+            @ApiResponse(responseCode = "404", description = "No traffic fines found for vehicle ID", content = @Content)
+    })
+    @GetMapping("/vehicle/{vehicleId}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
+    public ResponseEntity<List<TrafficFineDTO>> getFinesByVehicleId(@PathVariable Long vehicleId) {
+        List<TrafficFineDTO> fines = trafficFineService.getAllTrafficFinesByVehicleId(vehicleId);
+        return ResponseEntity.ok(fines);
+    }
+
+    @Operation(summary = "Get all traffic fines for a driver by driver ID", description = "Returns a list of traffic fines for the specified driver ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Traffic fines found"),
+            @ApiResponse(responseCode = "400", description = "Invalid driver ID supplied", content = @Content),
+            @ApiResponse(responseCode = "404", description = "No traffic fines found for driver ID", content = @Content)
+    })
+    @GetMapping("/driver/{driverId}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
+    public ResponseEntity<List<TrafficFineDTO>> getFinesByDriverId(@PathVariable Long driverId) {
+        List<TrafficFineDTO> fines = trafficFineService.getAllTrafficFinesByDriverId(driverId);
+        return ResponseEntity.ok(fines);
     }
 
     @Operation(summary = "Delete traffic fine by id", description = "Deletes traffic fine with provided id")
@@ -77,6 +108,7 @@ public class TrafficFineController {
             @ApiResponse(responseCode = "404", description = "Traffic fine not found", content = @Content)
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Void> deleteTrafficFine(@PathVariable Long id) {
         trafficFineService.deleteTrafficFine(id);
         return ResponseEntity.noContent().build();

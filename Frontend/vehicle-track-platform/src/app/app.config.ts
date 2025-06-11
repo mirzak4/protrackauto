@@ -7,6 +7,8 @@ import { routes } from './app.routes';
 import { authInterceptorFn } from './core/interceptors/auth.interceptor';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+import { importProvidersFrom } from '@angular/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +17,7 @@ export const appConfig: ApplicationConfig = {
     // provideClientHydration(withEventReplay()),
     provideHttpClient(withInterceptors([authInterceptorFn])), 
     provideCharts(withDefaultRegisterables()),
-    provideAnimations()
+    provideAnimations(),
+    importProvidersFrom(FormsModule),
   ]
 };

@@ -1,26 +1,33 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { VehiclesComponent } from './pages/vehicles/vehicles.component';
 import { DriverListComponent } from './pages/drivers//driver-list/driver-list.component';
 import { DriverFormComponent } from './pages/drivers/driver-form/driver-form.component';
 import { ServicesComponent } from './pages/services/services.component';
-import { FuelComponent } from './pages/fuel/fuel.component';
 import { InsuranceComponent } from './pages/insurance/insurance.component';
-import { FinesComponent } from './pages/fines/fines.component';
 import { InspectionsComponent } from './pages/inspections/inspections.component';
 import { TravelRequestsComponent } from './pages/travel-requests/travel-requests.component';
-import { ServiceRequestsComponent } from './pages/service-requests/service-requests.component';
 import { AccountComponent } from './pages/account/account.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { CompanyListComponent } from './pages/company/company-list/company-list.component';
-import { CompanyCreateComponent } from './pages/company/company-create/company-create.component';
-import { CompanyDetailComponent } from './pages/company/company-detail/company-detail.component';
+import { CompanyFormComponent } from './pages/company/company-form/company-form.component';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { VehicleFormComponent } from './pages/vehicles/vehicle-form/vehicle-form.component';
 import { VehicleListComponent } from './pages/vehicles/vehicle-list/vehicle-list.component';
-import { VehicleDetailsComponent } from './pages/vehicles/vehicle-details/vehicle-details.component';
+import { EmployeeFormComponent } from './pages/employee/employee-form/employee-form.component';
+import { EmployeeListComponent } from './pages/employee/employee-list/employee-list.component';
+import { ServiceRequestFormComponent } from './pages/service-request/service-request-form/service-request-form.component';
+import { ServiceRequestListComponent } from './pages/service-request/service-request-list/service-request-list.component';
+import { FuelPriceManagement } from './pages/fuel-price-management/fuel-price-management.component';
+import { CompanyServiceRequestListComponent } from './pages/company/company-service-request-list/company-service-request-list.component';
+import { TrafficFineFormComponent } from './pages/traffic-fines/traffic-fine-form/traffic-fine-form.component';
+import { TrafficFineListComponent } from './pages/traffic-fines/traffic-fine-list/traffic-fine-list.component';
+import { FuelPriceListComponent } from './pages/fuel-price/fuel-price-list/fuel-price-list.component';
+import { FuelPriceFormComponent } from './pages/fuel-price/fuel-price-form/fuel-price-form.component';
+import { VehicleFinesComponent } from './pages/vehicles/vehicle-fines/vehicle-fines.component';
+import { DriverFinesComponent } from './pages/drivers/driver-fines/driver-fines.component';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,25 +35,44 @@ export const routes: Routes = [
   { path: 'drivers', component: DriverListComponent },
   { path: 'drivers/new', component: DriverFormComponent },
   { path: 'drivers/edit/:id', component: DriverFormComponent },
+  { path: 'drivers/:id/fines', component: DriverFinesComponent },
+
+  { path: 'employees', component: EmployeeListComponent },
+  { path: 'employees/new', component: EmployeeFormComponent },
+  { path: 'employees/edit/:id', component: EmployeeFormComponent },
+
+  { path: 'companies', component: CompanyListComponent },
+  { path: 'companies/new', component: CompanyFormComponent },
+  { path: 'companies/edit/:id', component: CompanyFormComponent },
+  { path: 'companies/:id/reports', component: FuelPriceManagement },
+  { path: 'companies/:id/service-requests', component: CompanyServiceRequestListComponent },
+
 
   { path: 'vehicles', component: VehicleListComponent },
   { path: 'vehicles/new', component: VehicleFormComponent },
   { path: 'vehicles/edit/:id', component: VehicleFormComponent },
-  { path: 'vehicles/details', component: VehicleDetailsComponent },
+  { path: 'vehicles/:id/fines', component: VehicleFinesComponent },
+
+
+  { path: 'service-requests', component: ServiceRequestListComponent },
+  { path: 'service-requests/new', component: ServiceRequestFormComponent },
+  { path: 'service-requests/edit/:id', component: ServiceRequestFormComponent },
+
+  { path: 'traffic-fines', component: TrafficFineListComponent },
+  { path: 'traffic-fines/new', component: TrafficFineFormComponent },
+  { path: 'traffic-fines/edit/:id', component: TrafficFineFormComponent },
+
+  { path: 'fuel-prices', component: FuelPriceListComponent },
+  { path: 'fuel-prices/new', component: FuelPriceFormComponent },
+  { path: 'fuel-prices/edit/:id', component: FuelPriceFormComponent },
 
   { path: 'services', component: ServicesComponent },
-  { path: 'fuel', component: FuelComponent },
   { path: 'insurance', component: InsuranceComponent },
-  { path: 'fines', component: FinesComponent },
   { path: 'inspections', component: InspectionsComponent },
   { path: 'travel-requests', component: TravelRequestsComponent },
-  { path: 'service-requests', component: ServiceRequestsComponent },
   { path: 'account', component: AccountComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'company', component: CompanyListComponent },
-  { path: 'company/create', component: CompanyCreateComponent },
-  { path: 'company/detail/:id', component: CompanyDetailComponent }
+  { path: 'reset-password', component: ResetPasswordComponent }
 ];

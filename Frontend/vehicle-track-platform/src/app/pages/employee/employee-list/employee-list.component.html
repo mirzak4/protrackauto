@@ -1,0 +1,68 @@
+<section class="vehicles-section">
+  <div class="container">
+    <div class="header">
+      <h2>Employees</h2>
+      <button class="add-btn" (click)="addEmployee()">
+        <i class="fas fa-plus"></i> Add Employee
+      </button>
+    </div>
+
+    <table class="vehicles-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let emp of pagedEmployees">
+          <td>{{ getFullName(emp.user) }}</td>
+          <td>{{ emp.user.email }}</td>
+          <td>{{ formatRoleName(roleMap[emp.user.roleId]) || 'Unknown' }}</td>
+          <td>
+            <button class="action-btn" (click)="editEmployee(emp.id!)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="action-btn" (click)="deleteEmployee(emp)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination-wrapper" *ngIf="totalPages > 1">
+      <div class="pagination">
+        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="nav-button prev-next">
+          <i class="fas fa-angle-left"></i>
+        </button>
+
+        <button *ngFor="let page of [].constructor(totalPages); let i = index"
+                [class.active]="i + 1 === currentPage"
+                (click)="changePage(i + 1)"
+                class="page-button">
+          {{ i + 1 }}
+        </button>
+
+        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="nav-button prev-next">
+          <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="modal-backdrop" *ngIf="isDeleteConfirmOpen">
+    <div class="modal">
+      <h2>Confirm Deletion</h2>
+      <p>Are you sure you want to delete <strong>{{ getFullName(employeeToDelete?.user) }}</strong>?</p>
+      <div class="modal-buttons">
+        <button class="btn-primary" (click)="confirmDelete()">Delete</button>
+        <button class="btn-secondary" (click)="cancelDelete()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</section>

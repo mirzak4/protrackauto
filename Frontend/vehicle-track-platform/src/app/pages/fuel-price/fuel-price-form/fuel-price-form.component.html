@@ -1,0 +1,92 @@
+<section class="fuel-price-form-section">
+  <div class="form-container">
+    <header class="form-header">
+      <h2 class="form-title">{{ isEditMode ? 'Edit Fuel Price' : 'Add Fuel Price' }}</h2>
+      <div class="form-divider"></div>
+    </header>
+
+    <form (ngSubmit)="saveFuelPrice()" #fuelPriceForm="ngForm" class="fuel-price-form">
+      <div class="form-section">
+        <h3 class="section-title">Fuel Price Details</h3>
+        <div class="form-grid">
+          <div class="input-group">
+            <label for="fuelId" class="input-label">Fuel Type</label>
+            <select
+              id="fuelId"
+              name="fuelId"
+              [(ngModel)]="fuelPrice.fuelId"
+              required
+              class="form-input"
+              (ngModelChange)="onInputChange()"
+            >
+              <option [ngValue]="null" disabled>-- Select Fuel Type --</option>
+              <option *ngFor="let f of fuels" [ngValue]="f.id">{{ f.name }}</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="gasStationId" class="input-label">Gas Station</label>
+            <select
+              id="gasStationId"
+              name="gasStationId"
+              [(ngModel)]="fuelPrice.gasStationId"
+              required
+              class="form-input"
+              (ngModelChange)="onInputChange()"
+            >
+              <option [ngValue]="null" disabled>-- Select Gas Station --</option>
+              <option *ngFor="let s of gasStations" [ngValue]="s.id">{{ s.name }}</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label for="price" class="input-label">Price (EUR)</label>
+            <input
+              id="price"
+              name="price"
+              type="number"
+              step="0.01"
+              min="0"
+              required
+              [(ngModel)]="fuelPrice.price"
+              placeholder="Enter price"
+              class="form-input"
+              (input)="onInputChange()"
+            />
+          </div>
+
+          <div class="input-group">
+            <label for="issueDate" class="input-label">Date</label>
+            <input
+              id="issueDate"
+              name="issueDate"
+              type="date"
+              required
+              [(ngModel)]="fuelPrice.issueDate"
+              class="form-input"
+              (input)="onInputChange()"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!fuelPriceForm.valid || (isEditMode && !hasChanges)"
+        >
+          {{ isEditMode ? 'Update Fuel Price' : 'Create Fuel Price' }}
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline"
+          (click)="router.navigate(['/fuel-prices'])"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

@@ -28,9 +28,10 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+}
+
+.add-btn i {
+  margin-right: 6px;
 }
 
 .vehicles-table {
@@ -56,17 +57,15 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #3b82f6;
+  color: #3b82f6; 
   font-size: 1rem;
   margin-right: 0.5rem;
-  padding: 0.25rem;
 }
 
 .action-btn:hover {
   color: #1d4ed8;
 }
 
-/* Modal styles (identical to drivers) */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -91,31 +90,22 @@
 
 .modal h2 {
   margin-top: 0;
-  color: #1e293b;
-}
-
-.modal p {
-  margin-bottom: 1.5rem;
-  color: #475569;
 }
 
 .modal-buttons {
   display: flex;
   justify-content: flex-end;
   gap: 1rem;
+  margin-top: 1rem;
 }
 
 .btn-primary {
-  background: #2563eb;
+  background: #2563eb; 
   color: white;
   border: none;
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
   cursor: pointer;
-}
-
-.btn-primary:hover {
-  background: #1d4ed8;
 }
 
 .btn-secondary {
@@ -124,9 +114,106 @@
   padding: 0.6rem 1.2rem;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: auto;
+}
+
+.filter label {
+  font-weight: 500;
   color: #334155;
 }
 
-.btn-secondary:hover {
-  background: #e2e8f0;
+.filter select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background-color: #fff;
+  color: #1e293b;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.filter select:focus {
+  border-color: #3b82f6;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.pagination-wrapper {
+  margin-top: 2rem;
+  padding: 1rem 0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 0.5rem;
+  border: 1px solid #e2e8f0;
+  background-color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  color: #64748b;
+}
+
+.pagination button.page-button {
+  font-weight: 500;
+}
+
+.pagination button.prev-next {
+  color: #3b82f6;
+  border-color: #e2e8f0;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.pagination button.active {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+  font-weight: 600;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  color: #cbd5e1;
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    gap: 0.15rem;
+  }
+  
+  .pagination button {
+    min-width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
 }

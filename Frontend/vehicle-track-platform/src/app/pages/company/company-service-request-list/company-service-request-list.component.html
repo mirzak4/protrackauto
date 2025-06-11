@@ -1,0 +1,56 @@
+<section class="vehicles-section">
+  <div class="container">
+    <div class="header">
+      <h2>Service Requests for {{ companyName || ('Company ID: ' + servicerId) }}</h2>
+    </div>
+
+    <table class="vehicles-table" *ngIf="serviceRequests.length > 0; else noData">
+      <thead>
+        <tr>
+          <th>Service Type</th>
+          <th>Fiscal Receipt Number</th>
+          <th>Cost</th>
+          <th>Status</th>
+          <th>Request Date</th>
+          <th>Requested By</th>
+          <th>License Plate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let request of pagedServiceRequests">
+          <td>{{ getServiceTypeName(request.serviceType) }}</td>
+          <td>{{ request.fiscalReceiptNumber }}</td>
+          <td>{{ request.cost | number:'1.2-2' }} KM</td>
+          <td>{{ getStatusName(request.status) }}</td>
+          <td>{{ request.requestDate | date:'mediumDate' }}</td>
+          <td>{{ request.requestedBy }}</td>
+          <td>{{ vehiclePlates[request.vehicleId] }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+        <!-- Pagination -->
+    <div class="pagination-wrapper" *ngIf="totalPages > 1">
+      <div class="pagination">
+        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="nav-button prev-next">
+          <i class="fas fa-angle-left"></i>
+        </button>
+
+        <button *ngFor="let page of [].constructor(totalPages); let i = index"
+                [class.active]="i + 1 === currentPage"
+                (click)="changePage(i + 1)"
+                class="page-button">
+          {{ i + 1 }}
+        </button>
+
+        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="nav-button prev-next">
+          <i class="fas fa-angle-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <ng-template #noData>
+      <p>No service requests available for this servicer.</p>
+    </ng-template>
+  </div>
+</section>

@@ -105,7 +105,7 @@ public class CompanyRepository {
                     "VALUES (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement ps = connection.prepareStatement(sql, new String[] {"ID"});
-            ps.setInt(1, company.getCompanyType().ordinal());
+            ps.setInt(1, company.getCompanyType().getCode());
             ps.setString(2, company.getName());
             ps.setString(3, company.getAddress());
             ps.setString(4, company.getPhoneNumber());

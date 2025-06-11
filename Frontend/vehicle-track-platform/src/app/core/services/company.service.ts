@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { CompanyDTO } from '../models/company.model';
 import { GasStationFuelPriceReport } from '../models/gas-station-fuel-price-report.model';
+import { environment } from 'environments/environment';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class CompanyService {
+  getReportDocument(documentId: number) {
+    throw new Error('Method not implemented.');
+  }
+
   private apiUrl = `${environment.apiUrl}/api/companies`;
 
   constructor(private http: HttpClient) {}
 
-  getAll(type?: string): Observable<CompanyDTO[]> {
-    const params = type ? new HttpParams().set('type', type) : undefined;
+  getAll(companyType?: string): Observable<CompanyDTO[]> {
+    const params = companyType ? new HttpParams().set('companyType', companyType) : undefined;
     return this.http.get<CompanyDTO[]>(this.apiUrl, { params });
   }
 
@@ -20,15 +26,15 @@ export class CompanyService {
     return this.http.get<CompanyDTO>(`${this.apiUrl}/${id}`);
   }
 
-  create(dto: CompanyDTO): Observable<number> {
-    return this.http.post<number>(this.apiUrl, dto);
+  createCompany(dto: CompanyDTO): Observable<CompanyDTO> {
+    return this.http.post<CompanyDTO>(this.apiUrl, dto);
   }
 
-  update(p0: number, dto: CompanyDTO): Observable<CompanyDTO> {
-    return this.http.put<CompanyDTO>(`${this.apiUrl}/${dto.id}`, dto);
+  updateCompany(id: number, dto: CompanyDTO): Observable<CompanyDTO> {
+    return this.http.put<CompanyDTO>(`${this.apiUrl}/${id}`, dto);
   }
 
-  delete(id: number): Observable<void> {
+  deleteCompany(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
@@ -40,11 +46,9 @@ export class CompanyService {
     this.http.post(`${this.apiUrl}/${companyId}/reports/weekly-fuel-prices`, null, { responseType: 'blob' })
       .subscribe(blob => {
         const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'weekly-fuel-prices.pdf';
-        link.click();
-        window.URL.revokeObjectURL(url);
+        window.open(url, '_blank'); // Open in a new tab
+        // Optional: clean up the URL after some time
+        setTimeout(() => window.URL.revokeObjectURL(url), 1000);
       });
   }
 }

@@ -17,6 +17,9 @@ export class DriverListComponent implements OnInit {
   isDeleteConfirmOpen = false;
   driverToDelete: DriverDTO | null = null;
 
+  currentPage = 1;
+  itemsPerPage = 10;
+
   constructor(
     private driverService: DriverService,
     private router: Router,
@@ -36,6 +39,21 @@ export class DriverListComponent implements OnInit {
         console.error('Error loading drivers:', error);
       }
     });
+  }
+
+  get pagedDrivers(): DriverDTO[] {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.drivers.slice(start, start + this.itemsPerPage);
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.drivers.length / this.itemsPerPage);
+  }
+
+  changePage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
   }
 
   addDriver() {
@@ -84,5 +102,9 @@ export class DriverListComponent implements OnInit {
 
   getFullName(user: UserDTO | undefined): string {
     return user ? `${user.firstName} ${user.lastName}` : '';
+  }
+
+  viewFines(driverId: number) {
+    this.router.navigate(['/drivers', driverId, 'fines']);
   }
 }

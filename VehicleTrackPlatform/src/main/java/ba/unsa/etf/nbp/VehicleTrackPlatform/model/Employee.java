@@ -7,6 +7,9 @@ public class Employee extends AuditableEntity {
     private Company company;
     private User user;
 
+    public Employee() {
+    }
+
     public Employee(Long id, Long companyId, Long userId) {
         this.id = id;
         this.userId = userId;

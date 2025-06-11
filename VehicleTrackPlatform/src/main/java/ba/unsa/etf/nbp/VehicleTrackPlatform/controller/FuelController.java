@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -29,6 +30,7 @@ public class FuelController {
             @ApiResponse(responseCode = "200", description = "List of fuels")
     })
     @GetMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public List<FuelDTO> getAllFuels() {
         return fuelService.getAllFuels();
     }
@@ -40,6 +42,7 @@ public class FuelController {
             @ApiResponse(responseCode = "404", description = "Fuel not found", content = @Content)
     })
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<FuelDTO> getFuelById(@PathVariable Long id) {
         return fuelService.getFuelById(id)
                 .map(ResponseEntity::ok)
@@ -52,6 +55,7 @@ public class FuelController {
             @ApiResponse(responseCode = "400", description = "Invalid fuel payload supplied", content = @Content)
     })
     @PostMapping
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Long> createFuel(@RequestBody FuelDTO fuelDTO) {
         Long fuelId = fuelService.createFuel(fuelDTO);
         return ResponseEntity.created(URI.create("/api/fuel/" + fuelId))
@@ -65,6 +69,7 @@ public class FuelController {
             @ApiResponse(responseCode = "404", description = "Fuel not found", content = @Content)
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<FuelDTO> updateFuel(@PathVariable Long id, @RequestBody FuelDTO fuelDTO) {
         fuelDTO.setId(id);
         return ResponseEntity.ok(fuelService.updateFuel(fuelDTO));
@@ -77,6 +82,7 @@ public class FuelController {
             @ApiResponse(responseCode = "404", description = "Fuel not found", content = @Content)
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority(@roles.ADMIN)")
     public ResponseEntity<Void> deleteFuel(@PathVariable Long id) {
         fuelService.deleteFuel(id);
         return ResponseEntity.noContent().build();
